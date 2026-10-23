@@ -3,46 +3,115 @@
     "home": "Home",
     "clothing": "Clothing Collection",
     "bouquet": "Bouquet Gallery",
-    "location": "Location & Hours"
+    "location": "Location"
   },
   "hero": {
-    "title": "Welcome to Galeri Tik",
-    "subtitle": "Curated fashion boutique & custom flower bouquets for your special moments"
+    "headline": "Graceful Boutique Attire & Memorable Custom Bouquets",
+    "subtitle": "Discover premium women's clothing and bespoke handcrafted bouquets designed to elevate your special moments with our warm, personalized store experience.",
+    "exploreClothing": "Explore Clothing Collection",
+    "exploreBouquet": "Bouquet Portfolio"
+  },
+  "features": {
+    "qualityTitle": "Quality Collection",
+    "qualityDesc": "Breathable, comfortable fabrics and curated selections for daily wear or celebrations.",
+    "bouquetTitle": "Flexible Bouquets",
+    "bouquetDesc": "Custom designs crafted to adapt seamlessly to your budget and theme preferences.",
+    "fittingTitle": "Fitting Room",
+    "fittingDesc": "Comfortable fitting room available in-store to ensure the perfect fit and look.",
+    "paymentTitle": "Complete Payment",
+    "paymentDesc": "Hassle-free transactions supporting Cash, universal QRIS, and direct Bank Transfer."
+  },
+  "tabs": {
+    "featured": "Featured Picks",
+    "clothing": "Clothing Gallery",
+    "bouquet": "Bouquet Gallery"
   },
   "search": {
-    "placeholder": "Search products...",
-    "noResults": "No products found.",
-    "allCategories": "All"
+    "placeholder": "Search fashion or bouquet products...",
+    "showingResults": "Showing search results for:",
+    "productsFound": "products found",
+    "reset": "Reset Filter",
+    "noResultsTitle": "No products found",
+    "noResultsDesc": "Please check your spelling or try different keywords such as dress style or bouquet type.",
+    "clearSearch": "Clear Search",
+    "allTypes": "All Types"
   },
-  "product": {
-    "inquire": "Inquire About This Item",
-    "whatsapp": "Contact via WhatsApp",
+  "catalog": {
+    "curatedPicks": "Curated Picks",
+    "featuredClothingTitle": "Featured Clothing Collection",
     "viewAllClothing": "View All Clothing",
-    "viewAllBouquet": "View Full Bouquet Gallery",
-    "featured": "Featured Collection"
+    "featuredPortfolio": "Featured Portfolio",
+    "featuredBouquetTitle": "Featured Bouquet Gallery",
+    "viewAllBouquet": "View All Bouquets",
+    "fullCatalog": "Full Catalog",
+    "clothingTitle": "Clothing Collection",
+    "clothingSubtitle": "Filter by your favorite attire category or use the search box above.",
+    "creativePortfolio": "Creative Portfolio",
+    "bouquetTitle": "Bouquet Gallery",
+    "bouquetSubtitle": "All arrangements of flower, money, snack, and graduation bouquets can be custom tailored for your special occasion.",
+    "viewDetail": "View Detail"
   },
-  "bouquet": {
-    "education": "Price estimates depend on complexity, flower/paper materials, and the denomination/number of money folds.",
-    "educationTitle": "About Custom Bouquet Pricing",
-    "educationDesc": "Each bouquet is custom-made to your request. Prices vary depending on design complexity, material type, and additional components."
+  "categories": {
+    "all": "All Types",
+    "gamis": "Gamis / Maxi Dress",
+    "daster": "House Dress",
+    "kulot": "Culottes",
+    "rok": "Skirt",
+    "celana": "Trousers",
+    "koko": "Koko Shirt",
+    "kemeja": "Shirt",
+    "kaos": "T-Shirt",
+    "tas": "Bag",
+    "bros": "Brooch"
+  },
+  "lightbox": {
+    "zoom": "Zoom",
+    "reset": "Reset",
+    "fashionBadge": "Fashion Collection",
+    "bouquetBadge": "Bouquet Portfolio",
+    "descHeader": "Description & Characteristics",
+    "storeVisitTitle": "In-Store Visit",
+    "clothingStoreNote": "Items can be tried on directly in our comfortable fitting room at the physical store.",
+    "bouquetStoreNote": "Designs can be tailored to match your budget, color theme, and personal requests.",
+    "inquireClothing": "Inquire via WhatsApp",
+    "inquireBouquet": "Consult via WhatsApp",
+    "close": "Close modal",
+    "prev": "Previous photo",
+    "next": "Next photo"
+  },
+  "bouquetEducation": {
+    "badge": "Flexible Consultation",
+    "title": "About Custom Bouquet Price Flexibility",
+    "desc": "Every bouquet is uniquely handcrafted to order. You are free to determine your preferred colors, flowers, cash amounts, and decorative accents.",
+    "quote": "Price estimates depend on complexity, flower/paper materials, and the denomination/number of money folds.",
+    "button": "Consult Bouquet via WhatsApp"
   },
   "store": {
+    "badge": "Location & Facilities",
     "title": "Visit Our Store",
-    "address": "Store Address",
-    "hours": "Operating Hours",
-    "hoursValue": "Every Day, 08:00 - 21:00 WIB",
+    "subtitle": "Feel free to visit us in person to explore our clothing curation, try them in the fitting room, or discuss your dream bouquet directly.",
+    "addressLabel": "Store Address",
+    "hoursLabel": "Operating Hours",
+    "hoursNote": "Open daily including weekends & public holidays",
+    "fittingTitle": "Fitting Room",
+    "fittingDesc": "Dedicated comfortable fitting room available to try on clothes before buying.",
+    "paymentTitle": "Complete Payment Options",
+    "paymentDesc": "Accepting Cash, QRIS (Gopay/OVO/ShopeePay), and Bank Transfer.",
     "visitMap": "Open in Google Maps",
-    "contact": "Contact Us"
+    "contact": "Contact via WhatsApp"
   },
   "footer": {
+    "desc": "Digital storefront and boutique offering curated women's apparel and custom bouquet arrangements to make your special moments truly memorable.",
+    "quickLinks": "Quick Links",
+    "directContact": "Direct Contact",
+    "owner": "Owner:",
+    "whatsapp": "WhatsApp:",
+    "chatWhatsApp": "Contact via WhatsApp",
     "copyright": "© 2026 Galeri Tik. All rights reserved.",
-    "tagline": "Fashion Boutique & Custom Flower Bouquets"
-  },
-  "theme": {
-    "light": "Light Mode",
-    "dark": "Dark Mode"
+    "tagline": "Fashion Boutique & Custom Bouquet Portfolio"
   },
   "language": {
-    "switch": "ID"
+    "switch": "ID",
+    "current": "EN"
   }
 }

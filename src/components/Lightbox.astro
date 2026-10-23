@@ -3,47 +3,170 @@ import { getLangFromCookie, t } from '../i18n';
 const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
 ---
 
-<dialog id="lightbox-dialog" class="fixed inset-0 z-[100] w-full h-full max-w-full max-h-full m-0 p-0 bg-black/90 backdrop:bg-black/90">
-  <div class="w-full h-full flex flex-col">
-    <!-- Top bar -->
-    <div class="flex items-center justify-between p-4 text-white">
-      <div>
-        <h3 id="lightbox-title" class="text-lg font-bold"></h3>
-        <p id="lightbox-desc" class="text-sm text-gray-300 mt-1 max-w-lg"></p>
+<dialog 
+  id="lightbox-dialog" 
+  class="fixed inset-0 z-[100] m-auto w-full max-w-4xl p-0 bg-transparent backdrop:bg-black/75 backdrop:backdrop-blur-sm open:flex flex-col items-center justify-center focus:outline-none"
+  aria-modal="true"
+>
+  <!-- Modal Content Container -->
+  <div class="relative w-full max-h-[92vh] mx-4 sm:mx-auto bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-2xl overflow-hidden flex flex-col md:flex-row">
+    
+    <!-- Close Button Top Right -->
+    <button 
+      id="lightbox-close" 
+      class="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-zinc-100/80 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-300 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500" 
+      aria-label={t(lang, 'lightbox.close')}
+      data-i18n-aria="lightbox.close"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <!-- KOLOM KIRI: Foto Utama (Full Fit / Zoomable & Pannable) & Deretan Thumbnail -->
+    <div class="w-full md:w-1/2 bg-zinc-100 dark:bg-zinc-950 p-6 flex flex-col justify-between border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
+      
+      <!-- Wadah Foto Utama dengan Fitur Zoom & Pan -->
+      <div 
+        id="lightbox-viewport"
+        class="relative w-full aspect-[4/5] sm:aspect-[3/4] max-h-[420px] rounded-2xl overflow-hidden bg-zinc-200/80 dark:bg-zinc-900/80 flex items-center justify-center group shadow-inner select-none transition-all"
+      >
+        <!-- Kontainer foto yang bisa di-zoom & di-pan -->
+        <div 
+          id="lightbox-pan-area"
+          class="w-full h-full flex items-center justify-center transition-transform duration-200 origin-center cursor-zoom-in"
+          title="Zoom"
+        >
+          <img 
+            id="lightbox-image" 
+            src="" 
+            alt="" 
+            class="w-full h-full object-contain pointer-events-none select-none transition-transform duration-200"
+          />
+        </div>
+        
+        <!-- Tombol Kontrol Zoom Manual (+ / -) -->
+        <div class="absolute top-3 left-3 z-10 flex items-center gap-1.5 bg-zinc-900/80 backdrop-blur-md rounded-lg p-1 text-white shadow-xs">
+          <button 
+            id="lightbox-zoom-toggle" 
+            type="button"
+            class="px-2.5 py-1 text-xs font-semibold rounded hover:bg-white/20 transition-colors flex items-center gap-1"
+          >
+            <svg id="zoom-icon-in" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/>
+            </svg>
+            <svg id="zoom-icon-out" class="w-3.5 h-3.5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"/>
+            </svg>
+            <span id="zoom-text" data-i18n="lightbox.zoom">{t(lang, 'lightbox.zoom')}</span>
+          </button>
+        </div>
+
+        <!-- Indikator Counter Foto -->
+        <div class="absolute bottom-3 left-3 bg-zinc-900/80 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+          <span id="lightbox-counter">1 / 1</span>
+        </div>
+
+        <!-- Tombol Navigasi Prev/Next Foto -->
+        <button 
+          id="lightbox-prev" 
+          class="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 dark:bg-zinc-900/90 text-zinc-800 dark:text-zinc-200 shadow-md hover:bg-white dark:hover:bg-zinc-800 transition-colors focus:outline-none z-10"
+          aria-label={t(lang, 'lightbox.prev')}
+          data-i18n-aria="lightbox.prev"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+
+        <button 
+          id="lightbox-next" 
+          class="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 dark:bg-zinc-900/90 text-zinc-800 dark:text-zinc-200 shadow-md hover:bg-white dark:hover:bg-zinc-800 transition-colors focus:outline-none z-10"
+          aria-label={t(lang, 'lightbox.next')}
+          data-i18n-aria="lightbox.next"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
       </div>
-      <button id="lightbox-close" class="p-2 hover:bg-white/20 rounded-full transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Close">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
+
+      <!-- Deretan Thumbnail Kecil (Multi-Foto) -->
+      <div id="lightbox-thumbnails-wrapper" class="mt-4">
+        <div id="lightbox-thumbnails" class="flex items-center gap-2.5 overflow-x-auto py-1 scrollbar-none">
+          <!-- Thumbnail buttons injected via JS -->
+        </div>
+      </div>
     </div>
 
-    <!-- Image Area -->
-    <div class="flex-1 flex items-center justify-center relative px-4 overflow-hidden">
-      <!-- Prev button -->
-      <button id="lightbox-prev" class="absolute left-2 sm:left-6 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center text-white">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-        </svg>
-      </button>
+    <!-- KOLOM KANAN: Detail, Karakteristik & Aksi WhatsApp -->
+    <div class="w-full md:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto max-h-[500px] md:max-h-[600px]">
+      <div class="space-y-5">
+        
+        <!-- Header Info: Kategori Pill -->
+        <div class="flex items-center gap-2">
+          <span 
+            id="lightbox-badge-type" 
+            class="text-[11px] uppercase tracking-wider font-bold px-2.5 py-1 rounded bg-brand-50 text-brand-700 dark:bg-brand-950/50 dark:text-brand-300 border border-brand-200 dark:border-brand-900"
+          >
+            {t(lang, 'lightbox.fashionBadge')}
+          </span>
+          <span 
+            id="lightbox-subcategory" 
+            class="text-xs font-semibold px-2.5 py-1 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+          >
+            Subkategori
+          </span>
+        </div>
 
-      <img id="lightbox-image" src="" alt="" class="max-h-[70vh] max-w-full object-contain rounded-lg shadow-2xl" />
+        <!-- Nama Produk -->
+        <h2 
+          id="lightbox-title" 
+          class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white leading-tight font-sans"
+        >
+          Nama Produk
+        </h2>
 
-      <!-- Next button -->
-      <button id="lightbox-next" class="absolute right-2 sm:right-6 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center text-white">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-        </svg>
-      </button>
-    </div>
+        <!-- Blok DESKRIPSI & KARAKTERISTIK -->
+        <div class="pt-2">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2" data-i18n="lightbox.descHeader">
+            {t(lang, 'lightbox.descHeader')}
+          </h4>
+          <p 
+            id="lightbox-desc" 
+            class="text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed font-normal whitespace-pre-line"
+          >
+            Deskripsi produk akan tampil di sini.
+          </p>
+        </div>
 
-    <!-- Bottom bar -->
-    <div class="p-4 flex items-center justify-between">
-      <span id="lightbox-counter" class="text-white/70 text-sm"></span>
-      <a id="lightbox-wa-btn" href="" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-semibold px-6 py-3 rounded-full transition-colors min-h-[44px] shadow-lg">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        <span>{t(lang, 'product.inquire')}</span>
-      </a>
+        <!-- Kotak Info Ketersediaan Toko Fisik (Tanpa Simbol/Emoji) -->
+        <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-850/60 border border-zinc-200/80 dark:border-zinc-800">
+          <p class="font-semibold text-zinc-900 dark:text-white text-sm" data-i18n="lightbox.storeVisitTitle">
+            {t(lang, 'lightbox.storeVisitTitle')}
+          </p>
+          <p id="lightbox-store-note" class="text-zinc-500 dark:text-zinc-400 mt-1 leading-snug text-xs sm:text-sm font-normal">
+            {t(lang, 'lightbox.clothingStoreNote')}
+          </p>
+        </div>
+      </div>
+
+      <!-- Tombol Aksi WhatsApp Dinamis -->
+      <div class="pt-6 mt-6 border-t border-zinc-100 dark:border-zinc-800">
+        <a 
+          id="lightbox-wa-btn" 
+          href="#" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="w-full inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-semibold px-6 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all min-h-[48px] text-sm sm:text-base"
+        >
+          <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          <span id="lightbox-wa-text">{t(lang, 'lightbox.inquireClothing')}</span>
+        </a>
+      </div>
+
     </div>
   </div>
 </dialog>
@@ -51,66 +174,277 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
 <script is:inline>
 (function() {
   const dialog = document.getElementById('lightbox-dialog');
-  const image = document.getElementById('lightbox-image');
+  const mainImage = document.getElementById('lightbox-image');
+  const panArea = document.getElementById('lightbox-pan-area');
   const title = document.getElementById('lightbox-title');
   const desc = document.getElementById('lightbox-desc');
+  const subcategory = document.getElementById('lightbox-subcategory');
+  const badgeType = document.getElementById('lightbox-badge-type');
   const counter = document.getElementById('lightbox-counter');
   const waBtn = document.getElementById('lightbox-wa-btn');
+  const waText = document.getElementById('lightbox-wa-text');
+  const storeNote = document.getElementById('lightbox-store-note');
   const closeBtn = document.getElementById('lightbox-close');
   const prevBtn = document.getElementById('lightbox-prev');
   const nextBtn = document.getElementById('lightbox-next');
+  const thumbnailsContainer = document.getElementById('lightbox-thumbnails');
+  const thumbnailsWrapper = document.getElementById('lightbox-thumbnails-wrapper');
+  const zoomToggle = document.getElementById('lightbox-zoom-toggle');
+  const zoomIconIn = document.getElementById('zoom-icon-in');
+  const zoomIconOut = document.getElementById('zoom-icon-out');
+  const zoomText = document.getElementById('zoom-text');
 
   let images = [];
   let currentIndex = 0;
+  let isZoomed = false;
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+  let currentTranslateX = 0;
+  let currentTranslateY = 0;
+  let activeProductType = 'pakaian';
 
-  function showImage(index) {
+  function updateDynamicTexts() {
+    const currentLang = localStorage.getItem('lang') || document.documentElement.lang || 'id';
+    if (activeProductType === 'pakaian') {
+      if (badgeType) badgeType.textContent = window.getI18nText('lightbox.fashionBadge', currentLang);
+      if (waText) waText.textContent = window.getI18nText('lightbox.inquireClothing', currentLang);
+      if (storeNote) storeNote.textContent = window.getI18nText('lightbox.clothingStoreNote', currentLang);
+    } else {
+      if (badgeType) badgeType.textContent = window.getI18nText('lightbox.bouquetBadge', currentLang);
+      if (waText) waText.textContent = window.getI18nText('lightbox.inquireBouquet', currentLang);
+      if (storeNote) storeNote.textContent = window.getI18nText('lightbox.bouquetStoreNote', currentLang);
+    }
+    if (zoomText) {
+      zoomText.textContent = isZoomed ? window.getI18nText('lightbox.reset', currentLang) : window.getI18nText('lightbox.zoom', currentLang);
+    }
+  }
+
+  // Dengarkan event perubahan bahasa
+  window.addEventListener('app:language-change', () => {
+    updateDynamicTexts();
+  });
+
+  function resetZoom() {
+    isZoomed = false;
+    currentTranslateX = 0;
+    currentTranslateY = 0;
+    if (panArea) {
+      panArea.style.transform = 'translate(0px, 0px) scale(1)';
+      panArea.className = 'w-full h-full flex items-center justify-center transition-transform duration-200 origin-center cursor-zoom-in';
+    }
+    if (zoomIconIn) zoomIconIn.classList.remove('hidden');
+    if (zoomIconOut) zoomIconOut.classList.add('hidden');
+    const currentLang = localStorage.getItem('lang') || document.documentElement.lang || 'id';
+    if (zoomText) zoomText.textContent = window.getI18nText('lightbox.zoom', currentLang);
+  }
+
+  function toggleZoom(e) {
+    if (e) e.stopPropagation();
+    isZoomed = !isZoomed;
+    const currentLang = localStorage.getItem('lang') || document.documentElement.lang || 'id';
+    if (isZoomed) {
+      currentTranslateX = 0;
+      currentTranslateY = 0;
+      panArea.style.transform = 'translate(0px, 0px) scale(1.85)';
+      panArea.className = 'w-full h-full flex items-center justify-center transition-transform duration-200 origin-center cursor-grab active:cursor-grabbing';
+      zoomIconIn.classList.add('hidden');
+      zoomIconOut.classList.remove('hidden');
+      if (zoomText) zoomText.textContent = window.getI18nText('lightbox.reset', currentLang);
+    } else {
+      resetZoom();
+    }
+  }
+
+  zoomToggle?.addEventListener('click', toggleZoom);
+  panArea?.addEventListener('click', (e) => {
+    if (!isDragging) {
+      toggleZoom(e);
+    }
+  });
+
+  // Drag to Pan when zoomed
+  panArea?.addEventListener('mousedown', (e) => {
+    if (!isZoomed) return;
+    isDragging = true;
+    startX = e.clientX - currentTranslateX;
+    startY = e.clientY - currentTranslateY;
+    panArea.style.transition = 'none';
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging || !isZoomed) return;
+    currentTranslateX = e.clientX - startX;
+    currentTranslateY = e.clientY - startY;
+
+    const maxBound = 160;
+    currentTranslateX = Math.max(-maxBound, Math.min(maxBound, currentTranslateX));
+    currentTranslateY = Math.max(-maxBound, Math.min(maxBound, currentTranslateY));
+
+    panArea.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px) scale(1.85)`;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      if (panArea) panArea.style.transition = 'transform 0.2s ease-out';
+    }
+  });
+
+  // Touch Support
+  panArea?.addEventListener('touchstart', (e) => {
+    if (!isZoomed || e.touches.length !== 1) return;
+    isDragging = true;
+    startX = e.touches[0].clientX - currentTranslateX;
+    startY = e.touches[0].clientY - currentTranslateY;
+    panArea.style.transition = 'none';
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isDragging || !isZoomed || e.touches.length !== 1) return;
+    currentTranslateX = e.touches[0].clientX - startX;
+    currentTranslateY = e.touches[0].clientY - startY;
+    panArea.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px) scale(1.85)`;
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    if (isDragging) {
+      isDragging = false;
+      if (panArea) panArea.style.transition = 'transform 0.2s ease-out';
+    }
+  });
+
+  function renderThumbnails() {
+    thumbnailsContainer.innerHTML = '';
+    if (!images || images.length <= 1) {
+      thumbnailsWrapper.style.display = 'none';
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+      return;
+    }
+    
+    thumbnailsWrapper.style.display = 'block';
+    prevBtn.style.display = 'flex';
+    nextBtn.style.display = 'flex';
+
+    images.forEach((imgUrl, idx) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `w-14 h-14 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
+        idx === currentIndex ? 'border-brand-500 scale-105 shadow-sm' : 'border-transparent opacity-60 hover:opacity-100'
+      }`;
+      btn.innerHTML = `<img src="${imgUrl}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover select-none pointer-events-none" />`;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setActiveImage(idx);
+      });
+      thumbnailsContainer.appendChild(btn);
+    });
+  }
+
+  function setActiveImage(index) {
     if (!images.length) return;
+    resetZoom();
     currentIndex = ((index % images.length) + images.length) % images.length;
-    image.src = images[currentIndex];
+    mainImage.src = images[currentIndex];
     counter.textContent = `${currentIndex + 1} / ${images.length}`;
-    prevBtn.style.display = images.length > 1 ? 'flex' : 'none';
-    nextBtn.style.display = images.length > 1 ? 'flex' : 'none';
+
+    Array.from(thumbnailsContainer.children).forEach((thumb, idx) => {
+      if (idx === currentIndex) {
+        thumb.className = 'w-14 h-14 rounded-lg overflow-hidden border-2 border-brand-500 scale-105 shadow-sm flex-shrink-0 transition-all';
+      } else {
+        thumb.className = 'w-14 h-14 rounded-lg overflow-hidden border-2 border-transparent opacity-60 hover:opacity-100 flex-shrink-0 transition-all';
+      }
+    });
   }
 
   document.addEventListener('click', (e) => {
     const trigger = e.target.closest('[data-lightbox-trigger]');
     if (!trigger) return;
 
-    images = JSON.parse(trigger.dataset.images || '[]');
-    title.textContent = trigger.dataset.title || '';
-    desc.textContent = trigger.dataset.description || '';
-    waBtn.href = trigger.dataset.waUrl || '#';
+    try {
+      images = JSON.parse(trigger.dataset.images || '[]');
+    } catch {
+      images = [];
+    }
+
+    const itemTitle = trigger.dataset.title || 'Galeri Tik';
+    const itemSubCat = trigger.dataset.subcategory || 'Koleksi';
+    const itemDesc = trigger.dataset.description || '';
+    activeProductType = trigger.dataset.type || 'pakaian';
+    const itemWaUrl = trigger.dataset.waUrl || '#';
+
+    title.textContent = itemTitle;
+    mainImage.alt = itemTitle;
+    desc.textContent = itemDesc;
+    subcategory.textContent = itemSubCat;
+    waBtn.href = itemWaUrl;
+
+    updateDynamicTexts();
+
     currentIndex = 0;
-    showImage(0);
+    renderThumbnails();
+    setActiveImage(0);
+
     dialog.showModal();
+    document.body.style.overflow = 'hidden';
   });
 
-  closeBtn?.addEventListener('click', () => dialog.close());
-  prevBtn?.addEventListener('click', () => showImage(currentIndex - 1));
-  nextBtn?.addEventListener('click', () => showImage(currentIndex + 1));
+  function closeDialog() {
+    resetZoom();
+    dialog.close();
+    document.body.style.overflow = '';
+  }
+
+  closeBtn?.addEventListener('click', closeDialog);
+  prevBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setActiveImage(currentIndex - 1);
+  });
+  nextBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setActiveImage(currentIndex + 1);
+  });
 
   dialog?.addEventListener('click', (e) => {
-    if (e.target === dialog) dialog.close();
+    const rect = dialog.getBoundingClientRect();
+    const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+    if (!isInDialog || e.target === dialog) {
+      closeDialog();
+    }
+  });
+
+  dialog?.addEventListener('cancel', () => {
+    resetZoom();
+    document.body.style.overflow = '';
   });
 
   document.addEventListener('keydown', (e) => {
     if (!dialog.open) return;
-    if (e.key === 'Escape') dialog.close();
-    if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
-    if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+    if (e.key === 'Escape') closeDialog();
+    if (e.key === 'ArrowLeft') setActiveImage(currentIndex - 1);
+    if (e.key === 'ArrowRight') setActiveImage(currentIndex + 1);
   });
 })();
 </script>
 
 <style>
   dialog::backdrop {
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(10, 10, 12, 0.78);
+    backdrop-filter: blur(4px);
   }
   dialog[open] {
-    animation: fadeIn 0.2s ease-out;
+    animation: modalScaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  @keyframes modalScaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
   }
 </style>

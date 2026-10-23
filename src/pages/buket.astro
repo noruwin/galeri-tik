@@ -29,34 +29,44 @@ const { data: products } = await supabase
 const allProducts = products || [];
 ---
 
-<BaseLayout title={`${t(lang, 'nav.bouquet')} — Galeri Tik`} description="Galeri portofolio buket bunga & buket uang custom di Galeri Tik. Buket wisuda, ulang tahun, dan momen spesial.">
+<BaseLayout title={`Galeri Buket — Galeri Tik`} description="Galeri portofolio buket bunga & buket uang custom di Galeri Tik. Buket wisuda, ulang tahun, dan momen spesial.">
   <Header />
 
-  <main class="min-h-screen">
-    <!-- Page Header -->
-    <section class="bg-gradient-to-b from-purple-50/50 to-white dark:from-gray-900 dark:to-gray-950 pt-10 pb-8">
+  <main class="min-h-screen pb-16">
+    <!-- Page Header (Tanpa Emoji) Terikat i18n -->
+    <section class="bg-gradient-to-b from-purple-50/40 to-slate-50/50 dark:from-zinc-950 dark:to-zinc-900/60 pt-10 pb-8 border-b border-zinc-200/60 dark:border-zinc-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
-          <a href="/" class="hover:text-brand-500 transition-colors">{t(lang, 'nav.home')}</a>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          <span class="text-gray-900 dark:text-white font-medium">{t(lang, 'nav.bouquet')}</span>
-        </div>
-        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-6">
-          💐 {t(lang, 'nav.bouquet')}
-        </h1>
-
-        <!-- Education Banner -->
-        <div class="mb-6">
-          <BouquetEducation />
+        
+        <div class="flex items-center gap-2 text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-4">
+          <a href="/" data-i18n="nav.home" class="hover:text-brand-600 transition-colors">{t(lang, 'nav.home')}</a>
+          <svg class="w-3.5 h-3.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+          <span class="text-zinc-900 dark:text-white font-semibold" data-i18n="nav.bouquet">{t(lang, 'nav.bouquet')}</span>
         </div>
 
-        <!-- Search -->
-        <SearchBar placeholder={t(lang, 'search.placeholder')} />
+        <div class="max-w-2xl">
+          <span class="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400" data-i18n="catalog.creativePortfolio">
+            {t(lang, 'catalog.creativePortfolio')}
+          </span>
+          <h1 class="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white mt-1 mb-3 font-serif tracking-tight" data-i18n="catalog.bouquetTitle">
+            {t(lang, 'catalog.bouquetTitle')}
+          </h1>
+          <p class="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed font-normal" data-i18n="catalog.bouquetSubtitle">
+            {t(lang, 'catalog.bouquetSubtitle')}
+          </p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="mt-8">
+          <SearchBar placeholder={t(lang, 'search.placeholder')} />
+        </div>
+
       </div>
     </section>
 
     <!-- Product Grid -->
-    <section class="py-8 sm:py-12">
+    <section class="py-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
           {allProducts.map((product) => (
@@ -66,20 +76,21 @@ const allProducts = products || [];
           ))}
         </div>
 
-        <!-- No Results -->
-        <div id="no-results" class="hidden text-center py-16">
-          <div class="text-6xl mb-4">🔍</div>
-          <p class="text-lg text-gray-500 dark:text-gray-400">{t(lang, 'search.noResults')}</p>
+        <!-- No Results State -->
+        <div id="no-results" class="hidden text-center py-20 bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 mt-6">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-400">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+            </svg>
+          </div>
+          <h3 class="text-base font-bold text-zinc-900 dark:text-white" data-i18n="search.noResultsTitle">{t(lang, 'search.noResultsTitle')}</h3>
+          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1" data-i18n="search.noResultsDesc">{t(lang, 'search.noResultsDesc')}</p>
         </div>
 
-        <!-- Empty state when no products at all -->
-        {allProducts.length === 0 && (
-          <div class="text-center py-20">
-            <div class="text-6xl mb-4">💐</div>
-            <p class="text-lg text-gray-500 dark:text-gray-400">{t(lang, 'search.noResults')}</p>
-            <p class="text-sm text-gray-400 dark:text-gray-500 mt-2">Portofolio buket akan segera hadir. Nantikan update kami!</p>
-          </div>
-        )}
+        <!-- Posisi Edukasi Buket Tepat SETELAH Seksi Galeri Buket -->
+        <div class="mt-14">
+          <BouquetEducation />
+        </div>
       </div>
     </section>
   </main>
@@ -89,7 +100,6 @@ const allProducts = products || [];
   <WhatsAppFAB />
 </BaseLayout>
 
-<!-- Client-side search script -->
 <script is:inline>
 (function() {
   const searchInput = document.getElementById('search-input');

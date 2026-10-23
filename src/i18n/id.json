@@ -3,46 +3,115 @@
     "home": "Beranda",
     "clothing": "Koleksi Pakaian",
     "bouquet": "Galeri Buket",
-    "location": "Lokasi & Jam Buka"
+    "location": "Lokasi"
   },
   "hero": {
-    "title": "Selamat Datang di Galeri Tik",
-    "subtitle": "Butik pakaian pilihan & buket bunga custom untuk momen spesial Anda"
+    "headline": "Sentuhan Anggun Busana Butik & Kreasi Buket Bunga Berkesan",
+    "subtitle": "Temukan busana wanita berkualitas dan buket hadiah yang dirangkai khusus untuk menyempurnakan hari bahagia Anda dengan pelayanan hangat toko fisik kami.",
+    "exploreClothing": "Eksplor Koleksi Pakaian",
+    "exploreBouquet": "Portofolio Buket Bunga"
+  },
+  "features": {
+    "qualityTitle": "Koleksi Berkualitas",
+    "qualityDesc": "Bahan adem, nyaman, dan pilihan kurasi terbaik untuk gaya harian maupun acara pesta.",
+    "bouquetTitle": "Buket Fleksibel",
+    "bouquetDesc": "Model custom fleksibel dapat disesuaikan dengan anggaran dan preferensi tema Anda.",
+    "fittingTitle": "Kamar Pas",
+    "fittingDesc": "Tersedia kamar pas nyaman di toko fisik agar Anda yakin dengan ukuran dan kecocokan model.",
+    "paymentTitle": "Pembayaran Lengkap",
+    "paymentDesc": "Transaksi mudah melayani Tunai (Cash), QRIS serba bisa, & Transfer Bank langsung."
+  },
+  "tabs": {
+    "featured": "Cuplikan Pilihan",
+    "clothing": "Galeri Pakaian",
+    "bouquet": "Galeri Buket"
   },
   "search": {
-    "placeholder": "Cari produk...",
-    "noResults": "Tidak ada produk ditemukan.",
-    "allCategories": "Semua"
+    "placeholder": "Cari produk busana atau buket...",
+    "showingResults": "Menampilkan hasil pencarian:",
+    "productsFound": "produk ditemukan",
+    "reset": "Reset Filter",
+    "noResultsTitle": "Tidak ada produk ditemukan",
+    "noResultsDesc": "Coba periksa ejaan atau gunakan kata kunci lain seperti jenis busana atau buket.",
+    "clearSearch": "Bersihkan Pencarian",
+    "allTypes": "Semua Jenis"
   },
-  "product": {
-    "inquire": "Tanya Produk Ini",
-    "whatsapp": "Hubungi via WhatsApp",
-    "viewAllClothing": "Lihat Semua Koleksi Pakaian",
-    "viewAllBouquet": "Lihat Galeri Lengkap Buket",
-    "featured": "Koleksi Pilihan"
+  "catalog": {
+    "curatedPicks": "Pilihan Kurasi",
+    "featuredClothingTitle": "Koleksi Pakaian Pilihan",
+    "viewAllClothing": "Lihat Semua Pakaian",
+    "featuredPortfolio": "Portofolio Pilihan",
+    "featuredBouquetTitle": "Galeri Buket Pilihan",
+    "viewAllBouquet": "Lihat Semua Buket",
+    "fullCatalog": "Katalog Lengkap",
+    "clothingTitle": "Koleksi Pakaian",
+    "clothingSubtitle": "Filter berdasarkan kategori busana favorit Anda atau gunakan pencarian di atas.",
+    "creativePortfolio": "Portofolio Kreasi",
+    "bouquetTitle": "Galeri Buket",
+    "bouquetSubtitle": "Semua rangkaian buket bunga, buket uang kertas, snack, dan buket wisuda dapat dikustomisasi sesuai momen Anda.",
+    "viewDetail": "Lihat Detail"
   },
-  "bouquet": {
-    "education": "Estimasi harga ditentukan oleh tingkat kerumitan, material bunga/kertas, serta nominal/jumlah lipatan uang.",
-    "educationTitle": "Tentang Harga Buket Custom",
-    "educationDesc": "Setiap buket dibuat khusus sesuai permintaan Anda. Harga bervariasi tergantung kompleksitas desain, jenis material, dan komponen tambahan."
+  "categories": {
+    "all": "Semua Jenis",
+    "gamis": "Gamis",
+    "daster": "Daster",
+    "kulot": "Kulot",
+    "rok": "Rok",
+    "celana": "Celana",
+    "koko": "Koko",
+    "kemeja": "Kemeja",
+    "kaos": "Kaos",
+    "tas": "Tas",
+    "bros": "Bros"
+  },
+  "lightbox": {
+    "zoom": "Zoom",
+    "reset": "Reset",
+    "fashionBadge": "Koleksi Busana",
+    "bouquetBadge": "Portofolio Buket",
+    "descHeader": "Deskripsi & Karakteristik",
+    "storeVisitTitle": "Kunjungan Toko Fisik",
+    "clothingStoreNote": "Model dapat dicoba langsung di kamar pas nyaman kami di toko fisik.",
+    "bouquetStoreNote": "Model dapat disesuaikan dengan anggaran, tema warna, dan kebutuhan Anda.",
+    "inquireClothing": "Tanya Produk via WhatsApp",
+    "inquireBouquet": "Konsultasi via WhatsApp",
+    "close": "Tutup modal",
+    "prev": "Foto sebelumnya",
+    "next": "Foto berikutnya"
+  },
+  "bouquetEducation": {
+    "badge": "Konsultasi Fleksibel",
+    "title": "Tentang Fleksibilitas Harga Buket Custom",
+    "desc": "Setiap buket dirangkai secara unik sesuai pesanan. Anda bebas menentukan pilihan warna, bunga, nominal uang, hingga ornamen pendukung.",
+    "quote": "Estimasi harga ditentukan oleh tingkat kerumitan, material bunga/kertas, serta nominal/jumlah lipatan uang.",
+    "button": "Konsultasi Buket via WhatsApp"
   },
   "store": {
+    "badge": "Lokasi & Fasilitas",
     "title": "Kunjungi Toko Kami",
-    "address": "Alamat Toko",
-    "hours": "Jam Operasional",
-    "hoursValue": "Setiap Hari, 08:00 - 21:00 WIB",
+    "subtitle": "Silakan datang langsung untuk melihat kurasi pakaian, mencoba di kamar pas, atau berdiskusi langsung mengenai pesanan buket impian Anda.",
+    "addressLabel": "Alamat Toko",
+    "hoursLabel": "Jam Operasional",
+    "hoursNote": "Buka setiap hari termasuk akhir pekan & hari libur nasional",
+    "fittingTitle": "Kamar Pas",
+    "fittingDesc": "Tersedia kamar pas nyaman khusus untuk mencoba pakaian sebelum membeli.",
+    "paymentTitle": "Opsi Pembayaran Lengkap",
+    "paymentDesc": "Melayani Tunai (Cash), QRIS (Gopay/OVO/ShopeePay), dan Transfer Bank.",
     "visitMap": "Buka di Google Maps",
-    "contact": "Hubungi Kami"
+    "contact": "Hubungi via WhatsApp"
   },
   "footer": {
+    "desc": "Digital storefront dan butik fisik yang menghadirkan kurasi busana wanita pilihan berkualitas serta jasa perangkaian buket bunga & uang custom untuk menyempurnakan hari istimewa Anda.",
+    "quickLinks": "Tautan Cepat",
+    "directContact": "Kontak Langsung",
+    "owner": "Pemilik:",
+    "whatsapp": "WhatsApp:",
+    "chatWhatsApp": "Hubungi via WhatsApp",
     "copyright": "© 2026 Galeri Tik. Hak cipta dilindungi.",
-    "tagline": "Butik Pakaian & Buket Bunga Custom"
-  },
-  "theme": {
-    "light": "Mode Terang",
-    "dark": "Mode Gelap"
+    "tagline": "Butik Busana & Portofolio Buket Bunga Custom"
   },
   "language": {
-    "switch": "EN"
+    "switch": "EN",
+    "current": "ID"
   }
 }

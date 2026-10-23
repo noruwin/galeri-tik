@@ -5,15 +5,15 @@ export type Lang = 'id' | 'en';
 export const defaultLang: Lang = 'id';
 export const languages = { id: 'Bahasa Indonesia', en: 'English' };
 
-const translations = { id: idStrings, en: enStrings };
+export const translations = { id: idStrings, en: enStrings };
 
 export function t(lang: Lang, key: string): string {
   const keys = key.split('.');
-  let result: any = translations[lang];
+  let result: any = translations[lang] || translations[defaultLang];
   for (const k of keys) {
     result = result?.[k];
   }
-  return result || key;
+  return result !== undefined && result !== null ? String(result) : key;
 }
 
 export function getLangFromCookie(cookieHeader: string | null | undefined): Lang {

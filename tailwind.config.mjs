@@ -6,6 +6,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'Cambria', 'serif'],
       },
       colors: {
         brand: {
@@ -20,10 +21,16 @@ export default {
           800: '#9d174d',
           900: '#831843',
         },
+        charcoal: {
+          800: '#27272a',
+          850: '#202023',
+          900: '#18181b',
+          950: '#121215',
+        },
         whatsapp: '#25D366',
       },
       animation: {
-        marquee: 'marquee 30s linear infinite',
+        marquee: 'marquee 35s linear infinite',
       },
       keyframes: {
         marquee: {

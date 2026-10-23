@@ -30,32 +30,45 @@ const { data: products } = await supabase
 const allProducts = products || [];
 ---
 
-<BaseLayout title={`${t(lang, 'nav.clothing')} — Galeri Tik`} description="Koleksi pakaian pilihan di Galeri Tik. Gamis, daster, kulot, rok, celana, koko, kemeja, kaos, tas, dan bros.">
+<BaseLayout title={`Koleksi Pakaian — Galeri Tik`} description="Koleksi busana pilihan di Galeri Tik. Gamis, daster, kulot, rok, celana, koko, kemeja, kaos, tas, dan bros.">
   <Header />
 
-  <main class="min-h-screen">
-    <!-- Page Header -->
-    <section class="bg-gradient-to-b from-pink-50/50 to-white dark:from-gray-900 dark:to-gray-950 pt-10 pb-8">
+  <main class="min-h-screen pb-16">
+    <!-- Page Header (Tanpa Emoji) Terikat i18n -->
+    <section class="bg-gradient-to-b from-pink-50/40 to-slate-50/50 dark:from-zinc-950 dark:to-zinc-900/60 pt-10 pb-8 border-b border-zinc-200/60 dark:border-zinc-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
-          <a href="/" class="hover:text-brand-500 transition-colors">{t(lang, 'nav.home')}</a>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          <span class="text-gray-900 dark:text-white font-medium">{t(lang, 'nav.clothing')}</span>
+        
+        <div class="flex items-center gap-2 text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-4">
+          <a href="/" data-i18n="nav.home" class="hover:text-brand-600 transition-colors">{t(lang, 'nav.home')}</a>
+          <svg class="w-3.5 h-3.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+          <span class="text-zinc-900 dark:text-white font-semibold" data-i18n="nav.clothing">{t(lang, 'nav.clothing')}</span>
         </div>
-        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-6">
-          👗 {t(lang, 'nav.clothing')}
-        </h1>
 
-        <!-- Search & Filter -->
-        <div class="flex flex-col gap-4">
+        <div class="max-w-2xl">
+          <span class="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400" data-i18n="catalog.fullCatalog">
+            {t(lang, 'catalog.fullCatalog')}
+          </span>
+          <h1 class="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white mt-1 mb-3 font-serif tracking-tight" data-i18n="catalog.clothingTitle">
+            {t(lang, 'catalog.clothingTitle')}
+          </h1>
+          <p class="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed font-normal" data-i18n="catalog.clothingSubtitle">
+            {t(lang, 'catalog.clothingSubtitle')}
+          </p>
+        </div>
+
+        <!-- Search & Sub-kategori Filter -->
+        <div class="mt-8 flex flex-col gap-4">
           <SearchBar placeholder={t(lang, 'search.placeholder')} />
           <CategoryFilter categories={SUB_CATEGORIES_PAKAIAN} />
         </div>
+
       </div>
     </section>
 
     <!-- Product Grid -->
-    <section class="py-8 sm:py-12">
+    <section class="py-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
           {allProducts.map((product) => (
@@ -65,18 +78,21 @@ const allProducts = products || [];
           ))}
         </div>
 
-        <!-- No Results -->
-        <div id="no-results" class="hidden text-center py-16">
-          <div class="text-6xl mb-4">🔍</div>
-          <p class="text-lg text-gray-500 dark:text-gray-400">{t(lang, 'search.noResults')}</p>
+        <!-- No Results State -->
+        <div id="no-results" class="hidden text-center py-20 bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 mt-6">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-400">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+            </svg>
+          </div>
+          <h3 class="text-base font-bold text-zinc-900 dark:text-white" data-i18n="search.noResultsTitle">{t(lang, 'search.noResultsTitle')}</h3>
+          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1" data-i18n="search.noResultsDesc">{t(lang, 'search.noResultsDesc')}</p>
         </div>
 
-        <!-- Empty state when no products at all -->
+        <!-- Empty state jika data belum ada -->
         {allProducts.length === 0 && (
           <div class="text-center py-20">
-            <div class="text-6xl mb-4">👗</div>
-            <p class="text-lg text-gray-500 dark:text-gray-400">{t(lang, 'search.noResults')}</p>
-            <p class="text-sm text-gray-400 dark:text-gray-500 mt-2">Koleksi akan segera hadir. Nantikan update kami!</p>
+            <p class="text-base font-semibold text-zinc-800 dark:text-zinc-200" data-i18n="search.noResultsTitle">Koleksi pakaian sedang dipersiapkan.</p>
           </div>
         )}
       </div>
@@ -88,7 +104,6 @@ const allProducts = products || [];
   <WhatsAppFAB />
 </BaseLayout>
 
-<!-- Client-side search script -->
 <script is:inline>
 (function() {
   const searchInput = document.getElementById('search-input');
@@ -100,43 +115,21 @@ const allProducts = products || [];
   searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase().trim();
     const cards = grid.querySelectorAll('[data-sub-category]');
-    let visibleCount = 0;
 
     cards.forEach(card => {
       const title = (card.dataset.title || '').toLowerCase();
       const desc = (card.dataset.description || '').toLowerCase();
       const subCat = (card.dataset.subCategory || '').toLowerCase();
-      
-      // Also check if currently filtered by category
-      const isHiddenByCategory = card.style.display === 'none' && !query;
-      
+
       if (!query || title.includes(query) || desc.includes(query) || subCat.includes(query)) {
-        // Respect category filter if search is empty
-        if (!query) {
-          // Don't override category filter
-        } else {
-          card.style.display = '';
-          visibleCount++;
-        }
+        card.style.display = '';
       } else {
         card.style.display = 'none';
       }
     });
 
-    if (query) {
-      const visibleCards = grid.querySelectorAll('[data-sub-category]:not([style*="display: none"])');
-      noResults.style.display = visibleCards.length === 0 ? 'block' : 'none';
-    } else {
-      // Reset: re-apply category filter
-      const activeCategory = document.querySelector('.category-btn.bg-brand-500')?.dataset?.category || 'all';
-      cards.forEach(card => {
-        if (activeCategory === 'all' || card.dataset.subCategory === activeCategory) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-      const visibleCards = grid.querySelectorAll('[data-sub-category]:not([style*="display: none"])');
+    const visibleCards = grid.querySelectorAll('[data-sub-category]:not([style*="display: none"])');
+    if (noResults) {
       noResults.style.display = visibleCards.length === 0 ? 'block' : 'none';
     }
   });

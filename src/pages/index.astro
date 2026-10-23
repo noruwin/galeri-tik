@@ -10,6 +10,7 @@ import Footer from '../components/Footer.astro';
 import Lightbox from '../components/Lightbox.astro';
 import { supabase } from '../lib/supabase';
 import { getLangFromCookie, t } from '../i18n';
+import { SUB_CATEGORIES_PAKAIAN } from '../lib/constants';
 
 const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
 
@@ -32,113 +33,626 @@ const { data: categories } = await supabase
 const pakaianCategory = categories?.find(c => c.slug === 'pakaian');
 const buketCategory = categories?.find(c => c.slug === 'buket');
 
-// Fetch featured products
-const { data: featuredPakaian } = await supabase
+// Fetch all pakaian products
+const { data: pakaianProducts } = await supabase
   .from('products')
   .select('*')
   .eq('category_id', pakaianCategory?.id || '')
-  .eq('is_featured', true)
-  .limit(6);
+  .order('created_at', { ascending: false });
 
-const { data: featuredBuket } = await supabase
+// Fetch all buket products
+const { data: buketProducts } = await supabase
   .from('products')
   .select('*')
   .eq('category_id', buketCategory?.id || '')
-  .eq('is_featured', true)
-  .limit(6);
+  .order('created_at', { ascending: false });
+
+const allPakaian = pakaianProducts || [];
+const allBuket = buketProducts || [];
+
+const featuredPakaian = allPakaian.filter(p => p.is_featured);
+const featuredBuket = allBuket.filter(p => p.is_featured);
 ---
 
 <BaseLayout>
   <Header />
   
-  <!-- Brand Marquee -->
+  <!-- Marquee Ticker: Gelap Elegan Charcoal dengan Pemisah Garis Vertikal | -->
   <BrandMarquee brands={brandNames} />
 
-  <!-- Hero Section -->
-  <section id="beranda" class="py-16 sm:py-24 bg-gradient-to-b from-pink-50/50 to-white dark:from-gray-900 dark:to-gray-950">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight mb-6">
-        {t(lang, 'hero.title').split('Galeri Tik')[0]}
-        <span class="text-brand-500">Galeri Tik</span>
+  <!-- Hero Section (Terikat Menyeluruh ke i18n) -->
+  <section id="beranda" class="relative pt-16 sm:pt-24 pb-12 sm:pb-16 bg-gradient-to-b from-pink-50/40 via-white to-slate-50/50 dark:from-zinc-950 dark:via-zinc-900/60 dark:to-zinc-950 border-b border-zinc-200/60 dark:border-zinc-800/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      
+      <!-- Headline: Font Serif Berkarakter Katalog/Editorial yang Tegas (Tanpa Badge di Atasnya) -->
+      <h1 
+        class="text-3xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-white leading-[1.18] tracking-tight font-serif max-w-4xl mx-auto mb-6"
+        data-i18n="hero.headline"
+      >
+        {t(lang, 'hero.headline')}
       </h1>
-      <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-10">
+
+      <!-- Deskripsi Hero: Sans-serif Modern Berbobot Ringan-Sedang -->
+      <p 
+        class="text-base sm:text-lg lg:text-xl text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto font-normal leading-relaxed mb-10"
+        data-i18n="hero.subtitle"
+      >
         {t(lang, 'hero.subtitle')}
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/pakaian" class="inline-flex items-center justify-center gap-2 bg-brand-500 hover:bg-brand-600 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors min-h-[52px] shadow-lg shadow-brand-500/25">
-          👗 {t(lang, 'nav.clothing')}
+
+      <!-- Tombol Hero CTA: Warna Selaras Headline, Hover Mengambang, Berubah Warna Saat Diklik -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+        <a 
+          href="#katalog-utama" 
+          onclick="if(window.switchCatalogTab){window.switchCatalogTab('pakaian');}"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-8 py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1.5 hover:shadow-xl active:scale-95 active:bg-rose-600 active:border-rose-600 active:text-white dark:active:bg-rose-600 dark:active:border-rose-600 dark:active:text-white transition-all duration-300 ease-out min-h-[50px] group"
+        >
+          <span data-i18n="hero.exploreClothing">{t(lang, 'hero.exploreClothing')}</span>
+          <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
         </a>
-        <a href="/buket" class="inline-flex items-center justify-center gap-2 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors min-h-[52px] border border-gray-200 dark:border-gray-700 shadow-sm">
-          💐 {t(lang, 'nav.bouquet')}
+
+        <a 
+          href="#katalog-utama" 
+          onclick="if(window.switchCatalogTab){window.switchCatalogTab('buket');}"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-8 py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1.5 hover:shadow-xl active:scale-95 active:bg-purple-600 active:border-purple-600 active:text-white dark:active:bg-purple-600 dark:active:border-purple-600 dark:active:text-white transition-all duration-300 ease-out min-h-[50px] group"
+        >
+          <span data-i18n="hero.exploreBouquet">{t(lang, 'hero.exploreBouquet')}</span>
+          <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
         </a>
       </div>
+
+      <!-- Deretan 4 Fitur / Keunggulan Toko (Terikat i18n) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 pt-8 border-t border-zinc-200/60 dark:border-zinc-800/80" id="store-features-container">
+        
+        <!-- Fitur 1: Koleksi Berkualitas (Aksen Rose/Pink) -->
+        <div 
+          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group"
+          data-feature-color="rose"
+        >
+          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors" data-i18n="features.qualityTitle">
+            {t(lang, 'features.qualityTitle')}
+          </h3>
+          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed font-normal" data-i18n="features.qualityDesc">
+            {t(lang, 'features.qualityDesc')}
+          </p>
+        </div>
+
+        <!-- Fitur 2: Buket Fleksibel (Aksen Purple/Violet) -->
+        <div 
+          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group"
+          data-feature-color="purple"
+        >
+          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors" data-i18n="features.bouquetTitle">
+            {t(lang, 'features.bouquetTitle')}
+          </h3>
+          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed font-normal" data-i18n="features.bouquetDesc">
+            {t(lang, 'features.bouquetDesc')}
+          </p>
+        </div>
+
+        <!-- Fitur 3: Kamar Pas (Aksen Sky/Blue) -->
+        <div 
+          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group"
+          data-feature-color="sky"
+        >
+          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors" data-i18n="features.fittingTitle">
+            {t(lang, 'features.fittingTitle')}
+          </h3>
+          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed font-normal" data-i18n="features.fittingDesc">
+            {t(lang, 'features.fittingDesc')}
+          </p>
+        </div>
+
+        <!-- Fitur 4: Pembayaran Lengkap (Aksen Emerald/Teal) -->
+        <div 
+          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group"
+          data-feature-color="emerald"
+        >
+          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" data-i18n="features.paymentTitle">
+            {t(lang, 'features.paymentTitle')}
+          </h3>
+          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed font-normal" data-i18n="features.paymentDesc">
+            {t(lang, 'features.paymentDesc')}
+          </p>
+        </div>
+
+      </div>
+
     </div>
   </section>
 
-  <!-- Featured Clothing -->
-  {(featuredPakaian && featuredPakaian.length > 0) && (
-    <section class="py-16 sm:py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-8">
-          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-            👗 {t(lang, 'nav.clothing')}
-          </h2>
-          <a href="/pakaian" class="text-brand-500 hover:text-brand-600 font-semibold text-sm sm:text-base flex items-center gap-1 group">
-            {t(lang, 'product.viewAllClothing')}
-            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6">
-          {featuredPakaian.map((product) => (
-            <ProductCard product={product} type="pakaian" lang={lang} />
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <!-- Bouquet Education Banner -->
-  <section class="py-8">
+  <!-- SEKSI UTAMA: Tab Switcher Terpadu & Pencarian Global (Terikat i18n) -->
+  <section id="katalog-utama" class="py-12 sm:py-16 scroll-mt-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <BouquetEducation />
+      
+      <!-- Bar Kontrol Terpadu: Kiri Tab Switcher, Kanan Input Pencarian Global -->
+      <div class="bg-white dark:bg-zinc-900 p-3 sm:p-4 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-sm mb-10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+        
+        <!-- Tab Switcher -->
+        <div class="flex items-center gap-1.5 p-1 bg-zinc-100 dark:bg-zinc-800/80 rounded-xl overflow-x-auto scrollbar-none" id="catalog-tab-switcher">
+          <button
+            type="button"
+            data-tab="cuplikan"
+            data-i18n="tabs.featured"
+            class="tab-btn active px-4 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-xs"
+          >
+            {t(lang, 'tabs.featured')}
+          </button>
+          <button
+            type="button"
+            data-tab="pakaian"
+            data-i18n="tabs.clothing"
+            class="tab-btn px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+          >
+            {t(lang, 'tabs.clothing')}
+          </button>
+          <button
+            type="button"
+            data-tab="buket"
+            data-i18n="tabs.bouquet"
+            class="tab-btn px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+          >
+            {t(lang, 'tabs.bouquet')}
+          </button>
+        </div>
+
+        <!-- Input Pencarian Global -->
+        <div class="relative w-full md:w-80">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+          <input
+            type="search"
+            id="global-catalog-search"
+            placeholder={t(lang, 'search.placeholder')}
+            data-i18n-placeholder="search.placeholder"
+            class="w-full pl-10 pr-9 py-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 rounded-xl text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:bg-white dark:focus:bg-zinc-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
+            autocomplete="off"
+          />
+          <button
+            id="clear-search-btn"
+            type="button"
+            class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+            aria-label="Bersihkan pencarian"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- STATUS INDIKATOR HASIL PENCARIAN -->
+      <div id="search-active-notice" class="hidden mb-6 flex items-center justify-between p-3.5 rounded-xl bg-zinc-100 dark:bg-zinc-850 border border-zinc-200 dark:border-zinc-800 text-xs sm:text-sm">
+        <div class="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+          <span data-i18n="search.showingResults">{t(lang, 'search.showingResults')}</span>
+          <span id="search-query-display" class="font-bold text-zinc-900 dark:text-white"></span>
+          <span id="search-count-display" class="text-zinc-500 font-normal"></span>
+        </div>
+        <button id="reset-search-link" type="button" class="text-brand-600 dark:text-brand-400 font-semibold hover:underline" data-i18n="search.reset">
+          {t(lang, 'search.reset')}
+        </button>
+      </div>
+
+      <!-- KONTEN TAB 1: [Cuplikan Pilihan] -->
+      <div id="tab-content-cuplikan" class="tab-pane space-y-16">
+        
+        <!-- Seksi Cuplikan Pakaian Pilihan -->
+        <div>
+          <div class="flex items-center justify-between mb-8">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400" data-i18n="catalog.curatedPicks">
+                {t(lang, 'catalog.curatedPicks')}
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white font-serif mt-1" data-i18n="catalog.featuredClothingTitle">
+                {t(lang, 'catalog.featuredClothingTitle')}
+              </h2>
+            </div>
+            <button
+              type="button"
+              onclick="window.switchCatalogTab('pakaian')"
+              class="text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-300 hover:text-brand-600 dark:hover:text-brand-400 flex items-center gap-1 group py-1"
+            >
+              <span data-i18n="catalog.viewAllClothing">{t(lang, 'catalog.viewAllClothing')}</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 catalog-items-container">
+            {featuredPakaian.map((product) => (
+              <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="pakaian">
+                <ProductCard product={product} type="pakaian" lang={lang} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Seksi Cuplikan Buket Pilihan -->
+        <div>
+          <div class="flex items-center justify-between mb-8">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400" data-i18n="catalog.featuredPortfolio">
+                {t(lang, 'catalog.featuredPortfolio')}
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white font-serif mt-1" data-i18n="catalog.featuredBouquetTitle">
+                {t(lang, 'catalog.featuredBouquetTitle')}
+              </h2>
+            </div>
+            <button
+              type="button"
+              onclick="window.switchCatalogTab('buket')"
+              class="text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-300 hover:text-brand-600 dark:hover:text-brand-400 flex items-center gap-1 group py-1"
+            >
+              <span data-i18n="catalog.viewAllBouquet">{t(lang, 'catalog.viewAllBouquet')}</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 catalog-items-container">
+            {featuredBuket.map((product) => (
+              <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="buket">
+                <ProductCard product={product} type="buket" lang={lang} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Edukasi Buket SETELAH Galeri Buket Pilihan -->
+        <div class="pt-4">
+          <BouquetEducation />
+        </div>
+
+      </div>
+
+      <!-- KONTEN TAB 2: [Galeri Pakaian] -->
+      <div id="tab-content-pakaian" class="tab-pane hidden space-y-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-zinc-200/80 dark:border-zinc-800">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400" data-i18n="catalog.fullCatalog">
+              {t(lang, 'catalog.fullCatalog')}
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white font-serif mt-1" data-i18n="catalog.clothingTitle">
+              {t(lang, 'catalog.clothingTitle')}
+            </h2>
+            <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1" data-i18n="catalog.clothingSubtitle">
+              {t(lang, 'catalog.clothingSubtitle')}
+            </p>
+          </div>
+
+          <!-- Filter Sub-Kategori Pakaian (Terikat i18n) -->
+          <div class="flex flex-wrap gap-1.5" id="pakaian-subcat-filters">
+            <button
+              type="button"
+              data-subcat="all"
+              data-i18n="categories.all"
+              class="subcat-filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 transition-all shadow-2xs"
+            >
+              {t(lang, 'categories.all')}
+            </button>
+            {SUB_CATEGORIES_PAKAIAN.map((subcat) => {
+              const lowerKey = subcat.toLowerCase();
+              const i18nKey = `categories.${lowerKey}`;
+              return (
+                <button
+                  type="button"
+                  data-subcat={subcat}
+                  data-i18n={i18nKey}
+                  class="subcat-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-zinc-850 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 transition-all"
+                >
+                  {t(lang, i18nKey)}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <!-- Grid Semua Pakaian -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 catalog-items-container" id="pakaian-full-grid">
+          {allPakaian.map((product) => (
+            <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="pakaian">
+              <ProductCard product={product} type="pakaian" lang={lang} />
+            </div>
+          ))}
+        </div>
+
+      </div>
+
+      <!-- KONTEN TAB 3: [Galeri Buket] -->
+      <div id="tab-content-buket" class="tab-pane hidden space-y-10">
+        
+        <div class="pb-4 border-b border-zinc-200/80 dark:border-zinc-800">
+          <span class="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400" data-i18n="catalog.creativePortfolio">
+            {t(lang, 'catalog.creativePortfolio')}
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white font-serif mt-1" data-i18n="catalog.bouquetTitle">
+            {t(lang, 'catalog.bouquetTitle')}
+          </h2>
+          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1" data-i18n="catalog.bouquetSubtitle">
+            {t(lang, 'catalog.bouquetSubtitle')}
+          </p>
+        </div>
+
+        <!-- Grid Semua Buket -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 catalog-items-container" id="buket-full-grid">
+          {allBuket.map((product) => (
+            <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="buket">
+              <ProductCard product={product} type="buket" lang={lang} />
+            </div>
+          ))}
+        </div>
+
+        <!-- Kotak Informasi Fleksibilitas Harga Buket Tepat SETELAH Seksi Galeri Buket -->
+        <div class="pt-6">
+          <BouquetEducation />
+        </div>
+
+      </div>
+
+      <!-- TAMPILAN TIDAK ADA HASIL PENCARIAN -->
+      <div id="catalog-no-results" class="hidden text-center py-20 bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 mt-8">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-400">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-zinc-900 dark:text-white" data-i18n="search.noResultsTitle">
+          {t(lang, 'search.noResultsTitle')}
+        </h3>
+        <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-1 max-w-sm mx-auto" data-i18n="search.noResultsDesc">
+          {t(lang, 'search.noResultsDesc')}
+        </p>
+        <button
+          type="button"
+          onclick="document.getElementById('global-catalog-search').value = ''; document.getElementById('global-catalog-search').dispatchEvent(new Event('input'));"
+          class="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs font-semibold hover:opacity-90 transition-opacity"
+        >
+          <span data-i18n="search.clearSearch">{t(lang, 'search.clearSearch')}</span>
+        </button>
+      </div>
+
     </div>
   </section>
 
-  <!-- Featured Bouquets -->
-  {(featuredBuket && featuredBuket.length > 0) && (
-    <section class="py-16 sm:py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-8">
-          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-            💐 {t(lang, 'nav.bouquet')}
-          </h2>
-          <a href="/buket" class="text-brand-500 hover:text-brand-600 font-semibold text-sm sm:text-base flex items-center gap-1 group">
-            {t(lang, 'product.viewAllBouquet')}
-            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6">
-          {featuredBuket.map((product) => (
-            <ProductCard product={product} type="buket" lang={lang} />
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <!-- Store Info & Location -->
+  <!-- Seksi Informasi Toko Fisik & Lokasi -->
   <StoreInfo />
 
-  <!-- Footer -->
+  <!-- Footer Elegan Charcoal -->
   <Footer />
 
-  <!-- Lightbox -->
+  <!-- Modal Pop-up Multi-Foto (Lightbox) -->
   <Lightbox />
 
-  <!-- WhatsApp FAB -->
+  <!-- Tombol WhatsApp Mengambang (FAB) -->
   <WhatsAppFAB />
 </BaseLayout>
+
+<!-- Client Script: Tab Switcher, Pencarian Global & Efek Klik Berubah Warna pada Kartu Fitur -->
+<script is:inline>
+(function() {
+  const switcher = document.getElementById('catalog-tab-switcher');
+  const searchInput = document.getElementById('global-catalog-search');
+  const clearBtn = document.getElementById('clear-search-btn');
+  const noResultsBox = document.getElementById('catalog-no-results');
+  const searchNotice = document.getElementById('search-active-notice');
+  const searchQueryDisplay = document.getElementById('search-query-display');
+  const searchCountDisplay = document.getElementById('search-count-display');
+  const resetSearchLink = document.getElementById('reset-search-link');
+
+  let activeTab = 'cuplikan'; // 'cuplikan' | 'pakaian' | 'buket'
+  let activeSubcat = 'all';
+
+  // Interaktivitas Kartu Fitur Toko: Berubah Warna Berbeda-beda Saat Diklik
+  const featureCards = document.querySelectorAll('.feature-interactive-card');
+  const colorThemes = {
+    rose: {
+      bg: 'bg-rose-50 dark:bg-rose-950/60',
+      border: 'border-rose-400 dark:border-rose-600',
+      heading: 'text-rose-700 dark:text-rose-300',
+      desc: 'text-rose-600/90 dark:text-rose-200/90'
+    },
+    purple: {
+      bg: 'bg-purple-50 dark:bg-purple-950/60',
+      border: 'border-purple-400 dark:border-purple-600',
+      heading: 'text-purple-700 dark:text-purple-300',
+      desc: 'text-purple-600/90 dark:text-purple-200/90'
+    },
+    sky: {
+      bg: 'bg-sky-50 dark:bg-sky-950/60',
+      border: 'border-sky-400 dark:border-sky-600',
+      heading: 'text-sky-700 dark:text-sky-300',
+      desc: 'text-sky-600/90 dark:text-sky-200/90'
+    },
+    emerald: {
+      bg: 'bg-emerald-50 dark:bg-emerald-950/60',
+      border: 'border-emerald-400 dark:border-emerald-600',
+      heading: 'text-emerald-700 dark:text-emerald-300',
+      desc: 'text-emerald-600/90 dark:text-emerald-200/90'
+    }
+  };
+
+  featureCards.forEach((card) => {
+    card.addEventListener('click', () => {
+      const colorKey = card.dataset.featureColor;
+      const theme = colorThemes[colorKey];
+      if (!theme) return;
+
+      const isAlreadyActive = card.dataset.active === 'true';
+
+      // Reset semua kartu fitur terlebih dahulu
+      featureCards.forEach(c => {
+        c.dataset.active = 'false';
+        c.className = 'feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group';
+        const h = c.querySelector('h3');
+        const p = c.querySelector('p');
+        if (h) h.className = 'font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors';
+        if (p) p.className = 'text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed font-normal';
+      });
+
+      // Jika belum aktif, aktifkan warna uniknya
+      if (!isAlreadyActive) {
+        card.dataset.active = 'true';
+        card.className = `feature-interactive-card p-6 sm:p-7 rounded-2xl ${theme.bg} ${theme.border} shadow-md scale-[1.02] -translate-y-1 transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group`;
+        const h = card.querySelector('h3');
+        const p = card.querySelector('p');
+        if (h) h.className = `font-bold ${theme.heading} text-base sm:text-lg tracking-tight transition-colors`;
+        if (p) p.className = `text-xs sm:text-sm ${theme.desc} mt-2 leading-relaxed font-normal`;
+      }
+    });
+  });
+
+  // Global function to switch tabs from header or hero buttons
+  window.switchCatalogTab = function(tabName) {
+    if (!['cuplikan', 'pakaian', 'buket'].includes(tabName)) return;
+    activeTab = tabName;
+
+    // Update Tab Buttons UI
+    if (switcher) {
+      const buttons = switcher.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => {
+        if (btn.dataset.tab === tabName) {
+          btn.className = 'tab-btn active px-4 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-xs';
+        } else {
+          btn.className = 'tab-btn px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white';
+        }
+      });
+    }
+
+    // Toggle Tab Panes
+    document.querySelectorAll('.tab-pane').forEach(pane => {
+      pane.classList.add('hidden');
+    });
+    const currentPane = document.getElementById(`tab-content-${tabName}`);
+    if (currentPane) {
+      currentPane.classList.remove('hidden');
+    }
+
+    // Re-apply filter & search
+    filterCurrentView();
+  };
+
+  // Click on Tab switcher buttons
+  switcher?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    window.switchCatalogTab(btn.dataset.tab);
+  });
+
+  // Filter Sub-kategori Pakaian
+  const subcatFilters = document.getElementById('pakaian-subcat-filters');
+  subcatFilters?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.subcat-filter-btn');
+    if (!btn) return;
+    activeSubcat = btn.dataset.subcat || 'all';
+
+    subcatFilters.querySelectorAll('.subcat-filter-btn').forEach(b => {
+      if (b === btn) {
+        b.className = 'subcat-filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 transition-all shadow-2xs';
+      } else {
+        b.className = 'subcat-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-zinc-850 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 transition-all';
+      }
+    });
+
+    filterCurrentView();
+  });
+
+  // Real-time Global Search Input
+  searchInput?.addEventListener('input', () => {
+    const query = searchInput.value.trim();
+    if (query.length > 0) {
+      clearBtn?.classList.remove('hidden');
+    } else {
+      clearBtn?.classList.add('hidden');
+    }
+    filterCurrentView();
+  });
+
+  clearBtn?.addEventListener('click', () => {
+    if (searchInput) {
+      searchInput.value = '';
+      clearBtn.classList.add('hidden');
+      filterCurrentView();
+      searchInput.focus();
+    }
+  });
+
+  resetSearchLink?.addEventListener('click', () => {
+    if (searchInput) {
+      searchInput.value = '';
+      clearBtn?.classList.add('hidden');
+      filterCurrentView();
+    }
+  });
+
+  function filterCurrentView() {
+    const query = (searchInput?.value || '').toLowerCase().trim();
+    const currentPane = document.getElementById(`tab-content-${activeTab}`);
+    if (!currentPane) return;
+
+    const items = currentPane.querySelectorAll('.catalog-item');
+    let visibleCount = 0;
+
+    items.forEach(item => {
+      const title = (item.dataset.title || '').toLowerCase();
+      const subcat = (item.dataset.subcategory || '').toLowerCase();
+      const desc = (item.dataset.description || '').toLowerCase();
+
+      // Check subcategory filter if in 'pakaian' tab
+      let matchesSubcat = true;
+      if (activeTab === 'pakaian' && activeSubcat !== 'all') {
+        matchesSubcat = (subcat === activeSubcat.toLowerCase());
+      }
+
+      // Check search query
+      let matchesQuery = true;
+      if (query.length > 0) {
+        matchesQuery = title.includes(query) || subcat.includes(query) || desc.includes(query);
+      }
+
+      if (matchesSubcat && matchesQuery) {
+        item.style.display = '';
+        visibleCount++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    // Handle No Results State
+    if (visibleCount === 0) {
+      noResultsBox?.classList.remove('hidden');
+    } else {
+      noResultsBox?.classList.add('hidden');
+    }
+
+    // Update Search notice info
+    if (query.length > 0) {
+      searchNotice?.classList.remove('hidden');
+      if (searchQueryDisplay) searchQueryDisplay.textContent = `"${query}"`;
+      const currentLang = localStorage.getItem('lang') || document.documentElement.lang || 'id';
+      const foundLabel = window.getI18nText ? window.getI18nText('search.productsFound', currentLang) : 'produk ditemukan';
+      if (searchCountDisplay) searchCountDisplay.textContent = `(${visibleCount} ${foundLabel})`;
+    } else {
+      searchNotice?.classList.add('hidden');
+    }
+  }
+
+  // Update count jika bahasa berubah saat search aktif
+  window.addEventListener('app:language-change', () => {
+    filterCurrentView();
+  });
+
+  // Initial check on load
+  filterCurrentView();
+})();
+</script>

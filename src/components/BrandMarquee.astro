@@ -3,16 +3,16 @@ interface Props {
   brands: string[];
 }
 const { brands } = Astro.props;
-// Duplicate for seamless loop
-const displayBrands = [...brands, ...brands];
+// Duplicate for seamless infinite loop
+const displayBrands = [...brands, ...brands, ...brands];
 ---
 
-<div class="bg-brand-500 dark:bg-brand-700 text-white py-3 overflow-hidden relative">
+<div class="bg-zinc-900 border-y border-zinc-800 text-zinc-200 py-3 overflow-hidden relative select-none">
   <div class="animate-marquee whitespace-nowrap flex items-center">
     {displayBrands.map((brand) => (
-      <span class="mx-8 text-sm sm:text-base font-semibold tracking-wide inline-flex items-center gap-3">
-        <span class="w-1.5 h-1.5 bg-white rounded-full opacity-70"></span>
-        {brand}
+      <span class="inline-flex items-center text-xs sm:text-sm font-medium tracking-widest uppercase text-zinc-300">
+        <span class="px-5 sm:px-8 hover:text-white transition-colors">{brand}</span>
+        <span class="text-zinc-600 font-light select-none" aria-hidden="true">|</span>
       </span>
     ))}
   </div>
@@ -21,10 +21,10 @@ const displayBrands = [...brands, ...brands];
 <style>
   @keyframes marquee {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    100% { transform: translateX(-33.333%); }
   }
   .animate-marquee {
-    animation: marquee 30s linear infinite;
+    animation: marquee 35s linear infinite;
     width: max-content;
   }
   .animate-marquee:hover {

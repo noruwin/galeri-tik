@@ -5,58 +5,106 @@ const currentPath = Astro.url.pathname;
 const isHome = currentPath === '/';
 ---
 
-<header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+<header class="sticky top-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors duration-300">
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
-      <!-- Logo -->
-      <a href="/" class="flex items-center gap-2 group">
-        <div class="w-9 h-9 bg-brand-500 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:scale-105 transition-transform">G</div>
-        <span class="text-xl font-bold text-gray-900 dark:text-white">Galeri <span class="text-brand-500">Tik</span></span>
+    <div class="flex items-center justify-between h-18">
+      <!-- Logo & Name -->
+      <a href="/" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-full pr-2">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+          <img
+            src="/logo.png"
+            alt="Galeri Tik"
+            class="w-full h-full object-cover"
+            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-white font-serif font-bold text-lg\'>GT</span>';"
+          />
+        </div>
+        <span class="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white transition-colors group-hover:text-brand-600 dark:group-hover:text-brand-400 font-sans">
+          Galeri Tik
+        </span>
       </a>
 
-      <!-- Desktop Nav -->
-      <div class="hidden md:flex items-center gap-6">
-        <a href={isHome ? '#beranda' : '/'} class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">{t(lang, 'nav.home')}</a>
-        <a href="/pakaian" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">{t(lang, 'nav.clothing')}</a>
-        <a href="/buket" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">{t(lang, 'nav.bouquet')}</a>
-        <a href={isHome ? '#lokasi' : '/#lokasi'} class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">{t(lang, 'nav.location')}</a>
+      <!-- Desktop Nav Links (Ikat ke i18n) -->
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a 
+          href={isHome ? '#beranda' : '/'} 
+          data-i18n="nav.home"
+          class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white tracking-wide transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-500 hover:after:w-full after:transition-all"
+        >
+          {t(lang, 'nav.home')}
+        </a>
+        <a 
+          href={isHome ? '#katalog-utama' : '/#katalog-utama'} 
+          data-i18n="nav.clothing"
+          class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white tracking-wide transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-500 hover:after:w-full after:transition-all"
+          onclick="if (window.switchCatalogTab) { window.switchCatalogTab('pakaian'); }"
+        >
+          {t(lang, 'nav.clothing')}
+        </a>
+        <a 
+          href={isHome ? '#katalog-utama' : '/#katalog-utama'} 
+          data-i18n="nav.bouquet"
+          class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white tracking-wide transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-500 hover:after:w-full after:transition-all"
+          onclick="if (window.switchCatalogTab) { window.switchCatalogTab('buket'); }"
+        >
+          {t(lang, 'nav.bouquet')}
+        </a>
+        <a 
+          href={isHome ? '#lokasi' : '/#lokasi'} 
+          data-i18n="nav.location"
+          class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white tracking-wide transition-colors py-1 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-500 hover:after:w-full after:transition-all"
+        >
+          {t(lang, 'nav.location')}
+        </a>
       </div>
 
       <!-- Action Buttons -->
-      <div class="flex items-center gap-2">
-        <!-- Language Toggle -->
-        <button id="lang-toggle" class="px-3 py-1.5 text-xs font-bold rounded-full border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Switch language">
+      <div class="flex items-center gap-2.5">
+        <!-- Language Switcher: Seketika Berpindah & Tersimpan di localStorage -->
+        <button 
+          id="lang-toggle" 
+          type="button"
+          class="lang-toggle-btn px-3.5 py-1.5 text-xs font-semibold rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 transition-all min-w-[44px] min-h-[44px] flex items-center justify-center tracking-wider select-none cursor-pointer" 
+          aria-label="Switch language"
+        >
           {t(lang, 'language.switch')}
         </button>
 
         <!-- Theme Toggle -->
-        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Toggle theme">
-          <!-- Sun icon (shown in dark mode) -->
-          <svg class="w-5 h-5 hidden dark:block text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+        <button 
+          id="theme-toggle" 
+          type="button"
+          class="p-2.5 rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 transition-all min-w-[44px] min-h-[44px] flex items-center justify-center" 
+          aria-label="Toggle theme"
+        >
+          <svg class="w-4 h-4 hidden dark:block text-amber-300" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
           </svg>
-          <!-- Moon icon (shown in light mode) -->
-          <svg class="w-5 h-5 block dark:hidden text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+          <svg class="w-4 h-4 block dark:hidden text-zinc-700" fill="currentColor" viewBox="0 0 20 20">
             <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
           </svg>
         </button>
 
-        <!-- Mobile Menu Toggle -->
-        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Open menu">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- Mobile Menu Button -->
+        <button 
+          id="mobile-menu-btn" 
+          type="button"
+          class="md:hidden p-2.5 rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center" 
+          aria-label="Open menu"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
         </button>
       </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="md:hidden hidden pb-4 border-t border-gray-200 dark:border-gray-800 mt-2 pt-4">
-      <div class="flex flex-col gap-3">
-        <a href={isHome ? '#beranda' : '/'} class="text-base font-medium text-gray-700 dark:text-gray-200 hover:text-brand-500 py-2">{t(lang, 'nav.home')}</a>
-        <a href="/pakaian" class="text-base font-medium text-gray-700 dark:text-gray-200 hover:text-brand-500 py-2">{t(lang, 'nav.clothing')}</a>
-        <a href="/buket" class="text-base font-medium text-gray-700 dark:text-gray-200 hover:text-brand-500 py-2">{t(lang, 'nav.bouquet')}</a>
-        <a href={isHome ? '#lokasi' : '/#lokasi'} class="text-base font-medium text-gray-700 dark:text-gray-200 hover:text-brand-500 py-2">{t(lang, 'nav.location')}</a>
+    <!-- Mobile Nav Dropdown -->
+    <div id="mobile-menu" class="md:hidden hidden pb-5 border-t border-zinc-200 dark:border-zinc-800 mt-2 pt-3">
+      <div class="flex flex-col gap-2">
+        <a href={isHome ? '#beranda' : '/'} data-i18n="nav.home" class="text-sm font-medium text-zinc-700 dark:text-zinc-200 hover:text-brand-600 dark:hover:text-brand-400 py-2.5 px-3 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">{t(lang, 'nav.home')}</a>
+        <a href={isHome ? '#katalog-utama' : '/#katalog-utama'} data-i18n="nav.clothing" onclick="if(window.switchCatalogTab){window.switchCatalogTab('pakaian');} document.getElementById('mobile-menu').classList.add('hidden');" class="text-sm font-medium text-zinc-700 dark:text-zinc-200 hover:text-brand-600 dark:hover:text-brand-400 py-2.5 px-3 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">{t(lang, 'nav.clothing')}</a>
+        <a href={isHome ? '#katalog-utama' : '/#katalog-utama'} data-i18n="nav.bouquet" onclick="if(window.switchCatalogTab){window.switchCatalogTab('buket');} document.getElementById('mobile-menu').classList.add('hidden');" class="text-sm font-medium text-zinc-700 dark:text-zinc-200 hover:text-brand-600 dark:hover:text-brand-400 py-2.5 px-3 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">{t(lang, 'nav.bouquet')}</a>
+        <a href={isHome ? '#lokasi' : '/#lokasi'} data-i18n="nav.location" onclick="document.getElementById('mobile-menu').classList.add('hidden');" class="text-sm font-medium text-zinc-700 dark:text-zinc-200 hover:text-brand-600 dark:hover:text-brand-400 py-2.5 px-3 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">{t(lang, 'nav.location')}</a>
       </div>
     </div>
   </nav>
@@ -70,12 +118,13 @@ const isHome = currentPath === '/';
     localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
   });
 
-  // Language toggle
+  // Language toggle seketika (Instant Switch tanpa reload)
   document.getElementById('lang-toggle')?.addEventListener('click', () => {
-    const currentLang = document.cookie.match(/(?:^|;\s*)lang=(id|en)/)?.[1] || 'id';
-    const newLang = currentLang === 'id' ? 'en' : 'id';
-    document.cookie = `lang=${newLang};path=/;max-age=31536000`;
-    window.location.reload();
+    const currentLang = localStorage.getItem('lang') || document.documentElement.lang || 'id';
+    const nextLang = (currentLang === 'id') ? 'en' : 'id';
+    if (window.setAppLanguage) {
+      window.setAppLanguage(nextLang);
+    }
   });
 
   // Mobile menu toggle
