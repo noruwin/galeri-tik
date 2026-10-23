@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "clothing": "Koleksi Pakaian",
+    "bouquet": "Galeri Buket",
+    "location": "Lokasi & Jam Buka"
+  },
+  "hero": {
+    "title": "Selamat Datang di Galeri Tik",
+    "subtitle": "Butik pakaian pilihan & buket bunga custom untuk momen spesial Anda"
+  },
+  "search": {
+    "placeholder": "Cari produk...",
+    "noResults": "Tidak ada produk ditemukan.",
+    "allCategories": "Semua"
+  },
+  "product": {
+    "inquire": "Tanya Produk Ini",
+    "whatsapp": "Hubungi via WhatsApp",
+    "viewAllClothing": "Lihat Semua Koleksi Pakaian",
+    "viewAllBouquet": "Lihat Galeri Lengkap Buket",
+    "featured": "Koleksi Pilihan"
+  },
+  "bouquet": {
+    "education": "Estimasi harga ditentukan oleh tingkat kerumitan, material bunga/kertas, serta nominal/jumlah lipatan uang.",
+    "educationTitle": "Tentang Harga Buket Custom",
+    "educationDesc": "Setiap buket dibuat khusus sesuai permintaan Anda. Harga bervariasi tergantung kompleksitas desain, jenis material, dan komponen tambahan."
+  },
+  "store": {
+    "title": "Kunjungi Toko Kami",
+    "address": "Alamat Toko",
+    "hours": "Jam Operasional",
+    "hoursValue": "Setiap Hari, 08:00 - 21:00 WIB",
+    "visitMap": "Buka di Google Maps",
+    "contact": "Hubungi Kami"
+  },
+  "footer": {
+    "copyright": "© 2026 Galeri Tik. Hak cipta dilindungi.",
+    "tagline": "Butik Pakaian & Buket Bunga Custom"
+  },
+  "theme": {
+    "light": "Mode Terang",
+    "dark": "Mode Gelap"
+  },
+  "language": {
+    "switch": "EN"
+  }
+}

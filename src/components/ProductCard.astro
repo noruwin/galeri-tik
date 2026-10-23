@@ -1,0 +1,62 @@
+---
+import type { Product } from '../lib/supabase';
+
+interface Props {
+  product: Product;
+  type: 'pakaian' | 'buket';
+  lang: 'id' | 'en';
+}
+
+const { product, type, lang } = Astro.props;
+
+import { t } from '../i18n';
+import { generateWhatsAppUrl } from '../lib/whatsapp';
+
+const waUrl = generateWhatsAppUrl(type, product.title);
+const allImages = [product.thumbnail_url, ...(product.gallery_urls || [])];
+---
+
+<div 
+  class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 dark:border-gray-800 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+  data-lightbox-trigger
+  data-images={JSON.stringify(allImages)}
+  data-title={product.title}
+  data-description={product.description || ''}
+  data-wa-url={waUrl}
+  data-type={type}
+>
+  <!-- Image -->
+  <div class="aspect-[3/4] overflow-hidden bg-gray-100 dark:bg-gray-800 relative">
+    <img
+      src={product.thumbnail_url}
+      alt={product.title}
+      loading="lazy"
+      decoding="async"
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+    />
+    <!-- Overlay on hover -->
+    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+      <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-full p-3">
+          <svg class="w-6 h-6 text-gray-700 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <!-- Sub-category badge -->
+    <div class="absolute top-3 left-3">
+      <span class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-gray-700 dark:text-gray-200">
+        {product.sub_category}
+      </span>
+    </div>
+  </div>
+  
+  <!-- Info -->
+  <div class="p-4">
+    <h3 class="font-semibold text-gray-900 dark:text-white text-sm sm:text-base line-clamp-2 mb-1">{product.title}</h3>
+    {product.description && (
+      <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">{product.description}</p>
+    )}
+  </div>
+</div>

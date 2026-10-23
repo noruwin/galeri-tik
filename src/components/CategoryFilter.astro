@@ -1,0 +1,66 @@
+---
+import { getLangFromCookie, t } from '../i18n';
+
+interface Props {
+  categories: string[];
+}
+
+const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
+const { categories } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-2" id="category-filters">
+  <button
+    data-category="all"
+    class="category-btn active px-4 py-2 rounded-full text-sm font-medium border transition-all min-h-[44px] bg-brand-500 text-white border-brand-500"
+  >
+    {t(lang, 'search.allCategories')}
+  </button>
+  {categories.map((cat) => (
+    <button
+      data-category={cat}
+      class="category-btn px-4 py-2 rounded-full text-sm font-medium border transition-all min-h-[44px] bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-brand-300 hover:text-brand-600"
+    >
+      {cat}
+    </button>
+  ))}
+</div>
+
+<script is:inline>
+(function() {
+  const filters = document.getElementById('category-filters');
+  if (!filters) return;
+
+  filters.addEventListener('click', (e) => {
+    const btn = e.target.closest('.category-btn');
+    if (!btn) return;
+
+    // Update active state visually
+    filters.querySelectorAll('.category-btn').forEach(b => {
+      b.classList.remove('bg-brand-500', 'text-white', 'border-brand-500');
+      b.classList.add('bg-white', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'border-gray-200', 'dark:border-gray-700');
+    });
+    btn.classList.add('bg-brand-500', 'text-white', 'border-brand-500');
+    btn.classList.remove('bg-white', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'border-gray-200', 'dark:border-gray-700');
+
+    const category = btn.dataset.category;
+    
+    // Filter cards
+    document.querySelectorAll('[data-sub-category]').forEach(card => {
+      if (category === 'all' || card.dataset.subCategory === category) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Check if any visible
+    const grid = document.getElementById('product-grid');
+    const noResults = document.getElementById('no-results');
+    if (grid && noResults) {
+      const visibleCards = grid.querySelectorAll('[data-sub-category]:not([style*="display: none"])');
+      noResults.style.display = visibleCards.length === 0 ? 'block' : 'none';
+    }
+  });
+})();
+</script>

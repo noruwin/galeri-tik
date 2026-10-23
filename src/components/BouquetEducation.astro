@@ -1,0 +1,21 @@
+---
+import { getLangFromCookie, t } from '../i18n';
+const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
+---
+
+<div class="bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-950/30 dark:to-purple-950/30 border border-pink-200 dark:border-pink-800/50 rounded-2xl p-6 sm:p-8">
+  <div class="flex items-start gap-4">
+    <div class="flex-shrink-0 text-3xl">💐</div>
+    <div>
+      <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-2">
+        {t(lang, 'bouquet.educationTitle')}
+      </h3>
+      <p class="text-gray-600 dark:text-gray-300 text-base leading-relaxed mb-3">
+        {t(lang, 'bouquet.educationDesc')}
+      </p>
+      <p class="text-sm text-brand-600 dark:text-brand-400 font-medium italic bg-white/60 dark:bg-white/5 rounded-lg px-4 py-2 inline-block">
+        "{t(lang, 'bouquet.education')}"
+      </p>
+    </div>
+  </div>
+</div>

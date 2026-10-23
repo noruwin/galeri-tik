@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import SearchBar from '../components/SearchBar.astro';
+import CategoryFilter from '../components/CategoryFilter.astro';
+import ProductCard from '../components/ProductCard.astro';
+import WhatsAppFAB from '../components/WhatsAppFAB.astro';
+import Footer from '../components/Footer.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { supabase } from '../lib/supabase';
+import { getLangFromCookie, t } from '../i18n';
+import { SUB_CATEGORIES_PAKAIAN } from '../lib/constants';
+
+const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
+
+// Fetch pakaian category
+const { data: categories } = await supabase
+  .from('categories')
+  .select('*')
+  .eq('slug', 'pakaian')
+  .single();
+
+// Fetch all pakaian products
+const { data: products } = await supabase
+  .from('products')
+  .select('*')
+  .eq('category_id', categories?.id || '')
+  .order('created_at', { ascending: false });
+
+const allProducts = products || [];
+---
+
+<BaseLayout title={`${t(lang, 'nav.clothing')} — Galeri Tik`} description="Koleksi pakaian pilihan di Galeri Tik. Gamis, daster, kulot, rok, celana, koko, kemeja, kaos, tas, dan bros.">
+  <Header />
+
+  <main class="min-h-screen">
+    <!-- Page Header -->
+    <section class="bg-gradient-to-b from-pink-50/50 to-white dark:from-gray-900 dark:to-gray-950 pt-10 pb-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+          <a href="/" class="hover:text-brand-500 transition-colors">{t(lang, 'nav.home')}</a>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          <span class="text-gray-900 dark:text-white font-medium">{t(lang, 'nav.clothing')}</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-6">
+          👗 {t(lang, 'nav.clothing')}
+        </h1>
+
+        <!-- Search & Filter -->
+        <div class="flex flex-col gap-4">
+          <SearchBar placeholder={t(lang, 'search.placeholder')} />
+          <CategoryFilter categories={SUB_CATEGORIES_PAKAIAN} />
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Grid -->
+    <section class="py-8 sm:py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+          {allProducts.map((product) => (
+            <div data-sub-category={product.sub_category} data-title={product.title} data-description={product.description || ''}>
+              <ProductCard product={product} type="pakaian" lang={lang} />
+            </div>
+          ))}
+        </div>
+
+        <!-- No Results -->
+        <div id="no-results" class="hidden text-center py-16">
+          <div class="text-6xl mb-4">🔍</div>
+          <p class="text-lg text-gray-500 dark:text-gray-400">{t(lang, 'search.noResults')}</p>
+        </div>
+
+        <!-- Empty state when no products at all -->
+        {allProducts.length === 0 && (
+          <div class="text-center py-20">
+            <div class="text-6xl mb-4">👗</div>
+            <p class="text-lg text-gray-500 dark:text-gray-400">{t(lang, 'search.noResults')}</p>
+            <p class="text-sm text-gray-400 dark:text-gray-500 mt-2">Koleksi akan segera hadir. Nantikan update kami!</p>
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <Lightbox />
+  <WhatsAppFAB />
+</BaseLayout>
+
+<!-- Client-side search script -->
+<script is:inline>
+(function() {
+  const searchInput = document.getElementById('search-input');
+  const grid = document.getElementById('product-grid');
+  const noResults = document.getElementById('no-results');
+
+  if (!searchInput || !grid) return;
+
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    const cards = grid.querySelectorAll('[data-sub-category]');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const title = (card.dataset.title || '').toLowerCase();
+      const desc = (card.dataset.description || '').toLowerCase();
+      const subCat = (card.dataset.subCategory || '').toLowerCase();
+      
+      // Also check if currently filtered by category
+      const isHiddenByCategory = card.style.display === 'none' && !query;
+      
+      if (!query || title.includes(query) || desc.includes(query) || subCat.includes(query)) {
+        // Respect category filter if search is empty
+        if (!query) {
+          // Don't override category filter
+        } else {
+          card.style.display = '';
+          visibleCount++;
+        }
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (query) {
+      const visibleCards = grid.querySelectorAll('[data-sub-category]:not([style*="display: none"])');
+      noResults.style.display = visibleCards.length === 0 ? 'block' : 'none';
+    } else {
+      // Reset: re-apply category filter
+      const activeCategory = document.querySelector('.category-btn.bg-brand-500')?.dataset?.category || 'all';
+      cards.forEach(card => {
+        if (activeCategory === 'all' || card.dataset.subCategory === activeCategory) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      const visibleCards = grid.querySelectorAll('[data-sub-category]:not([style*="display: none"])');
+      noResults.style.display = visibleCards.length === 0 ? 'block' : 'none';
+    }
+  });
+})();
+</script>

@@ -1,0 +1,21 @@
+---
+import { getLangFromCookie, t } from '../i18n';
+import { STORE_CONFIG } from '../lib/constants';
+
+const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
+---
+
+<footer class="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-10 mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">G</div>
+        <div>
+          <p class="font-bold text-gray-900 dark:text-white">{STORE_CONFIG.name}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">{t(lang, 'footer.tagline')}</p>
+        </div>
+      </div>
+      <p class="text-sm text-gray-500 dark:text-gray-400">{t(lang, 'footer.copyright')}</p>
+    </div>
+  </div>
+</footer>

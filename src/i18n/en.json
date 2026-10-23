@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "home": "Home",
+    "clothing": "Clothing Collection",
+    "bouquet": "Bouquet Gallery",
+    "location": "Location & Hours"
+  },
+  "hero": {
+    "title": "Welcome to Galeri Tik",
+    "subtitle": "Curated fashion boutique & custom flower bouquets for your special moments"
+  },
+  "search": {
+    "placeholder": "Search products...",
+    "noResults": "No products found.",
+    "allCategories": "All"
+  },
+  "product": {
+    "inquire": "Inquire About This Item",
+    "whatsapp": "Contact via WhatsApp",
+    "viewAllClothing": "View All Clothing",
+    "viewAllBouquet": "View Full Bouquet Gallery",
+    "featured": "Featured Collection"
+  },
+  "bouquet": {
+    "education": "Price estimates depend on complexity, flower/paper materials, and the denomination/number of money folds.",
+    "educationTitle": "About Custom Bouquet Pricing",
+    "educationDesc": "Each bouquet is custom-made to your request. Prices vary depending on design complexity, material type, and additional components."
+  },
+  "store": {
+    "title": "Visit Our Store",
+    "address": "Store Address",
+    "hours": "Operating Hours",
+    "hoursValue": "Every Day, 08:00 - 21:00 WIB",
+    "visitMap": "Open in Google Maps",
+    "contact": "Contact Us"
+  },
+  "footer": {
+    "copyright": "© 2026 Galeri Tik. All rights reserved.",
+    "tagline": "Fashion Boutique & Custom Flower Bouquets"
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode"
+  },
+  "language": {
+    "switch": "ID"
+  }
+}

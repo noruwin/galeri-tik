@@ -1,0 +1,66 @@
+---
+import { STORE_CONFIG } from '../lib/constants';
+import { getLangFromCookie, t } from '../i18n';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
+const { title = `${STORE_CONFIG.name} — ${STORE_CONFIG.tagline}`, description = 'Butik pakaian pilihan & buket bunga custom untuk momen spesial Anda.' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang} class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+
+  <!-- OG Tags -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={STORE_CONFIG.siteUrl} />
+  <meta property="og:image" content={`${STORE_CONFIG.siteUrl}${STORE_CONFIG.ogImage}`} />
+  <meta property="og:locale" content="id_ID" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- LocalBusiness Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": STORE_CONFIG.name,
+    "description": description,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": STORE_CONFIG.address
+    },
+    "telephone": STORE_CONFIG.phone,
+    "openingHours": "Mo-Su 08:00-21:00",
+    "url": STORE_CONFIG.siteUrl
+  })} />
+
+  <!-- Dark Mode Init (prevent flash) -->
+  <script is:inline>
+    (function() {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body class="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300 antialiased">
+  <slot />
+</body>
+</html>
