@@ -20,6 +20,14 @@ export interface BrandTicker {
   created_at: string;
 }
 
+export interface ClothingType {
+  id: string;
+  name: string;
+  display_order: number;
+  is_active: boolean;
+  created_at: string;
+}
+
 export interface Product {
   id: string;
   category_id: string;

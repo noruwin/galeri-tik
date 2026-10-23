@@ -10,7 +10,7 @@ const waUrl = getGeneralWhatsAppUrl();
 <section id="lokasi" class="py-16 sm:py-24 bg-white dark:bg-zinc-950 border-t border-zinc-200/80 dark:border-zinc-850">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <!-- Section Header (Tanpa Emoji) Terikat i18n -->
+    <!-- Section Header (Lebih Dekat dengan Galeri Tik) Terikat i18n -->
     <div class="text-center max-w-2xl mx-auto mb-14">
       <span class="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400" data-i18n="store.badge">
         {t(lang, 'store.badge')}
@@ -18,7 +18,7 @@ const waUrl = getGeneralWhatsAppUrl();
       <h2 class="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white mt-2 tracking-tight font-serif" data-i18n="store.title">
         {t(lang, 'store.title')}
       </h2>
-      <p class="text-sm sm:text-base text-zinc-500 dark:text-zinc-400 mt-3 font-normal" data-i18n="store.subtitle">
+      <p class="text-sm sm:text-base text-zinc-500 dark:text-zinc-400 mt-3 font-normal leading-relaxed" data-i18n="store.subtitle">
         {t(lang, 'store.subtitle')}
       </p>
     </div>
@@ -57,8 +57,8 @@ const waUrl = getGeneralWhatsAppUrl();
             <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1" data-i18n="store.hoursLabel">
               {t(lang, 'store.hoursLabel')}
             </h3>
-            <p class="text-sm sm:text-base font-semibold text-zinc-900 dark:text-white">
-              {STORE_CONFIG.hours}
+            <p class="text-sm sm:text-base font-semibold text-zinc-900 dark:text-white" data-i18n="store.hoursValue">
+              {t(lang, 'store.hoursValue')}
             </p>
             <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1" data-i18n="store.hoursNote">
               {t(lang, 'store.hoursNote')}
@@ -68,7 +68,7 @@ const waUrl = getGeneralWhatsAppUrl();
 
         <!-- Fasilitas Toko & Metode Pembayaran: Bebas dari Semua Simbol dan Emoji -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Fasilitas Kamar Pas (Tanpa Simbol/Emoji) -->
+          <!-- Fasilitas Coba Langsung di Toko (Tanpa Simbol/Emoji) -->
           <div class="p-5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800">
             <h4 class="text-sm font-bold text-zinc-900 dark:text-white" data-i18n="store.fittingTitle">
               {t(lang, 'store.fittingTitle')}
@@ -78,7 +78,7 @@ const waUrl = getGeneralWhatsAppUrl();
             </p>
           </div>
 
-          <!-- Opsi Pembayaran (Tanpa Simbol/Emoji) -->
+          <!-- Opsi Pilihan Pembayaran Praktis (Tanpa Simbol/Emoji) -->
           <div class="p-5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800">
             <h4 class="text-sm font-bold text-zinc-900 dark:text-white" data-i18n="store.paymentTitle">
               {t(lang, 'store.paymentTitle')}

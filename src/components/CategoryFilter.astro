@@ -13,23 +13,18 @@ const { categories } = Astro.props;
   <button
     data-category="all"
     data-i18n="categories.all"
-    class="category-btn active px-4 py-2 rounded-full text-sm font-medium border transition-all min-h-[44px] bg-brand-500 text-white border-brand-500"
+    class="category-btn active px-4 py-2 rounded-full text-sm font-medium border transition-all min-h-[44px] bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border-zinc-900 dark:border-white shadow-xs"
   >
     {t(lang, 'categories.all')}
   </button>
-  {categories.map((cat) => {
-    const lowerKey = cat.toLowerCase();
-    const i18nKey = `categories.${lowerKey}`;
-    return (
-      <button
-        data-category={cat}
-        data-i18n={i18nKey}
-        class="category-btn px-4 py-2 rounded-full text-sm font-medium border transition-all min-h-[44px] bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-brand-300 hover:text-brand-600"
-      >
-        {t(lang, i18nKey)}
-      </button>
-    );
-  })}
+  {categories.map((cat) => (
+    <button
+      data-category={cat}
+      class="category-btn px-4 py-2 rounded-full text-sm font-medium border transition-all min-h-[44px] bg-white dark:bg-zinc-850 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 hover:text-zinc-900 dark:hover:text-white"
+    >
+      {cat}
+    </button>
+  ))}
 </div>
 
 <script is:inline>
@@ -43,11 +38,11 @@ const { categories } = Astro.props;
 
     // Update active state visually
     filters.querySelectorAll('.category-btn').forEach(b => {
-      b.classList.remove('bg-brand-500', 'text-white', 'border-brand-500');
-      b.classList.add('bg-white', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'border-gray-200', 'dark:border-gray-700');
+      b.classList.remove('bg-zinc-900', 'text-white', 'border-zinc-900', 'dark:bg-white', 'dark:text-zinc-900', 'dark:border-white');
+      b.classList.add('bg-white', 'dark:bg-zinc-850', 'text-zinc-700', 'dark:text-zinc-300', 'border-zinc-200', 'dark:border-zinc-800');
     });
-    btn.classList.add('bg-brand-500', 'text-white', 'border-brand-500');
-    btn.classList.remove('bg-white', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'border-gray-200', 'dark:border-gray-700');
+    btn.classList.add('bg-zinc-900', 'text-white', 'border-zinc-900', 'dark:bg-white', 'dark:text-zinc-900', 'dark:border-white');
+    btn.classList.remove('bg-white', 'dark:bg-zinc-850', 'text-zinc-700', 'dark:text-zinc-300', 'border-zinc-200', 'dark:border-zinc-800');
 
     const category = btn.dataset.category;
     

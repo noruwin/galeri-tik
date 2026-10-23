@@ -3,23 +3,24 @@
     "home": "Beranda",
     "clothing": "Koleksi Pakaian",
     "bouquet": "Galeri Buket",
-    "location": "Lokasi"
+    "location": "Lokasi & Informasi"
   },
   "hero": {
-    "headline": "Sentuhan Anggun Busana Butik & Kreasi Buket Bunga Berkesan",
-    "subtitle": "Temukan busana wanita berkualitas dan buket hadiah yang dirangkai khusus untuk menyempurnakan hari bahagia Anda dengan pelayanan hangat toko fisik kami.",
-    "exploreClothing": "Eksplor Koleksi Pakaian",
-    "exploreBouquet": "Portofolio Buket Bunga"
+    "headline": "Pilihan Busana untuk Semua, Buket Istimewa untuk Setiap Momen",
+    "subtitle": "Temukan beragam pilihan pakaian untuk berbagai usia dan gaya, serta buket bunga custom yang dirangkai sesuai keinginan. Jelajahi koleksi kami, temukan inspirasi, dan kunjungi toko Galeri Tik untuk melihat produk secara langsung.",
+    "exploreClothing": "Jelajahi Koleksi Pakaian",
+    "viewClothingGallery": "Lihat Galeri Pakaian",
+    "viewBouquetGallery": "Lihat Galeri Buket"
   },
   "features": {
-    "qualityTitle": "Koleksi Berkualitas",
-    "qualityDesc": "Bahan adem, nyaman, dan pilihan kurasi terbaik untuk gaya harian maupun acara pesta.",
-    "bouquetTitle": "Buket Fleksibel",
-    "bouquetDesc": "Model custom fleksibel dapat disesuaikan dengan anggaran dan preferensi tema Anda.",
-    "fittingTitle": "Kamar Pas",
-    "fittingDesc": "Tersedia kamar pas nyaman di toko fisik agar Anda yakin dengan ukuran dan kecocokan model.",
-    "paymentTitle": "Pembayaran Lengkap",
-    "paymentDesc": "Transaksi mudah melayani Tunai (Cash), QRIS serba bisa, & Transfer Bank langsung."
+    "qualityTitle": "Pilihan Busana Beragam",
+    "qualityDesc": "Tersedia beragam pilihan busana untuk berbagai usia, gaya, dan kebutuhan. Temukan koleksi yang sesuai untuk aktivitas sehari-hari maupun acara spesial.",
+    "bouquetTitle": "Buket Custom Sesuai Keinginan",
+    "bouquetDesc": "Wujudkan buket sesuai selera dengan pilihan tema, warna, dan isi yang dapat disesuaikan dengan kebutuhan serta anggaran Anda.",
+    "fittingTitle": "Coba Langsung di Toko",
+    "fittingDesc": "Tersedia ruang ganti sederhana untuk membantu Anda mencoba pakaian dan memastikan pilihan terasa nyaman sebelum membeli.",
+    "paymentTitle": "Pilihan Pembayaran Praktis",
+    "paymentDesc": "Nikmati kemudahan pembayaran melalui metode yang tersedia di toko, mulai dari tunai, QRIS, hingga transfer bank."
   },
   "tabs": {
     "featured": "Cuplikan Pilihan",
@@ -52,17 +53,7 @@
     "viewDetail": "Lihat Detail"
   },
   "categories": {
-    "all": "Semua Jenis",
-    "gamis": "Gamis",
-    "daster": "Daster",
-    "kulot": "Kulot",
-    "rok": "Rok",
-    "celana": "Celana",
-    "koko": "Koko",
-    "kemeja": "Kemeja",
-    "kaos": "Kaos",
-    "tas": "Tas",
-    "bros": "Bros"
+    "all": "Semua Jenis"
   },
   "lightbox": {
     "zoom": "Zoom",
@@ -70,9 +61,11 @@
     "fashionBadge": "Koleksi Busana",
     "bouquetBadge": "Portofolio Buket",
     "descHeader": "Deskripsi & Karakteristik",
-    "storeVisitTitle": "Kunjungan Toko Fisik",
-    "clothingStoreNote": "Model dapat dicoba langsung di kamar pas nyaman kami di toko fisik.",
-    "bouquetStoreNote": "Model dapat disesuaikan dengan anggaran, tema warna, dan kebutuhan Anda.",
+    "clothingStoreTitle": "Coba Langsung di Toko",
+    "clothingStoreNote": "Tersedia ruang ganti sederhana untuk membantu Anda mencoba pakaian dan memastikan pilihan yang sesuai sebelum membeli.",
+    "bouquetStoreTitle": "Kunjungi Toko Galeri Tik",
+    "bouquetStoreNote": "Lihat hasil rangkaian secara langsung dan konsultasikan desain buket sesuai keinginan Anda.",
+    "bouquetCustomNote": "Desain, warna, dan isi buket dapat dikonsultasikan sesuai keinginan dan anggaran Anda.",
     "inquireClothing": "Tanya Produk via WhatsApp",
     "inquireBouquet": "Konsultasi via WhatsApp",
     "close": "Tutup modal",
@@ -87,28 +80,29 @@
     "button": "Konsultasi Buket via WhatsApp"
   },
   "store": {
-    "badge": "Lokasi & Fasilitas",
-    "title": "Kunjungi Toko Kami",
-    "subtitle": "Silakan datang langsung untuk melihat kurasi pakaian, mencoba di kamar pas, atau berdiskusi langsung mengenai pesanan buket impian Anda.",
+    "badge": "Lokasi & Informasi",
+    "title": "Lebih Dekat dengan Galeri Tik",
+    "subtitle": "Kunjungi toko kami untuk melihat koleksi secara langsung, menemukan pilihan yang sesuai, atau berkonsultasi mengenai buket custom untuk momen spesial Anda.",
     "addressLabel": "Alamat Toko",
     "hoursLabel": "Jam Operasional",
+    "hoursValue": "Setiap Hari, 07:00 - 21:30 WIB",
     "hoursNote": "Buka setiap hari termasuk akhir pekan & hari libur nasional",
-    "fittingTitle": "Kamar Pas",
-    "fittingDesc": "Tersedia kamar pas nyaman khusus untuk mencoba pakaian sebelum membeli.",
-    "paymentTitle": "Opsi Pembayaran Lengkap",
-    "paymentDesc": "Melayani Tunai (Cash), QRIS (Gopay/OVO/ShopeePay), dan Transfer Bank.",
+    "fittingTitle": "Coba Langsung di Toko",
+    "fittingDesc": "Tersedia ruang ganti sederhana untuk membantu Anda mencoba pakaian dan memastikan pilihan terasa nyaman sebelum membeli.",
+    "paymentTitle": "Pilihan Pembayaran Praktis",
+    "paymentDesc": "Nikmati kemudahan pembayaran melalui metode yang tersedia di toko, mulai dari tunai, QRIS, hingga transfer bank.",
     "visitMap": "Buka di Google Maps",
     "contact": "Hubungi via WhatsApp"
   },
   "footer": {
-    "desc": "Digital storefront dan butik fisik yang menghadirkan kurasi busana wanita pilihan berkualitas serta jasa perangkaian buket bunga & uang custom untuk menyempurnakan hari istimewa Anda.",
+    "desc": "Galeri Tik menghadirkan beragam pilihan busana untuk berbagai usia dan gaya, serta buket bunga custom untuk melengkapi momen spesial Anda. Jelajahi koleksi kami secara online dan kunjungi toko untuk melihat produk secara langsung.",
     "quickLinks": "Tautan Cepat",
     "directContact": "Kontak Langsung",
     "owner": "Pemilik:",
     "whatsapp": "WhatsApp:",
     "chatWhatsApp": "Hubungi via WhatsApp",
     "copyright": "© 2026 Galeri Tik. Hak cipta dilindungi.",
-    "tagline": "Butik Busana & Portofolio Buket Bunga Custom"
+    "tagline": "Galeri Butik Busana & Buket Bunga Custom"
   },
   "language": {
     "switch": "EN",

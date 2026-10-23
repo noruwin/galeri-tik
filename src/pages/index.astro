@@ -10,7 +10,6 @@ import Footer from '../components/Footer.astro';
 import Lightbox from '../components/Lightbox.astro';
 import { supabase } from '../lib/supabase';
 import { getLangFromCookie, t } from '../i18n';
-import { SUB_CATEGORIES_PAKAIAN } from '../lib/constants';
 
 const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
 
@@ -23,6 +22,17 @@ const { data: brands } = await supabase
 
 const brandNames = brands?.map(b => b.brand_name) || [
   'Zara', 'Nevada', 'Produk Impor', 'Koleksi Lokal Pilihan', 'Aksesoris Mode', 'Koleksi Terbaru'
+];
+
+// Fetch dynamic clothing types from Supabase
+const { data: dbClothingTypes } = await supabase
+  .from('clothing_types')
+  .select('name')
+  .eq('is_active', true)
+  .order('display_order', { ascending: true });
+
+const clothingTypes = dbClothingTypes?.map(t => t.name) || [
+  'Gamis', 'Daster', 'Kulot', 'Rok', 'Celana', 'Koko', 'Kemeja', 'Kaos', 'Tas', 'Bros'
 ];
 
 // Fetch categories
@@ -94,13 +104,12 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
         </a>
 
         <a 
-          href="#katalog-utama" 
-          onclick="if(window.switchCatalogTab){window.switchCatalogTab('buket');}"
+          href="/pakaian" 
           class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-8 py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1.5 hover:shadow-xl active:scale-95 active:bg-purple-600 active:border-purple-600 active:text-white dark:active:bg-purple-600 dark:active:border-purple-600 dark:active:text-white transition-all duration-300 ease-out min-h-[50px] group"
         >
-          <span data-i18n="hero.exploreBouquet">{t(lang, 'hero.exploreBouquet')}</span>
-          <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          <span data-i18n="hero.viewClothingGallery">{t(lang, 'hero.viewClothingGallery')}</span>
+          <svg class="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
         </a>
       </div>
@@ -331,7 +340,7 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
             </p>
           </div>
 
-          <!-- Filter Sub-Kategori Pakaian (Terikat i18n) -->
+          <!-- Filter Sub-Kategori Pakaian (Dinamis dari Supabase, tanpa kamus i18n) -->
           <div class="flex flex-wrap gap-1.5" id="pakaian-subcat-filters">
             <button
               type="button"
@@ -341,20 +350,15 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
             >
               {t(lang, 'categories.all')}
             </button>
-            {SUB_CATEGORIES_PAKAIAN.map((subcat) => {
-              const lowerKey = subcat.toLowerCase();
-              const i18nKey = `categories.${lowerKey}`;
-              return (
-                <button
-                  type="button"
-                  data-subcat={subcat}
-                  data-i18n={i18nKey}
-                  class="subcat-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-zinc-850 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 transition-all"
-                >
-                  {t(lang, i18nKey)}
-                </button>
-              );
-            })}
+            {clothingTypes.map((subcat) => (
+              <button
+                type="button"
+                data-subcat={subcat}
+                class="subcat-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-zinc-850 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 transition-all"
+              >
+                {subcat}
+              </button>
+            ))}
           </div>
         </div>
 

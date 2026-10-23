@@ -7,10 +7,10 @@ const isHome = currentPath === '/';
 
 <header class="sticky top-0 z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors duration-300">
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-18">
-      <!-- Logo & Name -->
-      <a href="/" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-full pr-2">
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo & Name: Font Khusus Khas & Eye Catching (Playfair Display / Serif) -->
+      <a href="/" class="flex items-center gap-3.5 group focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-full pr-2">
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
           <img
             src="/logo.png"
             alt="Galeri Tik"
@@ -18,12 +18,12 @@ const isHome = currentPath === '/';
             onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-white font-serif font-bold text-lg\'>GT</span>';"
           />
         </div>
-        <span class="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white transition-colors group-hover:text-brand-600 dark:group-hover:text-brand-400 font-sans">
+        <span class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white transition-colors group-hover:text-brand-600 dark:group-hover:text-brand-400 font-serif">
           Galeri Tik
         </span>
       </a>
 
-      <!-- Desktop Nav Links (Ikat ke i18n) -->
+      <!-- Desktop Nav Links -->
       <div class="hidden md:flex items-center gap-8 text-sm font-medium">
         <a 
           href={isHome ? '#beranda' : '/'} 

@@ -3,23 +3,24 @@
     "home": "Home",
     "clothing": "Clothing Collection",
     "bouquet": "Bouquet Gallery",
-    "location": "Location"
+    "location": "Location & Information"
   },
   "hero": {
-    "headline": "Graceful Boutique Attire & Memorable Custom Bouquets",
-    "subtitle": "Discover premium women's clothing and bespoke handcrafted bouquets designed to elevate your special moments with our warm, personalized store experience.",
+    "headline": "Fashion for Everyone, Special Bouquets for Every Moment",
+    "subtitle": "Discover a diverse selection of clothing for all ages and styles, alongside custom flower bouquets crafted to your wishes. Explore our collection, find inspiration, and visit the Galeri Tik store to see our products in person.",
     "exploreClothing": "Explore Clothing Collection",
-    "exploreBouquet": "Bouquet Portfolio"
+    "viewClothingGallery": "View Clothing Gallery",
+    "viewBouquetGallery": "View Bouquet Gallery"
   },
   "features": {
-    "qualityTitle": "Quality Collection",
-    "qualityDesc": "Breathable, comfortable fabrics and curated selections for daily wear or celebrations.",
-    "bouquetTitle": "Flexible Bouquets",
-    "bouquetDesc": "Custom designs crafted to adapt seamlessly to your budget and theme preferences.",
-    "fittingTitle": "Fitting Room",
-    "fittingDesc": "Comfortable fitting room available in-store to ensure the perfect fit and look.",
-    "paymentTitle": "Complete Payment",
-    "paymentDesc": "Hassle-free transactions supporting Cash, universal QRIS, and direct Bank Transfer."
+    "qualityTitle": "Diverse Fashion Choices",
+    "qualityDesc": "A wide variety of attire available for all ages, styles, and needs. Find the perfect collection for everyday activities or special occasions.",
+    "bouquetTitle": "Custom Bouquets to Your Liking",
+    "bouquetDesc": "Bring your ideal bouquet to life with customizable themes, colors, and items tailored to your needs and budget.",
+    "fittingTitle": "Try Directly in Store",
+    "fittingDesc": "A simple fitting room is available to help you try on clothes and ensure a comfortable fit before buying.",
+    "paymentTitle": "Convenient Payment Options",
+    "paymentDesc": "Enjoy easy payment methods available in store, ranging from Cash, QRIS, to direct bank transfer."
   },
   "tabs": {
     "featured": "Featured Picks",
@@ -52,17 +53,7 @@
     "viewDetail": "View Detail"
   },
   "categories": {
-    "all": "All Types",
-    "gamis": "Gamis / Maxi Dress",
-    "daster": "House Dress",
-    "kulot": "Culottes",
-    "rok": "Skirt",
-    "celana": "Trousers",
-    "koko": "Koko Shirt",
-    "kemeja": "Shirt",
-    "kaos": "T-Shirt",
-    "tas": "Bag",
-    "bros": "Brooch"
+    "all": "All Types"
   },
   "lightbox": {
     "zoom": "Zoom",
@@ -70,9 +61,11 @@
     "fashionBadge": "Fashion Collection",
     "bouquetBadge": "Bouquet Portfolio",
     "descHeader": "Description & Characteristics",
-    "storeVisitTitle": "In-Store Visit",
-    "clothingStoreNote": "Items can be tried on directly in our comfortable fitting room at the physical store.",
-    "bouquetStoreNote": "Designs can be tailored to match your budget, color theme, and personal requests.",
+    "clothingStoreTitle": "Try Directly in Store",
+    "clothingStoreNote": "A simple fitting room is available to help you try on clothes and ensure the right choice before buying.",
+    "bouquetStoreTitle": "Visit Galeri Tik Store",
+    "bouquetStoreNote": "See the arrangements in person and consult your bouquet design according to your preferences.",
+    "bouquetCustomNote": "Bouquet design, colors, and contents can be consulted to match your preferences and budget.",
     "inquireClothing": "Inquire via WhatsApp",
     "inquireBouquet": "Consult via WhatsApp",
     "close": "Close modal",
@@ -87,28 +80,29 @@
     "button": "Consult Bouquet via WhatsApp"
   },
   "store": {
-    "badge": "Location & Facilities",
-    "title": "Visit Our Store",
-    "subtitle": "Feel free to visit us in person to explore our clothing curation, try them in the fitting room, or discuss your dream bouquet directly.",
+    "badge": "Location & Information",
+    "title": "Closer to Galeri Tik",
+    "subtitle": "Visit our store to see the collections in person, find the perfect match, or consult on custom bouquets for your special moments.",
     "addressLabel": "Store Address",
     "hoursLabel": "Operating Hours",
+    "hoursValue": "Every Day, 07:00 - 21:30 WIB",
     "hoursNote": "Open daily including weekends & public holidays",
-    "fittingTitle": "Fitting Room",
-    "fittingDesc": "Dedicated comfortable fitting room available to try on clothes before buying.",
-    "paymentTitle": "Complete Payment Options",
+    "fittingTitle": "Try Directly in Store",
+    "fittingDesc": "A simple fitting room is available to help you try on clothes and ensure a comfortable fit before buying.",
+    "paymentTitle": "Convenient Payment Options",
     "paymentDesc": "Accepting Cash, QRIS (Gopay/OVO/ShopeePay), and Bank Transfer.",
     "visitMap": "Open in Google Maps",
     "contact": "Contact via WhatsApp"
   },
   "footer": {
-    "desc": "Digital storefront and boutique offering curated women's apparel and custom bouquet arrangements to make your special moments truly memorable.",
+    "desc": "Galeri Tik presents a diverse selection of clothing for all ages and styles, as well as custom flower bouquets to complement your special moments. Explore our collection online and visit our store to see the products in person.",
     "quickLinks": "Quick Links",
     "directContact": "Direct Contact",
     "owner": "Owner:",
     "whatsapp": "WhatsApp:",
     "chatWhatsApp": "Contact via WhatsApp",
     "copyright": "© 2026 Galeri Tik. All rights reserved.",
-    "tagline": "Fashion Boutique & Custom Bouquet Portfolio"
+    "tagline": "Fashion Boutique Gallery & Custom Flower Bouquets"
   },
   "language": {
     "switch": "ID",

@@ -1,6 +1,6 @@
 export const STORE_CONFIG = {
   name: 'Galeri Tik',
-  tagline: 'Butik Pakaian & Buket Bunga Custom',
+  tagline: 'Galeri Butik Busana & Buket Bunga Custom',
   address: 'Jl. Utama Raya Perum Permata Sepatan Blok D2 No. 03, Pisangan Jaya, Kec. Sepatan, Kabupaten Tangerang, Banten 15520',
   phone: '+6282299842236',
   whatsappNumber: '6282299842236',

@@ -122,7 +122,7 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
         <!-- Nama Produk -->
         <h2 
           id="lightbox-title" 
-          class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white leading-tight font-sans"
+          class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white leading-tight font-serif"
         >
           Nama Produk
         </h2>
@@ -140,13 +140,16 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
           </p>
         </div>
 
-        <!-- Kotak Info Ketersediaan Toko Fisik (Tanpa Simbol/Emoji) -->
-        <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-850/60 border border-zinc-200/80 dark:border-zinc-800">
-          <p class="font-semibold text-zinc-900 dark:text-white text-sm" data-i18n="lightbox.storeVisitTitle">
-            {t(lang, 'lightbox.storeVisitTitle')}
+        <!-- Kotak Info Ketersediaan Toko Fisik (Dinamis Sesuai Jenis Produk & Terikat i18n) -->
+        <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-850/60 border border-zinc-200/80 dark:border-zinc-800 space-y-1.5">
+          <p id="lightbox-store-title" class="font-semibold text-zinc-900 dark:text-white text-sm">
+            {t(lang, 'lightbox.clothingStoreTitle')}
           </p>
-          <p id="lightbox-store-note" class="text-zinc-500 dark:text-zinc-400 mt-1 leading-snug text-xs sm:text-sm font-normal">
+          <p id="lightbox-store-note" class="text-zinc-500 dark:text-zinc-400 leading-relaxed text-xs sm:text-sm font-normal">
             {t(lang, 'lightbox.clothingStoreNote')}
+          </p>
+          <p id="lightbox-custom-note" class="hidden text-brand-600 dark:text-brand-400 text-xs font-medium pt-1 border-t border-zinc-200/50 dark:border-zinc-700/50">
+            {t(lang, 'lightbox.bouquetCustomNote')}
           </p>
         </div>
       </div>
@@ -183,7 +186,9 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
   const counter = document.getElementById('lightbox-counter');
   const waBtn = document.getElementById('lightbox-wa-btn');
   const waText = document.getElementById('lightbox-wa-text');
+  const storeTitle = document.getElementById('lightbox-store-title');
   const storeNote = document.getElementById('lightbox-store-note');
+  const customNote = document.getElementById('lightbox-custom-note');
   const closeBtn = document.getElementById('lightbox-close');
   const prevBtn = document.getElementById('lightbox-prev');
   const nextBtn = document.getElementById('lightbox-next');
@@ -209,11 +214,18 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
     if (activeProductType === 'pakaian') {
       if (badgeType) badgeType.textContent = window.getI18nText('lightbox.fashionBadge', currentLang);
       if (waText) waText.textContent = window.getI18nText('lightbox.inquireClothing', currentLang);
+      if (storeTitle) storeTitle.textContent = window.getI18nText('lightbox.clothingStoreTitle', currentLang);
       if (storeNote) storeNote.textContent = window.getI18nText('lightbox.clothingStoreNote', currentLang);
+      if (customNote) customNote.classList.add('hidden');
     } else {
       if (badgeType) badgeType.textContent = window.getI18nText('lightbox.bouquetBadge', currentLang);
       if (waText) waText.textContent = window.getI18nText('lightbox.inquireBouquet', currentLang);
+      if (storeTitle) storeTitle.textContent = window.getI18nText('lightbox.bouquetStoreTitle', currentLang);
       if (storeNote) storeNote.textContent = window.getI18nText('lightbox.bouquetStoreNote', currentLang);
+      if (customNote) {
+        customNote.textContent = window.getI18nText('lightbox.bouquetCustomNote', currentLang);
+        customNote.classList.remove('hidden');
+      }
     }
     if (zoomText) {
       zoomText.textContent = isZoomed ? window.getI18nText('lightbox.reset', currentLang) : window.getI18nText('lightbox.zoom', currentLang);
