@@ -12,18 +12,10 @@ import { getLangFromCookie, t } from '../i18n';
 
 const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
 
-// Fetch buket category
-const { data: categories } = await supabase
-  .from('categories')
-  .select('*')
-  .eq('slug', 'buket')
-  .single();
-
-// Fetch all buket products
+// Fetch all buket products from dedicated bouquet_products table
 const { data: products } = await supabase
-  .from('products')
+  .from('bouquet_products')
   .select('*')
-  .eq('category_id', categories?.id || '')
   .order('created_at', { ascending: false });
 
 const allProducts = products || [];

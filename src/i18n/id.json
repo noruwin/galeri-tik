@@ -1,14 +1,14 @@
 {
   "nav": {
     "home": "Beranda",
-    "clothing": "Koleksi Pakaian",
+    "clothing": "Galeri Pakaian",
     "bouquet": "Galeri Buket",
     "location": "Lokasi & Informasi"
   },
   "hero": {
     "headline": "Pilihan Busana untuk Semua, Buket Istimewa untuk Setiap Momen",
     "subtitle": "Temukan beragam pilihan pakaian untuk berbagai usia dan gaya, serta buket bunga custom yang dirangkai sesuai keinginan. Jelajahi koleksi kami, temukan inspirasi, dan kunjungi toko Galeri Tik untuk melihat produk secara langsung.",
-    "exploreClothing": "Jelajahi Koleksi Pakaian",
+    "exploreClothing": "Jelajahi Galeri Pakaian",
     "viewClothingGallery": "Lihat Galeri Pakaian",
     "viewBouquetGallery": "Lihat Galeri Buket"
   },
@@ -39,13 +39,13 @@
   },
   "catalog": {
     "curatedPicks": "Pilihan Kurasi",
-    "featuredClothingTitle": "Koleksi Pakaian Pilihan",
+    "featuredClothingTitle": "Galeri Pakaian Pilihan",
     "viewAllClothing": "Lihat Semua Pakaian",
     "featuredPortfolio": "Portofolio Pilihan",
     "featuredBouquetTitle": "Galeri Buket Pilihan",
     "viewAllBouquet": "Lihat Semua Buket",
     "fullCatalog": "Katalog Lengkap",
-    "clothingTitle": "Koleksi Pakaian",
+    "clothingTitle": "Galeri Pakaian",
     "clothingSubtitle": "Filter berdasarkan kategori busana favorit Anda atau gunakan pencarian di atas.",
     "creativePortfolio": "Portofolio Kreasi",
     "bouquetTitle": "Galeri Buket",

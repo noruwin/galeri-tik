@@ -28,14 +28,28 @@ export interface ClothingType {
   created_at: string;
 }
 
-export interface Product {
+export interface ClothingProduct {
   id: string;
-  category_id: string;
   sub_category: string;
   title: string;
   description: string | null;
   thumbnail_url: string;
   gallery_urls: string[];
   is_featured: boolean;
+  display_order?: number;
   created_at: string;
 }
+
+export interface BouquetProduct {
+  id: string;
+  sub_category: string;
+  title: string;
+  description: string | null;
+  thumbnail_url: string;
+  gallery_urls: string[];
+  is_featured: boolean;
+  display_order?: number;
+  created_at: string;
+}
+
+export type Product = ClothingProduct | BouquetProduct;

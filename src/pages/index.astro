@@ -35,26 +35,16 @@ const clothingTypes = dbClothingTypes?.map(t => t.name) || [
   'Gamis', 'Daster', 'Kulot', 'Rok', 'Celana', 'Koko', 'Kemeja', 'Kaos', 'Tas', 'Bros'
 ];
 
-// Fetch categories
-const { data: categories } = await supabase
-  .from('categories')
-  .select('*');
-
-const pakaianCategory = categories?.find(c => c.slug === 'pakaian');
-const buketCategory = categories?.find(c => c.slug === 'buket');
-
-// Fetch all pakaian products
+// Fetch all pakaian products from dedicated clothing_products table
 const { data: pakaianProducts } = await supabase
-  .from('products')
+  .from('clothing_products')
   .select('*')
-  .eq('category_id', pakaianCategory?.id || '')
   .order('created_at', { ascending: false });
 
-// Fetch all buket products
+// Fetch all buket products from dedicated bouquet_products table
 const { data: buketProducts } = await supabase
-  .from('products')
+  .from('bouquet_products')
   .select('*')
-  .eq('category_id', buketCategory?.id || '')
   .order('created_at', { ascending: false });
 
 const allPakaian = pakaianProducts || [];
@@ -104,12 +94,13 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
         </a>
 
         <a 
-          href="/pakaian" 
+          href="#katalog-utama" 
+          onclick="if(window.switchCatalogTab){window.switchCatalogTab('buket');}"
           class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-8 py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1.5 hover:shadow-xl active:scale-95 active:bg-purple-600 active:border-purple-600 active:text-white dark:active:bg-purple-600 dark:active:border-purple-600 dark:active:text-white transition-all duration-300 ease-out min-h-[50px] group"
         >
-          <span data-i18n="hero.viewClothingGallery">{t(lang, 'hero.viewClothingGallery')}</span>
-          <svg class="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          <span data-i18n="hero.viewBouquetGallery">{t(lang, 'hero.viewBouquetGallery')}</span>
+          <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
           </svg>
         </a>
       </div>
@@ -181,13 +172,13 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
       <!-- Bar Kontrol Terpadu: Kiri Tab Switcher, Kanan Input Pencarian Global -->
       <div class="bg-white dark:bg-zinc-900 p-3 sm:p-4 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-sm mb-10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         
-        <!-- Tab Switcher -->
-        <div class="flex items-center gap-1.5 p-1 bg-zinc-100 dark:bg-zinc-800/80 rounded-xl overflow-x-auto scrollbar-none" id="catalog-tab-switcher">
+        <!-- Tab Switcher: 3 Pilihan Terlihat Jelas, Tab Terpilih Berubah Warna Tanpa Outline Pink -->
+        <div class="flex items-center gap-2 p-1.5 bg-zinc-100/90 dark:bg-zinc-800/90 rounded-2xl border border-zinc-200/90 dark:border-zinc-700/80 overflow-x-auto scrollbar-none" id="catalog-tab-switcher">
           <button
             type="button"
             data-tab="cuplikan"
             data-i18n="tabs.featured"
-            class="tab-btn active px-4 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-xs"
+            class="tab-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border border-zinc-900 dark:border-white shadow-sm"
           >
             {t(lang, 'tabs.featured')}
           </button>
@@ -195,7 +186,7 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
             type="button"
             data-tab="pakaian"
             data-i18n="tabs.clothing"
-            class="tab-btn px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+            class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap bg-white/80 dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-50 dark:hover:bg-zinc-800"
           >
             {t(lang, 'tabs.clothing')}
           </button>
@@ -203,7 +194,7 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
             type="button"
             data-tab="buket"
             data-i18n="tabs.bouquet"
-            class="tab-btn px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+            class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap bg-white/80 dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-50 dark:hover:bg-zinc-800"
           >
             {t(lang, 'tabs.bouquet')}
           </button>
@@ -526,9 +517,9 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
       const buttons = switcher.querySelectorAll('.tab-btn');
       buttons.forEach(btn => {
         if (btn.dataset.tab === tabName) {
-          btn.className = 'tab-btn active px-4 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-xs';
+          btn.className = 'tab-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border border-zinc-900 dark:border-white shadow-sm';
         } else {
-          btn.className = 'tab-btn px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white';
+          btn.className = 'tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap bg-white/80 dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-50 dark:hover:bg-zinc-800';
         }
       });
     }

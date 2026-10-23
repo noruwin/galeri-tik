@@ -1,14 +1,14 @@
 {
   "nav": {
     "home": "Home",
-    "clothing": "Clothing Collection",
+    "clothing": "Clothing Gallery",
     "bouquet": "Bouquet Gallery",
     "location": "Location & Information"
   },
   "hero": {
     "headline": "Fashion for Everyone, Special Bouquets for Every Moment",
     "subtitle": "Discover a diverse selection of clothing for all ages and styles, alongside custom flower bouquets crafted to your wishes. Explore our collection, find inspiration, and visit the Galeri Tik store to see our products in person.",
-    "exploreClothing": "Explore Clothing Collection",
+    "exploreClothing": "Explore Clothing Gallery",
     "viewClothingGallery": "View Clothing Gallery",
     "viewBouquetGallery": "View Bouquet Gallery"
   },
@@ -39,13 +39,13 @@
   },
   "catalog": {
     "curatedPicks": "Curated Picks",
-    "featuredClothingTitle": "Featured Clothing Collection",
+    "featuredClothingTitle": "Curated Clothing Gallery",
     "viewAllClothing": "View All Clothing",
     "featuredPortfolio": "Featured Portfolio",
-    "featuredBouquetTitle": "Featured Bouquet Gallery",
+    "featuredBouquetTitle": "Curated Bouquet Gallery",
     "viewAllBouquet": "View All Bouquets",
     "fullCatalog": "Full Catalog",
-    "clothingTitle": "Clothing Collection",
+    "clothingTitle": "Clothing Gallery",
     "clothingSubtitle": "Filter by your favorite attire category or use the search box above.",
     "creativePortfolio": "Creative Portfolio",
     "bouquetTitle": "Bouquet Gallery",
@@ -90,7 +90,7 @@
     "fittingTitle": "Try Directly in Store",
     "fittingDesc": "A simple fitting room is available to help you try on clothes and ensure a comfortable fit before buying.",
     "paymentTitle": "Convenient Payment Options",
-    "paymentDesc": "Accepting Cash, QRIS (Gopay/OVO/ShopeePay), and Bank Transfer.",
+    "paymentDesc": "Enjoy easy payment methods available in store, ranging from Cash, QRIS, to direct bank transfer.",
     "visitMap": "Open in Google Maps",
     "contact": "Contact via WhatsApp"
   },

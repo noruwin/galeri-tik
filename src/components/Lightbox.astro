@@ -103,17 +103,17 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
     <div class="w-full md:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto max-h-[500px] md:max-h-[600px]">
       <div class="space-y-5">
         
-        <!-- Header Info: Kategori Pill -->
+        <!-- Header Info: Kategori Pill dengan Warna Kontras Tinggi pada Mode Gelap -->
         <div class="flex items-center gap-2">
           <span 
             id="lightbox-badge-type" 
-            class="text-[11px] uppercase tracking-wider font-bold px-2.5 py-1 rounded bg-brand-50 text-brand-700 dark:bg-brand-950/50 dark:text-brand-300 border border-brand-200 dark:border-brand-900"
+            class="text-xs uppercase tracking-wider font-bold px-3 py-1 rounded-full bg-rose-100 text-rose-800 dark:bg-rose-600 dark:text-white border border-rose-200 dark:border-rose-500 shadow-xs"
           >
             {t(lang, 'lightbox.fashionBadge')}
           </span>
           <span 
             id="lightbox-subcategory" 
-            class="text-xs font-semibold px-2.5 py-1 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+            class="text-xs font-semibold px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700"
           >
             Subkategori
           </span>
@@ -127,28 +127,31 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
           Nama Produk
         </h2>
 
-        <!-- Blok DESKRIPSI & KARAKTERISTIK -->
-        <div class="pt-2">
-          <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2" data-i18n="lightbox.descHeader">
-            {t(lang, 'lightbox.descHeader')}
-          </h4>
+        <!-- Blok DESKRIPSI & KARAKTERISTIK dengan Background & Kontras Terang di Mode Gelap -->
+        <div class="p-4 sm:p-4.5 rounded-2xl bg-zinc-50 dark:bg-zinc-800/90 border border-zinc-200/80 dark:border-zinc-700/90 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-500 flex-shrink-0"></span>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-100" data-i18n="lightbox.descHeader">
+              {t(lang, 'lightbox.descHeader')}
+            </h4>
+          </div>
           <p 
             id="lightbox-desc" 
-            class="text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed font-normal whitespace-pre-line"
+            class="text-sm sm:text-base text-zinc-700 dark:text-zinc-100 leading-relaxed font-normal whitespace-pre-line"
           >
             Deskripsi produk akan tampil di sini.
           </p>
         </div>
 
         <!-- Kotak Info Ketersediaan Toko Fisik (Dinamis Sesuai Jenis Produk & Terikat i18n) -->
-        <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-850/60 border border-zinc-200/80 dark:border-zinc-800 space-y-1.5">
+        <div class="p-4 sm:p-4.5 rounded-2xl bg-zinc-50 dark:bg-zinc-800/90 border border-zinc-200/80 dark:border-zinc-700/90 space-y-1.5">
           <p id="lightbox-store-title" class="font-semibold text-zinc-900 dark:text-white text-sm">
             {t(lang, 'lightbox.clothingStoreTitle')}
           </p>
-          <p id="lightbox-store-note" class="text-zinc-500 dark:text-zinc-400 leading-relaxed text-xs sm:text-sm font-normal">
+          <p id="lightbox-store-note" class="text-zinc-600 dark:text-zinc-200 leading-relaxed text-xs sm:text-sm font-normal">
             {t(lang, 'lightbox.clothingStoreNote')}
           </p>
-          <p id="lightbox-custom-note" class="hidden text-brand-600 dark:text-brand-400 text-xs font-medium pt-1 border-t border-zinc-200/50 dark:border-zinc-700/50">
+          <p id="lightbox-custom-note" class="hidden text-brand-600 dark:text-brand-300 text-xs font-medium pt-1.5 border-t border-zinc-200/80 dark:border-zinc-700/80">
             {t(lang, 'lightbox.bouquetCustomNote')}
           </p>
         </div>
@@ -212,13 +215,19 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
   function updateDynamicTexts() {
     const currentLang = localStorage.getItem('lang') || document.documentElement.lang || 'id';
     if (activeProductType === 'pakaian') {
-      if (badgeType) badgeType.textContent = window.getI18nText('lightbox.fashionBadge', currentLang);
+      if (badgeType) {
+        badgeType.textContent = window.getI18nText('lightbox.fashionBadge', currentLang);
+        badgeType.className = 'text-xs uppercase tracking-wider font-bold px-3 py-1 rounded-full bg-rose-100 text-rose-800 dark:bg-rose-600 dark:text-white border border-rose-200 dark:border-rose-500 shadow-xs';
+      }
       if (waText) waText.textContent = window.getI18nText('lightbox.inquireClothing', currentLang);
       if (storeTitle) storeTitle.textContent = window.getI18nText('lightbox.clothingStoreTitle', currentLang);
       if (storeNote) storeNote.textContent = window.getI18nText('lightbox.clothingStoreNote', currentLang);
       if (customNote) customNote.classList.add('hidden');
     } else {
-      if (badgeType) badgeType.textContent = window.getI18nText('lightbox.bouquetBadge', currentLang);
+      if (badgeType) {
+        badgeType.textContent = window.getI18nText('lightbox.bouquetBadge', currentLang);
+        badgeType.className = 'text-xs uppercase tracking-wider font-bold px-3 py-1 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-600 dark:text-white border border-purple-200 dark:border-purple-500 shadow-xs';
+      }
       if (waText) waText.textContent = window.getI18nText('lightbox.inquireBouquet', currentLang);
       if (storeTitle) storeTitle.textContent = window.getI18nText('lightbox.bouquetStoreTitle', currentLang);
       if (storeNote) storeNote.textContent = window.getI18nText('lightbox.bouquetStoreNote', currentLang);

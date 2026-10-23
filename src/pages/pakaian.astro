@@ -12,13 +12,6 @@ import { getLangFromCookie, t } from '../i18n';
 
 const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
 
-// Fetch pakaian category
-const { data: categories } = await supabase
-  .from('categories')
-  .select('*')
-  .eq('slug', 'pakaian')
-  .single();
-
 // Fetch dynamic clothing types from Supabase
 const { data: dbClothingTypes } = await supabase
   .from('clothing_types')
@@ -30,17 +23,16 @@ const clothingTypes = dbClothingTypes?.map(t => t.name) || [
   'Gamis', 'Daster', 'Kulot', 'Rok', 'Celana', 'Koko', 'Kemeja', 'Kaos', 'Tas', 'Bros'
 ];
 
-// Fetch all pakaian products
+// Fetch all pakaian products from dedicated clothing_products table
 const { data: products } = await supabase
-  .from('products')
+  .from('clothing_products')
   .select('*')
-  .eq('category_id', categories?.id || '')
   .order('created_at', { ascending: false });
 
 const allProducts = products || [];
 ---
 
-<BaseLayout title={`Koleksi Pakaian — Galeri Tik`} description="Koleksi busana pilihan di Galeri Tik. Gamis, daster, kulot, rok, celana, koko, kemeja, kaos, tas, dan bros.">
+<BaseLayout title={`Galeri Pakaian — Galeri Tik`} description="Koleksi busana pilihan di Galeri Tik. Gamis, daster, kulot, rok, celana, koko, kemeja, kaos, tas, dan bros.">
   <Header />
 
   <main class="min-h-screen pb-16">
