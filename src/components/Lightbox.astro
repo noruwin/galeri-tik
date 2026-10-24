@@ -127,14 +127,26 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
           Nama Produk
         </h2>
 
-        <!-- Blok DESKRIPSI & KARAKTERISTIK dengan Background & Kontras Terang di Mode Gelap -->
-        <div class="p-4 sm:p-4.5 rounded-2xl bg-zinc-50 dark:bg-zinc-800/90 border border-zinc-200/80 dark:border-zinc-700/90 space-y-2">
-          <div class="flex items-center gap-2">
-            <span class="w-1.5 h-1.5 rounded-full bg-brand-500 flex-shrink-0"></span>
-            <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-100" data-i18n="lightbox.descHeader">
-              {t(lang, 'lightbox.descHeader')}
-            </h4>
+        <!-- Khusus Produk Busana/Pakaian: Kisaran Harga (Tepat di bawah judul produk dan sebelum deskripsi) -->
+        <div id="lightbox-price-range-wrapper" class="hidden pt-0.5">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-zinc-100/90 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
+            <span class="text-xs font-medium text-zinc-600 dark:text-zinc-300" data-i18n="lightbox.modalPriceRangeLabel">
+              {t(lang, 'lightbox.modalPriceRangeLabel')}
+            </span>
+            <span id="lightbox-price-range-value" class="text-sm font-bold text-zinc-900 dark:text-white tracking-tight">
+              Rp... – Rp...
+            </span>
           </div>
+          <p class="text-[11px] text-zinc-400 dark:text-zinc-500 mt-1" data-i18n="lightbox.priceRangeNote">
+            {t(lang, 'lightbox.priceRangeNote')}
+          </p>
+        </div>
+
+        <!-- Blok DESKRIPSI (Tanpa Karakteristik & Tanpa Pill Status di Sebelahnya) -->
+        <div class="p-4 sm:p-4.5 rounded-2xl bg-zinc-50 dark:bg-zinc-800/90 border border-zinc-200/80 dark:border-zinc-700/90 space-y-1.5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-100" data-i18n="lightbox.descTitle">
+            {t(lang, 'lightbox.descTitle')}
+          </h4>
           <p 
             id="lightbox-desc" 
             class="text-sm sm:text-base text-zinc-700 dark:text-zinc-100 leading-relaxed font-normal whitespace-pre-line"
@@ -143,16 +155,23 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
           </p>
         </div>
 
-        <!-- Kotak Info Ketersediaan Toko Fisik (Dinamis Sesuai Jenis Produk & Terikat i18n) -->
+        <!-- Blok INFORMASI HARGA -->
         <div class="p-4 sm:p-4.5 rounded-2xl bg-zinc-50 dark:bg-zinc-800/90 border border-zinc-200/80 dark:border-zinc-700/90 space-y-1.5">
-          <p id="lightbox-store-title" class="font-semibold text-zinc-900 dark:text-white text-sm">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-100" data-i18n="lightbox.priceInfoTitle">
+            {t(lang, 'lightbox.priceInfoTitle')}
+          </h4>
+          <p id="lightbox-price-info-desc" class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-200 leading-relaxed font-normal">
+            {t(lang, 'lightbox.clothingPriceInfoDesc')}
+          </p>
+        </div>
+
+        <!-- Kotak Info Ketersediaan Toko Fisik (Khusus Busana/Pakaian & Terikat i18n) -->
+        <div id="lightbox-store-box" class="p-4 sm:p-4.5 rounded-2xl bg-zinc-50 dark:bg-zinc-800/90 border border-zinc-200/80 dark:border-zinc-700/90 space-y-1.5">
+          <p id="lightbox-store-title" class="font-semibold text-zinc-900 dark:text-white text-sm" data-i18n="lightbox.clothingStoreTitle">
             {t(lang, 'lightbox.clothingStoreTitle')}
           </p>
-          <p id="lightbox-store-note" class="text-zinc-600 dark:text-zinc-200 leading-relaxed text-xs sm:text-sm font-normal">
+          <p id="lightbox-store-note" class="text-zinc-600 dark:text-zinc-200 leading-relaxed text-xs sm:text-sm font-normal" data-i18n="lightbox.clothingStoreNote">
             {t(lang, 'lightbox.clothingStoreNote')}
-          </p>
-          <p id="lightbox-custom-note" class="hidden text-brand-600 dark:text-brand-300 text-xs font-medium pt-1.5 border-t border-zinc-200/80 dark:border-zinc-700/80">
-            {t(lang, 'lightbox.bouquetCustomNote')}
           </p>
         </div>
       </div>
@@ -189,9 +208,12 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
   const counter = document.getElementById('lightbox-counter');
   const waBtn = document.getElementById('lightbox-wa-btn');
   const waText = document.getElementById('lightbox-wa-text');
+  const priceInfoDesc = document.getElementById('lightbox-price-info-desc');
+  const storeBox = document.getElementById('lightbox-store-box');
   const storeTitle = document.getElementById('lightbox-store-title');
   const storeNote = document.getElementById('lightbox-store-note');
-  const customNote = document.getElementById('lightbox-custom-note');
+  const priceRangeWrapper = document.getElementById('lightbox-price-range-wrapper');
+  const priceRangeValue = document.getElementById('lightbox-price-range-value');
   const closeBtn = document.getElementById('lightbox-close');
   const prevBtn = document.getElementById('lightbox-prev');
   const nextBtn = document.getElementById('lightbox-next');
@@ -220,21 +242,18 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
         badgeType.className = 'text-xs uppercase tracking-wider font-bold px-3 py-1 rounded-full bg-rose-100 text-rose-800 dark:bg-rose-600 dark:text-white border border-rose-200 dark:border-rose-500 shadow-xs';
       }
       if (waText) waText.textContent = window.getI18nText('lightbox.inquireClothing', currentLang);
+      if (priceInfoDesc) priceInfoDesc.textContent = window.getI18nText('lightbox.clothingPriceInfoDesc', currentLang);
+      if (storeBox) storeBox.classList.remove('hidden');
       if (storeTitle) storeTitle.textContent = window.getI18nText('lightbox.clothingStoreTitle', currentLang);
       if (storeNote) storeNote.textContent = window.getI18nText('lightbox.clothingStoreNote', currentLang);
-      if (customNote) customNote.classList.add('hidden');
     } else {
       if (badgeType) {
         badgeType.textContent = window.getI18nText('lightbox.bouquetBadge', currentLang);
         badgeType.className = 'text-xs uppercase tracking-wider font-bold px-3 py-1 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-600 dark:text-white border border-purple-200 dark:border-purple-500 shadow-xs';
       }
       if (waText) waText.textContent = window.getI18nText('lightbox.inquireBouquet', currentLang);
-      if (storeTitle) storeTitle.textContent = window.getI18nText('lightbox.bouquetStoreTitle', currentLang);
-      if (storeNote) storeNote.textContent = window.getI18nText('lightbox.bouquetStoreNote', currentLang);
-      if (customNote) {
-        customNote.textContent = window.getI18nText('lightbox.bouquetCustomNote', currentLang);
-        customNote.classList.remove('hidden');
-      }
+      if (priceInfoDesc) priceInfoDesc.textContent = window.getI18nText('lightbox.bouquetPriceInfoDesc', currentLang);
+      if (storeBox) storeBox.classList.add('hidden');
     }
     if (zoomText) {
       zoomText.textContent = isZoomed ? window.getI18nText('lightbox.reset', currentLang) : window.getI18nText('lightbox.zoom', currentLang);
@@ -394,12 +413,21 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
     const itemDesc = trigger.dataset.description || '';
     activeProductType = trigger.dataset.type || 'pakaian';
     const itemWaUrl = trigger.dataset.waUrl || '#';
+    const itemPriceRange = trigger.dataset.priceRange || '';
 
     title.textContent = itemTitle;
     mainImage.alt = itemTitle;
     desc.textContent = itemDesc;
     subcategory.textContent = itemSubCat;
     waBtn.href = itemWaUrl;
+
+    // Khusus Pakaian: Tampilkan Kisaran Harga jika tersedia
+    if (activeProductType === 'pakaian' && itemPriceRange) {
+      priceRangeWrapper?.classList.remove('hidden');
+      if (priceRangeValue) priceRangeValue.textContent = itemPriceRange;
+    } else {
+      priceRangeWrapper?.classList.add('hidden');
+    }
 
     updateDynamicTexts();
 

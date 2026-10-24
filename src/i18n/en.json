@@ -13,14 +13,14 @@
     "viewBouquetGallery": "View Bouquet Gallery"
   },
   "features": {
-    "qualityTitle": "Diverse Fashion Choices",
-    "qualityDesc": "A wide variety of attire available for all ages, styles, and needs. Find the perfect collection for everyday activities or special occasions.",
-    "bouquetTitle": "Custom Bouquets to Your Liking",
-    "bouquetDesc": "Bring your ideal bouquet to life with customizable themes, colors, and items tailored to your needs and budget.",
-    "fittingTitle": "Try Directly in Store",
-    "fittingDesc": "A simple fitting room is available to help you try on clothes and ensure a comfortable fit before buying.",
-    "paymentTitle": "Convenient Payment Options",
-    "paymentDesc": "Enjoy easy payment methods available in store, ranging from Cash, QRIS, to direct bank transfer."
+    "newProductTitle": "100% Brand New",
+    "newProductDesc": "All products we sell are brand new, not second-hand or pre-owned.",
+    "affordablePriceTitle": "Friendly Pricing",
+    "affordablePriceDesc": "Affordable fashion and bouquet selections tailored to various needs and budgets.",
+    "diverseClothingTitle": "Diverse Fashion Choices",
+    "diverseClothingDesc": "Discover various clothing models for diverse ages, styles, and needs.",
+    "customBouquetTitle": "Custom Bouquets",
+    "customBouquetDesc": "Bouquet arrangements that can be customized to your theme, preferences, and budget."
   },
   "tabs": {
     "featured": "Featured Picks",
@@ -50,7 +50,8 @@
     "creativePortfolio": "Creative Portfolio",
     "bouquetTitle": "Bouquet Gallery",
     "bouquetSubtitle": "All arrangements of flower, money, snack, and graduation bouquets can be custom tailored for your special occasion.",
-    "viewDetail": "View Detail"
+    "viewDetail": "View Detail",
+    "priceLabel": "Price"
   },
   "categories": {
     "all": "All Types"
@@ -60,12 +61,16 @@
     "reset": "Reset",
     "fashionBadge": "Fashion Collection",
     "bouquetBadge": "Bouquet Portfolio",
-    "descHeader": "Description & Characteristics",
+    "descTitle": "Description",
+    "priceInfoTitle": "Price Information",
+    "priceInfoDesc": "Prices vary depending on the model, material, and product details. Please contact us to confirm price and availability for your desired item.",
+    "clothingPriceInfoDesc": "Prices vary depending on the model, material, and product details. Please contact us to confirm price and availability for your desired item.",
+    "bouquetPriceInfoDesc": "Prices vary based on bouquet design, colors, and contents, which can be customized to match your preferences and budget. Contact us to discuss the concept and estimated price.",
+    "priceRangeLabel": "Range",
+    "priceRangeNote": "Price depends on model and availability.",
+    "modalPriceRangeLabel": "Price Range:",
     "clothingStoreTitle": "Try Directly in Store",
     "clothingStoreNote": "A simple fitting room is available to help you try on clothes and ensure the right choice before buying.",
-    "bouquetStoreTitle": "Visit Galeri Tik Store",
-    "bouquetStoreNote": "See the arrangements in person and consult your bouquet design according to your preferences.",
-    "bouquetCustomNote": "Bouquet design, colors, and contents can be consulted to match your preferences and budget.",
     "inquireClothing": "Inquire via WhatsApp",
     "inquireBouquet": "Consult via WhatsApp",
     "close": "Close modal",

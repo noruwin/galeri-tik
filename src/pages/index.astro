@@ -108,55 +108,55 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
       <!-- Deretan 4 Fitur / Keunggulan Toko (Terikat i18n) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 pt-8 border-t border-zinc-200/60 dark:border-zinc-800/80" id="store-features-container">
         
-        <!-- Fitur 1: Koleksi Berkualitas (Aksen Rose/Pink) -->
+        <!-- Fitur 1: 100% Produk Baru (Aksen Rose/Pink) -->
         <div 
-          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group"
+          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
           data-feature-color="rose"
         >
-          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors" data-i18n="features.qualityTitle">
-            {t(lang, 'features.qualityTitle')}
+          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors" data-i18n="features.newProductTitle">
+            {t(lang, 'features.newProductTitle')}
           </h3>
-          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed font-normal" data-i18n="features.qualityDesc">
-            {t(lang, 'features.qualityDesc')}
+          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2.5 leading-relaxed font-normal max-w-xs mx-auto" data-i18n="features.newProductDesc">
+            {t(lang, 'features.newProductDesc')}
           </p>
         </div>
 
-        <!-- Fitur 2: Buket Fleksibel (Aksen Purple/Violet) -->
+        <!-- Fitur 2: Harga Bersahabat (Aksen Purple/Violet) -->
         <div 
-          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group"
+          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
           data-feature-color="purple"
         >
-          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors" data-i18n="features.bouquetTitle">
-            {t(lang, 'features.bouquetTitle')}
+          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors" data-i18n="features.affordablePriceTitle">
+            {t(lang, 'features.affordablePriceTitle')}
           </h3>
-          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed font-normal" data-i18n="features.bouquetDesc">
-            {t(lang, 'features.bouquetDesc')}
+          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2.5 leading-relaxed font-normal max-w-xs mx-auto" data-i18n="features.affordablePriceDesc">
+            {t(lang, 'features.affordablePriceDesc')}
           </p>
         </div>
 
-        <!-- Fitur 3: Kamar Pas (Aksen Sky/Blue) -->
+        <!-- Fitur 3: Pilihan Busana Beragam (Aksen Sky/Blue) -->
         <div 
-          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group"
+          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
           data-feature-color="sky"
         >
-          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors" data-i18n="features.fittingTitle">
-            {t(lang, 'features.fittingTitle')}
+          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors" data-i18n="features.diverseClothingTitle">
+            {t(lang, 'features.diverseClothingTitle')}
           </h3>
-          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed font-normal" data-i18n="features.fittingDesc">
-            {t(lang, 'features.fittingDesc')}
+          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2.5 leading-relaxed font-normal max-w-xs mx-auto" data-i18n="features.diverseClothingDesc">
+            {t(lang, 'features.diverseClothingDesc')}
           </p>
         </div>
 
-        <!-- Fitur 4: Pembayaran Lengkap (Aksen Emerald/Teal) -->
+        <!-- Fitur 4: Buket Custom (Aksen Emerald/Teal) -->
         <div 
-          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group"
+          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
           data-feature-color="emerald"
         >
-          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" data-i18n="features.paymentTitle">
-            {t(lang, 'features.paymentTitle')}
+          <h3 class="font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" data-i18n="features.customBouquetTitle">
+            {t(lang, 'features.customBouquetTitle')}
           </h3>
-          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed font-normal" data-i18n="features.paymentDesc">
-            {t(lang, 'features.paymentDesc')}
+          <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2.5 leading-relaxed font-normal max-w-xs mx-auto" data-i18n="features.customBouquetDesc">
+            {t(lang, 'features.customBouquetDesc')}
           </p>
         </div>
 
@@ -488,21 +488,21 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
       // Reset semua kartu fitur terlebih dahulu
       featureCards.forEach(c => {
         c.dataset.active = 'false';
-        c.className = 'feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group';
+        c.className = 'feature-interactive-card p-6 sm:p-7 rounded-2xl bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/70 dark:border-zinc-800 shadow-2xs hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group';
         const h = c.querySelector('h3');
         const p = c.querySelector('p');
         if (h) h.className = 'font-bold text-zinc-900 dark:text-white text-base sm:text-lg tracking-tight group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors';
-        if (p) p.className = 'text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed font-normal';
+        if (p) p.className = 'text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2.5 leading-relaxed font-normal max-w-xs mx-auto';
       });
 
       // Jika belum aktif, aktifkan warna uniknya
       if (!isAlreadyActive) {
         card.dataset.active = 'true';
-        card.className = `feature-interactive-card p-6 sm:p-7 rounded-2xl ${theme.bg} ${theme.border} shadow-md scale-[1.02] -translate-y-1 transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-center group`;
+        card.className = `feature-interactive-card p-6 sm:p-7 rounded-2xl ${theme.bg} ${theme.border} shadow-md scale-[1.02] -translate-y-1 transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group`;
         const h = card.querySelector('h3');
         const p = card.querySelector('p');
         if (h) h.className = `font-bold ${theme.heading} text-base sm:text-lg tracking-tight transition-colors`;
-        if (p) p.className = `text-xs sm:text-sm ${theme.desc} mt-2 leading-relaxed font-normal`;
+        if (p) p.className = `text-xs sm:text-sm ${theme.desc} mt-2.5 leading-relaxed font-normal max-w-xs mx-auto`;
       }
     });
   });

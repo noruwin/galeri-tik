@@ -11,6 +11,9 @@ interface Props {
 
 const { product, type, lang = 'id' } = Astro.props;
 const waUrl = generateWhatsAppUrl(type, product.title);
+const priceRange = (type === 'pakaian' && 'price_range' in product && product.price_range) 
+  ? product.price_range 
+  : (type === 'pakaian' ? 'Rp 50.000 – Rp 150.000' : '');
 
 // Prepare gallery images list (guaranteed at least the thumbnail)
 const allImages = [
@@ -26,6 +29,7 @@ const allImages = [
   data-title={product.title}
   data-subcategory={product.sub_category}
   data-description={product.description || ''}
+  data-price-range={priceRange}
   data-wa-url={waUrl}
   data-type={type}
 >
@@ -71,6 +75,21 @@ const allImages = [
         <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 mt-2 leading-relaxed font-normal">
           {product.description}
         </p>
+      )}
+
+      <!-- Khusus Produk Busana/Pakaian: Informasi Harga Berurut (Harga -> Rp... – Rp... -> Deskripsi) -->
+      {type === 'pakaian' && priceRange && (
+        <div class="mt-3 pt-2.5 border-t border-zinc-100 dark:border-zinc-800 flex flex-col gap-0.5">
+          <span class="text-xs text-zinc-500 dark:text-zinc-400 font-medium" data-i18n="catalog.priceLabel">
+            {t(lang, 'catalog.priceLabel')}
+          </span>
+          <span class="text-sm font-bold text-zinc-900 dark:text-white tracking-tight">
+            {priceRange}
+          </span>
+          <p class="text-[11px] text-zinc-400 dark:text-zinc-500 leading-normal font-normal mt-0.5" data-i18n="lightbox.priceRangeNote">
+            {t(lang, 'lightbox.priceRangeNote')}
+          </p>
+        </div>
       )}
     </div>
 

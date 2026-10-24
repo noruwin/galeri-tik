@@ -13,14 +13,14 @@
     "viewBouquetGallery": "Lihat Galeri Buket"
   },
   "features": {
-    "qualityTitle": "Pilihan Busana Beragam",
-    "qualityDesc": "Tersedia beragam pilihan busana untuk berbagai usia, gaya, dan kebutuhan. Temukan koleksi yang sesuai untuk aktivitas sehari-hari maupun acara spesial.",
-    "bouquetTitle": "Buket Custom Sesuai Keinginan",
-    "bouquetDesc": "Wujudkan buket sesuai selera dengan pilihan tema, warna, dan isi yang dapat disesuaikan dengan kebutuhan serta anggaran Anda.",
-    "fittingTitle": "Coba Langsung di Toko",
-    "fittingDesc": "Tersedia ruang ganti sederhana untuk membantu Anda mencoba pakaian dan memastikan pilihan terasa nyaman sebelum membeli.",
-    "paymentTitle": "Pilihan Pembayaran Praktis",
-    "paymentDesc": "Nikmati kemudahan pembayaran melalui metode yang tersedia di toko, mulai dari tunai, QRIS, hingga transfer bank."
+    "newProductTitle": "100% Produk Baru",
+    "newProductDesc": "Seluruh produk yang kami jual merupakan barang baru, bukan barang bekas.",
+    "affordablePriceTitle": "Harga Bersahabat",
+    "affordablePriceDesc": "Pilihan busana dan buket dengan harga terjangkau untuk berbagai kebutuhan dan anggaran.",
+    "diverseClothingTitle": "Pilihan Busana Beragam",
+    "diverseClothingDesc": "Temukan berbagai model pakaian untuk beragam usia, gaya, dan kebutuhan.",
+    "customBouquetTitle": "Buket Custom",
+    "customBouquetDesc": "Rangkaian buket yang dapat dikonsultasikan sesuai tema, keinginan, dan anggaran Anda."
   },
   "tabs": {
     "featured": "Cuplikan Pilihan",
@@ -50,7 +50,8 @@
     "creativePortfolio": "Portofolio Kreasi",
     "bouquetTitle": "Galeri Buket",
     "bouquetSubtitle": "Semua rangkaian buket bunga, buket uang kertas, snack, dan buket wisuda dapat dikustomisasi sesuai momen Anda.",
-    "viewDetail": "Lihat Detail"
+    "viewDetail": "Lihat Detail",
+    "priceLabel": "Harga"
   },
   "categories": {
     "all": "Semua Jenis"
@@ -60,12 +61,16 @@
     "reset": "Reset",
     "fashionBadge": "Koleksi Busana",
     "bouquetBadge": "Portofolio Buket",
-    "descHeader": "Deskripsi & Karakteristik",
+    "descTitle": "Deskripsi",
+    "priceInfoTitle": "Informasi Harga",
+    "priceInfoDesc": "Harga bervariasi sesuai model, bahan, dan detail produk. Silakan hubungi kami untuk memastikan harga dan ketersediaan produk yang Anda minati.",
+    "clothingPriceInfoDesc": "Harga bervariasi sesuai model, bahan, dan detail produk. Silakan hubungi kami untuk memastikan harga dan ketersediaan produk yang Anda minati.",
+    "bouquetPriceInfoDesc": "Harga bervariasi sesuai desain, warna, dan isi buket yang dapat dikonsultasikan sesuai keinginan serta anggaran Anda. Hubungi kami untuk mendiskusikan konsep dan estimasi harga.",
+    "priceRangeLabel": "Kisaran",
+    "priceRangeNote": "Harga mengikuti model dan ketersediaan.",
+    "modalPriceRangeLabel": "Kisaran Harga:",
     "clothingStoreTitle": "Coba Langsung di Toko",
     "clothingStoreNote": "Tersedia ruang ganti sederhana untuk membantu Anda mencoba pakaian dan memastikan pilihan yang sesuai sebelum membeli.",
-    "bouquetStoreTitle": "Kunjungi Toko Galeri Tik",
-    "bouquetStoreNote": "Lihat hasil rangkaian secara langsung dan konsultasikan desain buket sesuai keinginan Anda.",
-    "bouquetCustomNote": "Desain, warna, dan isi buket dapat dikonsultasikan sesuai keinginan dan anggaran Anda.",
     "inquireClothing": "Tanya Produk via WhatsApp",
     "inquireBouquet": "Konsultasi via WhatsApp",
     "close": "Tutup modal",

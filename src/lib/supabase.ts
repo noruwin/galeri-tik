@@ -36,6 +36,7 @@ export interface ClothingProduct {
   thumbnail_url: string;
   gallery_urls: string[];
   is_featured: boolean;
+  price_range?: string | null;
   display_order?: number;
   created_at: string;
 }
