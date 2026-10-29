@@ -79,15 +79,9 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
       />
     </div>
 
-    <!-- Lapisan Gradasi Overlay Mask (z-10) -->
-    <!-- Versi Mobile (< 768px): Gradasi Padat & Backdrop Blur Lembut -->
+    <!-- Lapisan Gradasi Overlay Mask (z-10): Horizontal dari Kiri (Disamakan Mobile & Desktop) -->
     <div 
-      class="absolute inset-0 z-10 pointer-events-none block md:hidden bg-[linear-gradient(to_bottom,rgba(250,248,245,0.95)_0%,rgba(250,248,245,0.85)_45%,rgba(250,248,245,0.5)_65%,transparent_100%)] dark:bg-[linear-gradient(to_bottom,rgba(22,21,20,0.95)_0%,rgba(22,21,20,0.85)_45%,rgba(22,21,20,0.5)_65%,transparent_100%)] backdrop-blur-[2px] [mask-image:linear-gradient(to_bottom,black_65%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_65%,transparent_100%)]"
-      aria-hidden="true"
-    ></div>
-    <!-- Versi Desktop (>= 768px): Gradasi Horizontal dari Kiri -->
-    <div 
-      class="hidden md:block absolute inset-0 z-10 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent dark:from-[#161514] dark:via-[#161514]/80 dark:to-transparent pointer-events-none"
+      class="absolute inset-0 z-10 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent dark:from-[#161514] dark:via-[#161514]/80 dark:to-transparent pointer-events-none"
       aria-hidden="true"
     ></div>
 
@@ -95,17 +89,17 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
     <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <div class="flex flex-col items-start text-left max-w-2xl lg:max-w-3xl">
         
-        <!-- Headline: Font Serif Berkarakter Katalog/Editorial yang Tegas (Rata Kiri, Ekstra Tebal & Berbayang di Mobile) -->
+        <!-- Headline: Font Serif Berkarakter Katalog/Editorial yang Tegas (Rata Kiri) -->
         <h1 
-          class="text-3xl sm:text-5xl lg:text-6xl font-extrabold md:font-bold text-zinc-900 dark:text-white leading-[1.18] tracking-tight font-serif mb-4 sm:mb-6 text-left drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)] dark:drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] md:drop-shadow-none"
+          class="text-3xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-white leading-[1.18] tracking-tight font-serif mb-4 sm:mb-6 text-left"
           data-i18n="hero.headline"
         >
           {t(lang, 'hero.headline')}
         </h1>
 
-        <!-- Deskripsi: Paragraf singkat rata kiri dengan warna tegas & line-height renggang -->
+        <!-- Deskripsi: Paragraf singkat rata kiri dengan lebar maksimal terbatas (max-w-xl) -->
         <p 
-          class="text-base sm:text-lg lg:text-xl text-stone-900 dark:text-stone-100 font-semibold md:font-medium leading-relaxed max-w-xl mb-6 sm:mb-8 text-left drop-shadow-[0_1px_3px_rgba(255,255,255,0.8)] dark:drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] md:drop-shadow-none"
+          class="text-base sm:text-lg lg:text-xl text-zinc-700 dark:text-zinc-200 font-medium leading-relaxed max-w-xl mb-6 sm:mb-8 text-left"
           data-i18n="hero.subtitle"
         >
           {t(lang, 'hero.subtitle')}
