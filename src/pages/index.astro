@@ -60,53 +60,77 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
   <!-- Marquee Ticker: Gelap Elegan Charcoal dengan Pemisah Garis Vertikal | -->
   <BrandMarquee brands={brandNames} />
 
-  <!-- Hero Section (Terikat Menyeluruh ke i18n) -->
-  <section id="beranda" class="relative pt-16 sm:pt-24 pb-12 sm:pb-16 bg-gradient-to-b from-pink-50/40 via-white to-slate-50/50 dark:from-zinc-950 dark:via-zinc-900/60 dark:to-zinc-950 border-b border-zinc-200/60 dark:border-zinc-800/80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+  <!-- Hero Section (Editorial Rata Kiri dengan Background & Gradasi) -->
+  <section id="beranda" class="relative overflow-hidden pt-16 sm:pt-24 pb-14 sm:pb-20 bg-[#FAF8F5] dark:bg-[#161514] border-b border-stone-200/70 dark:border-stone-800/80">
+    
+    <!-- Layer Background Gambar Statis (z-0) -->
+    <div class="absolute inset-0 z-0 select-none pointer-events-none">
+      <img 
+        src="/hero-bg.jpg" 
+        alt="Galeri Tik Hero Background" 
+        class="w-full h-full object-cover object-right sm:object-center"
+      />
+    </div>
+
+    <!-- Layer Overlay Gradasi Kiri ke Kanan (z-10) -->
+    <div 
+      class="absolute inset-0 z-10 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/85 to-transparent dark:from-[#161514] dark:via-[#161514]/85 dark:to-transparent pointer-events-none"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Konten Hero & Fitur (z-20 relative) -->
+    <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Headline: Font Serif Berkarakter Katalog/Editorial yang Tegas (Tanpa Badge di Atasnya) -->
-      <h1 
-        class="text-3xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-white leading-[1.18] tracking-tight font-serif max-w-4xl mx-auto mb-6"
-        data-i18n="hero.headline"
-      >
-        {t(lang, 'hero.headline')}
-      </h1>
-
-      <!-- Deskripsi Hero: Sans-serif Modern Berbobot Ringan-Sedang -->
-      <p 
-        class="text-base sm:text-lg lg:text-xl text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto font-normal leading-relaxed mb-10"
-        data-i18n="hero.subtitle"
-      >
-        {t(lang, 'hero.subtitle')}
-      </p>
-
-      <!-- Tombol Hero CTA: Warna Selaras Headline, Hover Mengambang, Berubah Warna Saat Diklik -->
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-        <a 
-          href="#katalog-utama" 
-          onclick="if(window.switchCatalogTab){window.switchCatalogTab('pakaian');}"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-8 py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1.5 hover:shadow-xl active:scale-95 active:bg-rose-600 active:border-rose-600 active:text-white dark:active:bg-rose-600 dark:active:border-rose-600 dark:active:text-white transition-all duration-300 ease-out min-h-[50px] group"
+      <!-- Blok Teks & CTA Editorial Rata Kiri -->
+      <div class="flex flex-col items-start text-left max-w-3xl">
+        
+        <!-- Headline: Font Serif Berkarakter Katalog/Editorial yang Tegas (Rata Kiri) -->
+        <h1 
+          class="text-3xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-white leading-[1.18] tracking-tight font-serif mb-6 text-left"
+          data-i18n="hero.headline"
         >
-          <span data-i18n="hero.exploreClothing">{t(lang, 'hero.exploreClothing')}</span>
-          <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-          </svg>
-        </a>
+          {t(lang, 'hero.headline')}
+        </h1>
 
-        <a 
-          href="#katalog-utama" 
-          onclick="if(window.switchCatalogTab){window.switchCatalogTab('buket');}"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-8 py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1.5 hover:shadow-xl active:scale-95 active:bg-purple-600 active:border-purple-600 active:text-white dark:active:bg-purple-600 dark:active:border-purple-600 dark:active:text-white transition-all duration-300 ease-out min-h-[50px] group"
+        <!-- Deskripsi: Paragraf singkat rata kiri dengan lebar maksimal terbatas (max-w-xl) -->
+        <p 
+          class="text-base sm:text-lg lg:text-xl text-zinc-700 dark:text-zinc-200 font-medium leading-relaxed max-w-xl mb-10 text-left"
+          data-i18n="hero.subtitle"
         >
-          <span data-i18n="hero.viewBouquetGallery">{t(lang, 'hero.viewBouquetGallery')}</span>
-          <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-          </svg>
-        </a>
+          {t(lang, 'hero.subtitle')}
+        </p>
+
+        <!-- Tombol Aksi: Dua tombol berdampingan secara horizontal di bawah deskripsi -->
+        <div class="flex flex-row gap-4 flex-wrap items-center">
+          <a 
+            href="#katalog-utama" 
+            onclick="if(window.switchCatalogTab){window.switchCatalogTab('pakaian');}"
+            class="inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1 hover:shadow-xl active:scale-95 active:bg-rose-600 active:border-rose-600 active:text-white dark:active:bg-rose-600 dark:active:border-rose-600 dark:active:text-white transition-all duration-300 ease-out min-h-[48px] group"
+          >
+            <span data-i18n="hero.exploreClothing">{t(lang, 'hero.exploreClothing')}</span>
+            <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+
+          <a 
+            href="#katalog-utama" 
+            onclick="if(window.switchCatalogTab){window.switchCatalogTab('buket');}"
+            class="inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1 hover:shadow-xl active:scale-95 active:bg-purple-600 active:border-purple-600 active:text-white dark:active:bg-purple-600 dark:active:border-purple-600 dark:active:text-white transition-all duration-300 ease-out min-h-[48px] group"
+          >
+            <span data-i18n="hero.viewBouquetGallery">{t(lang, 'hero.viewBouquetGallery')}</span>
+            <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+        </div>
       </div>
 
-      <!-- Deretan 4 Fitur / Keunggulan Toko (Terikat i18n) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 pt-8 border-t border-zinc-200/60 dark:border-zinc-800/80" id="store-features-container">
+      <!-- 4 Poin Fitur di Bawah Hero (Terpisah oleh Garis) -->
+      <div 
+        id="store-features-container"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 border-t border-stone-200 dark:border-stone-800 pt-8 mt-12"
+      >
         
         <!-- Fitur 1: 100% Produk Baru (Aksen Rose/Pink) -->
         <div 
