@@ -65,11 +65,11 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
     
     <!-- Layer Background Gambar Responsif (z-0) -->
     <div class="absolute inset-0 z-0 select-none pointer-events-none">
-      <!-- Versi Mobile (< 768px): hero-bg-mobile.jpg -->
+      <!-- Versi Mobile (< 768px): hero-bg-mobile.jpg (kunci posisi ke kanan atas) -->
       <img 
         src="/hero-bg-mobile.jpg" 
         alt="Galeri Tik Hero Background Mobile" 
-        class="block md:hidden object-cover object-right w-full h-full"
+        class="block md:hidden object-cover object-[80%_25%] w-full h-full"
       />
       <!-- Versi Desktop (>= 768px): hero-bg.jpg -->
       <img 
@@ -80,9 +80,9 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
     </div>
 
     <!-- Lapisan Gradasi Overlay Mask (z-10) -->
-    <!-- Versi Mobile (< 768px): Gradasi Vertikal Lembut Optimal Keterbacaan -->
+    <!-- Versi Mobile (< 768px): Gradasi Padat & Backdrop Blur Lembut -->
     <div 
-      class="absolute inset-0 z-10 pointer-events-none block md:hidden bg-gradient-to-b from-[#FAF8F5]/80 via-[#FAF8F5]/45 via-50% to-transparent dark:from-[#161514]/85 dark:via-[#161514]/50 dark:via-50% dark:to-transparent"
+      class="absolute inset-0 z-10 pointer-events-none block md:hidden bg-[linear-gradient(to_bottom,rgba(250,248,245,0.95)_0%,rgba(250,248,245,0.85)_45%,rgba(250,248,245,0.5)_65%,transparent_100%)] dark:bg-[linear-gradient(to_bottom,rgba(22,21,20,0.95)_0%,rgba(22,21,20,0.85)_45%,rgba(22,21,20,0.5)_65%,transparent_100%)] backdrop-blur-[2px] [mask-image:linear-gradient(to_bottom,black_65%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_65%,transparent_100%)]"
       aria-hidden="true"
     ></div>
     <!-- Versi Desktop (>= 768px): Gradasi Horizontal dari Kiri -->
@@ -95,17 +95,17 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
     <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <div class="flex flex-col items-start text-left max-w-2xl lg:max-w-3xl">
         
-        <!-- Headline: Font Serif Berkarakter Katalog/Editorial yang Tegas (Rata Kiri) -->
+        <!-- Headline: Font Serif Berkarakter Katalog/Editorial yang Tegas (Rata Kiri, Ekstra Tebal & Berbayang di Mobile) -->
         <h1 
-          class="text-3xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-white leading-[1.18] tracking-tight font-serif mb-4 sm:mb-6 text-left drop-shadow-[0_1px_2px_rgba(255,255,255,0.4)] dark:drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] md:drop-shadow-none"
+          class="text-3xl sm:text-5xl lg:text-6xl font-extrabold md:font-bold text-zinc-900 dark:text-white leading-[1.18] tracking-tight font-serif mb-4 sm:mb-6 text-left drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)] dark:drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] md:drop-shadow-none"
           data-i18n="hero.headline"
         >
           {t(lang, 'hero.headline')}
         </h1>
 
-        <!-- Deskripsi: Paragraf singkat rata kiri dengan lebar maksimal terbatas (max-w-xl) -->
+        <!-- Deskripsi: Paragraf singkat rata kiri dengan warna tegas & line-height renggang -->
         <p 
-          class="text-base sm:text-lg lg:text-xl text-zinc-700 dark:text-zinc-200 font-medium leading-relaxed max-w-xl mb-6 sm:mb-8 text-left drop-shadow-[0_1px_2px_rgba(255,255,255,0.4)] dark:drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] md:drop-shadow-none"
+          class="text-base sm:text-lg lg:text-xl text-stone-900 dark:text-stone-100 font-semibold md:font-medium leading-relaxed max-w-xl mb-6 sm:mb-8 text-left drop-shadow-[0_1px_3px_rgba(255,255,255,0.8)] dark:drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] md:drop-shadow-none"
           data-i18n="hero.subtitle"
         >
           {t(lang, 'hero.subtitle')}
