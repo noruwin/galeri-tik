@@ -80,9 +80,9 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
     </div>
 
     <!-- Lapisan Gradasi Overlay Mask (z-10) -->
-    <!-- Versi Mobile (< 768px): Gradasi Vertikal Lembut -->
+    <!-- Versi Mobile (< 768px): Gradasi Vertikal Lembut Optimal Keterbacaan -->
     <div 
-      class="block md:hidden absolute inset-0 z-10 bg-gradient-to-b from-[#FAF8F5]/75 via-[#FAF8F5]/35 to-transparent dark:from-[#161514]/80 dark:via-[#161514]/40 dark:to-transparent pointer-events-none"
+      class="absolute inset-0 z-10 pointer-events-none block md:hidden bg-gradient-to-b from-[#FAF8F5]/80 via-[#FAF8F5]/45 via-50% to-transparent dark:from-[#161514]/85 dark:via-[#161514]/50 dark:via-50% dark:to-transparent"
       aria-hidden="true"
     ></div>
     <!-- Versi Desktop (>= 768px): Gradasi Horizontal dari Kiri -->
@@ -97,7 +97,7 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
         
         <!-- Headline: Font Serif Berkarakter Katalog/Editorial yang Tegas (Rata Kiri) -->
         <h1 
-          class="text-3xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-white leading-[1.18] tracking-tight font-serif mb-4 sm:mb-6 text-left"
+          class="text-3xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-white leading-[1.18] tracking-tight font-serif mb-4 sm:mb-6 text-left drop-shadow-[0_1px_2px_rgba(255,255,255,0.4)] dark:drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] md:drop-shadow-none"
           data-i18n="hero.headline"
         >
           {t(lang, 'hero.headline')}
@@ -105,7 +105,7 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
 
         <!-- Deskripsi: Paragraf singkat rata kiri dengan lebar maksimal terbatas (max-w-xl) -->
         <p 
-          class="text-base sm:text-lg lg:text-xl text-zinc-700 dark:text-zinc-200 font-medium leading-relaxed max-w-xl mb-6 sm:mb-8 text-left"
+          class="text-base sm:text-lg lg:text-xl text-zinc-700 dark:text-zinc-200 font-medium leading-relaxed max-w-xl mb-6 sm:mb-8 text-left drop-shadow-[0_1px_2px_rgba(255,255,255,0.4)] dark:drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] md:drop-shadow-none"
           data-i18n="hero.subtitle"
         >
           {t(lang, 'hero.subtitle')}
