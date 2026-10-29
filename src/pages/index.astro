@@ -60,46 +60,44 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
   <!-- Marquee Ticker: Gelap Elegan Charcoal dengan Pemisah Garis Vertikal | -->
   <BrandMarquee brands={brandNames} />
 
-  <!-- Hero Section (Editorial Rata Kiri dengan Background & Gradasi) -->
-  <section id="beranda" class="relative overflow-hidden pt-16 sm:pt-24 pb-14 sm:pb-20 bg-[#FAF8F5] dark:bg-[#161514] border-b border-stone-200/70 dark:border-stone-800/80">
+  <!-- Hero Section (Layer Dasar / Sticky Background) -->
+  <section id="beranda" class="sticky top-0 w-full h-[82vh] md:h-[88vh] z-0 overflow-hidden flex flex-col justify-center bg-[#FAF8F5] dark:bg-[#161514]">
     
     <!-- Layer Background Gambar Responsif (z-0) -->
     <div class="absolute inset-0 z-0 select-none pointer-events-none">
-      <!-- Versi Mobile (< 768px): hero-bg-mobile.jpg (menempel ke paling kanan) -->
+      <!-- Versi Mobile (< 768px): hero-bg-mobile.jpg -->
       <img 
         src="/hero-bg-mobile.jpg" 
         alt="Galeri Tik Hero Background Mobile" 
-        class="block md:hidden object-cover w-full h-full object-right"
+        class="block md:hidden object-cover object-right w-full h-full"
       />
       <!-- Versi Desktop (>= 768px): hero-bg.jpg -->
       <img 
         src="/hero-bg.jpg" 
         alt="Galeri Tik Hero Background Desktop" 
-        class="hidden md:block object-cover w-full h-full object-right sm:object-center"
+        class="hidden md:block object-cover object-right sm:object-center w-full h-full"
       />
     </div>
 
     <!-- Lapisan Gradasi Overlay Mask (z-10) -->
-    <!-- Mobile: Gradasi Vertikal lebih lembut/transparan di mode terang -->
+    <!-- Versi Mobile (< 768px): Gradasi Vertikal Lembut -->
     <div 
-      class="block md:hidden absolute inset-0 z-10 bg-gradient-to-b from-[#FAF8F5]/75 via-[#FAF8F5]/40 to-transparent dark:from-[#161514] dark:via-[#161514]/80 dark:to-transparent pointer-events-none"
+      class="block md:hidden absolute inset-0 z-10 bg-gradient-to-b from-[#FAF8F5]/75 via-[#FAF8F5]/35 to-transparent dark:from-[#161514]/80 dark:via-[#161514]/40 dark:to-transparent pointer-events-none"
       aria-hidden="true"
     ></div>
-    <!-- Desktop: Gradasi Horizontal dari kiri ke kanan -->
+    <!-- Versi Desktop (>= 768px): Gradasi Horizontal dari Kiri -->
     <div 
-      class="hidden md:block absolute inset-0 z-10 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/85 to-transparent dark:from-[#161514] dark:via-[#161514]/85 dark:to-transparent pointer-events-none"
+      class="hidden md:block absolute inset-0 z-10 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent dark:from-[#161514] dark:via-[#161514]/80 dark:to-transparent pointer-events-none"
       aria-hidden="true"
     ></div>
 
-    <!-- Konten Hero & Fitur (z-20 relative) -->
-    <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Blok Teks & CTA Editorial Rata Kiri -->
-      <div class="flex flex-col items-start text-left max-w-3xl">
+    <!-- Konten Teks Hero (z-20 relative, Rata Kiri Murni) -->
+    <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div class="flex flex-col items-start text-left max-w-2xl lg:max-w-3xl">
         
         <!-- Headline: Font Serif Berkarakter Katalog/Editorial yang Tegas (Rata Kiri) -->
         <h1 
-          class="text-3xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-white leading-[1.18] tracking-tight font-serif mb-6 text-left"
+          class="text-3xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-white leading-[1.18] tracking-tight font-serif mb-4 sm:mb-6 text-left"
           data-i18n="hero.headline"
         >
           {t(lang, 'hero.headline')}
@@ -107,18 +105,18 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
 
         <!-- Deskripsi: Paragraf singkat rata kiri dengan lebar maksimal terbatas (max-w-xl) -->
         <p 
-          class="text-base sm:text-lg lg:text-xl text-zinc-700 dark:text-zinc-200 font-medium leading-relaxed max-w-xl mb-10 text-left"
+          class="text-base sm:text-lg lg:text-xl text-zinc-700 dark:text-zinc-200 font-medium leading-relaxed max-w-xl mb-6 sm:mb-8 text-left"
           data-i18n="hero.subtitle"
         >
           {t(lang, 'hero.subtitle')}
         </p>
 
         <!-- Tombol Aksi: Dua tombol berdampingan secara horizontal di bawah deskripsi -->
-        <div class="flex flex-row gap-4 flex-wrap items-center">
+        <div class="flex flex-row gap-3 sm:gap-4 flex-wrap items-center">
           <a 
             href="#katalog-utama" 
             onclick="if(window.switchCatalogTab){window.switchCatalogTab('pakaian');}"
-            class="inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1 hover:shadow-xl active:scale-95 active:bg-rose-600 active:border-rose-600 active:text-white dark:active:bg-rose-600 dark:active:border-rose-600 dark:active:text-white transition-all duration-300 ease-out min-h-[48px] group"
+            class="inline-flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-6 py-3 sm:px-8 sm:py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1 hover:shadow-xl active:scale-95 active:bg-rose-600 active:border-rose-600 active:text-white dark:active:bg-rose-600 dark:active:border-rose-600 dark:active:text-white transition-all duration-300 ease-out min-h-[46px] group"
           >
             <span data-i18n="hero.exploreClothing">{t(lang, 'hero.exploreClothing')}</span>
             <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,7 +127,7 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
           <a 
             href="#katalog-utama" 
             onclick="if(window.switchCatalogTab){window.switchCatalogTab('buket');}"
-            class="inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1 hover:shadow-xl active:scale-95 active:bg-purple-600 active:border-purple-600 active:text-white dark:active:bg-purple-600 dark:active:border-purple-600 dark:active:text-white transition-all duration-300 ease-out min-h-[48px] group"
+            class="inline-flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-semibold px-6 py-3 sm:px-8 sm:py-4 rounded-xl text-sm sm:text-base border border-zinc-900 dark:border-white shadow-md hover:-translate-y-1 hover:shadow-xl active:scale-95 active:bg-purple-600 active:border-purple-600 active:text-white dark:active:bg-purple-600 dark:active:border-purple-600 dark:active:text-white transition-all duration-300 ease-out min-h-[46px] group"
           >
             <span data-i18n="hero.viewBouquetGallery">{t(lang, 'hero.viewBouquetGallery')}</span>
             <svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,72 +136,75 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
           </a>
         </div>
       </div>
-
-      <!-- 4 Poin Fitur di Bawah Hero (Terpisah oleh Garis) -->
-      <div 
-        id="store-features-container"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 border-t border-stone-200 dark:border-stone-800 pt-8 mt-12"
-      >
-        
-        <!-- Fitur 1: 100% Produk Baru (Aksen Rose/Pink) -->
-        <div 
-          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-zinc-900/95 border border-zinc-800/80 shadow-md hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
-          data-feature-color="rose"
-        >
-          <h3 class="font-bold text-white text-base sm:text-lg tracking-tight group-hover:text-rose-400 transition-colors" data-i18n="features.newProductTitle">
-            {t(lang, 'features.newProductTitle')}
-          </h3>
-          <p class="text-xs sm:text-sm text-zinc-400 mt-2.5 leading-relaxed font-normal max-w-xs mx-auto" data-i18n="features.newProductDesc">
-            {t(lang, 'features.newProductDesc')}
-          </p>
-        </div>
-
-        <!-- Fitur 2: Harga Bersahabat (Aksen Purple/Violet) -->
-        <div 
-          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-zinc-900/95 border border-zinc-800/80 shadow-md hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
-          data-feature-color="purple"
-        >
-          <h3 class="font-bold text-white text-base sm:text-lg tracking-tight group-hover:text-purple-400 transition-colors" data-i18n="features.affordablePriceTitle">
-            {t(lang, 'features.affordablePriceTitle')}
-          </h3>
-          <p class="text-xs sm:text-sm text-zinc-400 mt-2.5 leading-relaxed font-normal max-w-xs mx-auto" data-i18n="features.affordablePriceDesc">
-            {t(lang, 'features.affordablePriceDesc')}
-          </p>
-        </div>
-
-        <!-- Fitur 3: Pilihan Busana Beragam (Aksen Sky/Blue) -->
-        <div 
-          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-zinc-900/95 border border-zinc-800/80 shadow-md hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
-          data-feature-color="sky"
-        >
-          <h3 class="font-bold text-white text-base sm:text-lg tracking-tight group-hover:text-sky-400 transition-colors" data-i18n="features.diverseClothingTitle">
-            {t(lang, 'features.diverseClothingTitle')}
-          </h3>
-          <p class="text-xs sm:text-sm text-zinc-400 mt-2.5 leading-relaxed font-normal max-w-xs mx-auto" data-i18n="features.diverseClothingDesc">
-            {t(lang, 'features.diverseClothingDesc')}
-          </p>
-        </div>
-
-        <!-- Fitur 4: Buket Custom (Aksen Emerald/Teal) -->
-        <div 
-          class="feature-interactive-card p-6 sm:p-7 rounded-2xl bg-zinc-900/95 border border-zinc-800/80 shadow-md hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
-          data-feature-color="emerald"
-        >
-          <h3 class="font-bold text-white text-base sm:text-lg tracking-tight group-hover:text-emerald-400 transition-colors" data-i18n="features.customBouquetTitle">
-            {t(lang, 'features.customBouquetTitle')}
-          </h3>
-          <p class="text-xs sm:text-sm text-zinc-400 mt-2.5 leading-relaxed font-normal max-w-xs mx-auto" data-i18n="features.customBouquetDesc">
-            {t(lang, 'features.customBouquetDesc')}
-          </p>
-        </div>
-
-      </div>
-
     </div>
   </section>
 
-  <!-- SEKSI UTAMA: Tab Switcher Terpadu & Pencarian Global (Terikat i18n) -->
-  <section id="katalog-utama" class="py-12 sm:py-16 scroll-mt-20">
+  <!-- Lembar Konten Meluncur (Overlapping Content Sheet) -->
+  <div class="relative z-10 w-full bg-[#FAF8F5] dark:bg-[#161514] rounded-t-[32px] md:rounded-t-[48px] shadow-[0_-25px_50px_-12px_rgba(0,0,0,0.12)] dark:shadow-[0_-25px_50px_-12px_rgba(0,0,0,0.5)] pt-8 md:pt-12">
+    
+    <!-- Penataan 4 Kotak Fitur (Sebagai Pembuka Lembar Overlap) -->
+    <div 
+      id="store-features-container"
+      class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 md:mb-12"
+    >
+      <!-- Fitur 1: 100% Produk Baru (Aksen Rose/Pink) -->
+      <div 
+        class="feature-interactive-card bg-zinc-900 dark:bg-white border border-zinc-800 dark:border-white rounded-2xl p-4 sm:p-5 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
+        data-feature-color="rose"
+      >
+        <h3 class="font-bold text-white dark:text-zinc-900 text-sm sm:text-base tracking-tight transition-colors group-hover:text-rose-400 dark:group-hover:text-rose-600" data-i18n="features.newProductTitle">
+          {t(lang, 'features.newProductTitle')}
+        </h3>
+        <p class="text-xs sm:text-sm text-zinc-400 dark:text-zinc-600 mt-1.5 leading-relaxed font-normal" data-i18n="features.newProductDesc">
+          {t(lang, 'features.newProductDesc')}
+        </p>
+      </div>
+
+      <!-- Fitur 2: Harga Bersahabat (Aksen Purple/Violet) -->
+      <div 
+        class="feature-interactive-card bg-zinc-900 dark:bg-white border border-zinc-800 dark:border-white rounded-2xl p-4 sm:p-5 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
+        data-feature-color="purple"
+      >
+        <h3 class="font-bold text-white dark:text-zinc-900 text-sm sm:text-base tracking-tight transition-colors group-hover:text-purple-400 dark:group-hover:text-purple-600" data-i18n="features.affordablePriceTitle">
+          {t(lang, 'features.affordablePriceTitle')}
+        </h3>
+        <p class="text-xs sm:text-sm text-zinc-400 dark:text-zinc-600 mt-1.5 leading-relaxed font-normal" data-i18n="features.affordablePriceDesc">
+          {t(lang, 'features.affordablePriceDesc')}
+        </p>
+      </div>
+
+      <!-- Fitur 3: Pilihan Busana Beragam (Aksen Sky/Blue) -->
+      <div 
+        class="feature-interactive-card bg-zinc-900 dark:bg-white border border-zinc-800 dark:border-white rounded-2xl p-4 sm:p-5 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
+        data-feature-color="sky"
+      >
+        <h3 class="font-bold text-white dark:text-zinc-900 text-sm sm:text-base tracking-tight transition-colors group-hover:text-sky-400 dark:group-hover:text-sky-600" data-i18n="features.diverseClothingTitle">
+          {t(lang, 'features.diverseClothingTitle')}
+        </h3>
+        <p class="text-xs sm:text-sm text-zinc-400 dark:text-zinc-600 mt-1.5 leading-relaxed font-normal" data-i18n="features.diverseClothingDesc">
+          {t(lang, 'features.diverseClothingDesc')}
+        </p>
+      </div>
+
+      <!-- Fitur 4: Buket Custom (Aksen Emerald/Teal) -->
+      <div 
+        class="feature-interactive-card bg-zinc-900 dark:bg-white border border-zinc-800 dark:border-white rounded-2xl p-4 sm:p-5 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group"
+        data-feature-color="emerald"
+      >
+        <h3 class="font-bold text-white dark:text-zinc-900 text-sm sm:text-base tracking-tight transition-colors group-hover:text-emerald-400 dark:group-hover:text-emerald-600" data-i18n="features.customBouquetTitle">
+          {t(lang, 'features.customBouquetTitle')}
+        </h3>
+        <p class="text-xs sm:text-sm text-zinc-400 dark:text-zinc-600 mt-1.5 leading-relaxed font-normal" data-i18n="features.customBouquetDesc">
+          {t(lang, 'features.customBouquetDesc')}
+        </p>
+      </div>
+    </div>
+
+    <!-- SEKSI UTAMA: Tab Switcher Terpadu & Pencarian Global (Terikat i18n) -->
+    <section 
+      id="katalog-utama" 
+      class="scroll-mt-20 pb-12 sm:pb-16"
+    >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Bar Kontrol Terpadu: Kiri Tab Switcher, Kanan Input Pencarian Global -->
@@ -462,6 +463,7 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
 
   <!-- Footer Elegan Charcoal -->
   <Footer />
+  </div>
 
   <!-- Modal Pop-up Multi-Foto (Lightbox) -->
   <Lightbox />
@@ -489,28 +491,28 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
   const featureCards = document.querySelectorAll('.feature-interactive-card');
   const colorThemes = {
     rose: {
-      bg: 'bg-zinc-900',
-      border: 'border-rose-500 shadow-rose-950/40',
-      heading: 'text-rose-400',
-      desc: 'text-rose-200/90'
+      bg: 'bg-zinc-900 dark:bg-rose-50',
+      border: 'border-rose-500 dark:border-rose-400',
+      heading: 'text-rose-400 dark:text-rose-700',
+      desc: 'text-rose-200/90 dark:text-rose-900/80'
     },
     purple: {
-      bg: 'bg-zinc-900',
-      border: 'border-purple-500 shadow-purple-950/40',
-      heading: 'text-purple-400',
-      desc: 'text-purple-200/90'
+      bg: 'bg-zinc-900 dark:bg-purple-50',
+      border: 'border-purple-500 dark:border-purple-400',
+      heading: 'text-purple-400 dark:text-purple-700',
+      desc: 'text-purple-200/90 dark:text-purple-900/80'
     },
     sky: {
-      bg: 'bg-zinc-900',
-      border: 'border-sky-500 shadow-sky-950/40',
-      heading: 'text-sky-400',
-      desc: 'text-sky-200/90'
+      bg: 'bg-zinc-900 dark:bg-sky-50',
+      border: 'border-sky-500 dark:border-sky-400',
+      heading: 'text-sky-400 dark:text-sky-700',
+      desc: 'text-sky-200/90 dark:text-sky-900/80'
     },
     emerald: {
-      bg: 'bg-zinc-900',
-      border: 'border-emerald-500 shadow-emerald-950/40',
-      heading: 'text-emerald-400',
-      desc: 'text-emerald-200/90'
+      bg: 'bg-zinc-900 dark:bg-emerald-50',
+      border: 'border-emerald-500 dark:border-emerald-400',
+      heading: 'text-emerald-400 dark:text-emerald-700',
+      desc: 'text-emerald-200/90 dark:text-emerald-900/80'
     }
   };
 
@@ -525,21 +527,21 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
       // Reset semua kartu fitur terlebih dahulu
       featureCards.forEach(c => {
         c.dataset.active = 'false';
-        c.className = 'feature-interactive-card p-6 sm:p-7 rounded-2xl bg-zinc-900/95 border border-zinc-800/80 shadow-md hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group';
+        c.className = 'feature-interactive-card bg-zinc-900 dark:bg-white border border-zinc-800 dark:border-white rounded-2xl p-4 sm:p-5 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group';
         const h = c.querySelector('h3');
         const p = c.querySelector('p');
-        if (h) h.className = 'font-bold text-white text-base sm:text-lg tracking-tight group-hover:text-zinc-200 transition-colors';
-        if (p) p.className = 'text-xs sm:text-sm text-zinc-400 mt-2.5 leading-relaxed font-normal max-w-xs mx-auto';
+        if (h) h.className = 'font-bold text-white dark:text-zinc-900 text-sm sm:text-base tracking-tight transition-colors group-hover:text-zinc-200 dark:group-hover:text-zinc-700';
+        if (p) p.className = 'text-xs sm:text-sm text-zinc-400 dark:text-zinc-600 mt-1.5 leading-relaxed font-normal';
       });
 
       // Jika belum aktif, aktifkan warna uniknya
       if (!isAlreadyActive) {
         card.dataset.active = 'true';
-        card.className = `feature-interactive-card p-6 sm:p-7 rounded-2xl ${theme.bg} ${theme.border} shadow-lg scale-[1.02] -translate-y-1 transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group`;
+        card.className = `feature-interactive-card ${theme.bg} ${theme.border} border rounded-2xl p-4 sm:p-5 shadow-md scale-[1.02] -translate-y-1 transition-all duration-300 cursor-pointer select-none text-center flex flex-col items-center justify-start h-full group`;
         const h = card.querySelector('h3');
         const p = card.querySelector('p');
-        if (h) h.className = `font-bold ${theme.heading} text-base sm:text-lg tracking-tight transition-colors`;
-        if (p) p.className = `text-xs sm:text-sm ${theme.desc} mt-2.5 leading-relaxed font-normal max-w-xs mx-auto`;
+        if (h) h.className = `font-bold ${theme.heading} text-sm sm:text-base tracking-tight transition-colors`;
+        if (p) p.className = `text-xs sm:text-sm ${theme.desc} mt-1.5 leading-relaxed font-normal`;
       }
     });
   });
