@@ -51,7 +51,9 @@
     "bouquetTitle": "Bouquet Gallery",
     "bouquetSubtitle": "All arrangements of flower, money, snack, and graduation bouquets can be custom tailored for your special occasion.",
     "viewDetail": "View Detail",
-    "priceLabel": "Price"
+    "priceLabel": "Price",
+    "viewModeSwipe": "Swipe View",
+    "viewModeGrid": "Grid View"
   },
   "categories": {
     "all": "All Types"

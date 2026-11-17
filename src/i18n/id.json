@@ -51,7 +51,9 @@
     "bouquetTitle": "Galeri Buket",
     "bouquetSubtitle": "Semua rangkaian buket bunga, buket uang kertas, snack, dan buket wisuda dapat dikustomisasi sesuai momen Anda.",
     "viewDetail": "Lihat Detail",
-    "priceLabel": "Harga"
+    "priceLabel": "Harga",
+    "viewModeSwipe": "Mode Geser",
+    "viewModeGrid": "Mode Grid"
   },
   "categories": {
     "all": "Semua Jenis"

@@ -198,11 +198,12 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
     <section 
       id="katalog-utama" 
       class="scroll-mt-20 pb-12 sm:pb-16"
+      data-view-mode="swipe"
     >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Bar Kontrol Terpadu: Kiri Tab Switcher, Kanan Input Pencarian Global -->
-      <div class="bg-white dark:bg-zinc-900 p-3 sm:p-4 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-sm mb-10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      <!-- Bar Kontrol Terpadu: Kiri Tab Switcher, Kanan View Mode Toggle + Input Pencarian Global -->
+      <div class="bg-white dark:bg-zinc-900 p-3 sm:p-4 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 shadow-sm mb-10 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
         
         <!-- Tab Switcher: 3 Pilihan Terlihat Jelas, Tab Terpilih Berubah Warna Tanpa Outline Pink -->
         <div class="flex items-center gap-2 p-1.5 bg-zinc-100/90 dark:bg-zinc-800/90 rounded-2xl border border-zinc-200/90 dark:border-zinc-700/80 overflow-x-auto scrollbar-none" id="catalog-tab-switcher">
@@ -232,31 +233,65 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
           </button>
         </div>
 
-        <!-- Input Pencarian Global -->
-        <div class="relative w-full md:w-80">
-          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-          </div>
-          <input
-            type="search"
-            id="global-catalog-search"
-            placeholder={t(lang, 'search.placeholder')}
-            data-i18n-placeholder="search.placeholder"
-            class="w-full pl-10 pr-9 py-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 rounded-xl text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:bg-white dark:focus:bg-zinc-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
-            autocomplete="off"
-          />
-          <button
-            id="clear-search-btn"
-            type="button"
-            class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
-            aria-label="Bersihkan pencarian"
+        <!-- Aksi Kanan: Toggle Mode Tampilan (Geser vs Grid) & Pencarian Global -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <!-- Toggle Mode Tampilan: Mode Geser vs Mode Grid -->
+          <div 
+            class="flex items-center p-1 bg-zinc-100/90 dark:bg-zinc-800/90 rounded-2xl border border-zinc-200/90 dark:border-zinc-700/80 justify-center"
+            id="catalog-view-toggle"
+            role="group"
+            aria-label="Mode Tampilan Katalog"
           >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-          </button>
+            <button
+              type="button"
+              data-view-mode="swipe"
+              id="view-mode-swipe-btn"
+              class="view-mode-btn active inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border border-zinc-900 dark:border-white shadow-2xs"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+              </svg>
+              <span data-i18n="catalog.viewModeSwipe">{t(lang, 'catalog.viewModeSwipe')}</span>
+            </button>
+            <button
+              type="button"
+              data-view-mode="grid"
+              id="view-mode-grid-btn"
+              class="view-mode-btn inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+              </svg>
+              <span data-i18n="catalog.viewModeGrid">{t(lang, 'catalog.viewModeGrid')}</span>
+            </button>
+          </div>
+
+          <!-- Input Pencarian Global -->
+          <div class="relative w-full sm:w-64 md:w-72">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="global-catalog-search"
+              placeholder={t(lang, 'search.placeholder')}
+              data-i18n-placeholder="search.placeholder"
+              class="w-full pl-10 pr-9 py-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 rounded-xl text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:bg-white dark:focus:bg-zinc-900 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all"
+              autocomplete="off"
+            />
+            <button
+              id="clear-search-btn"
+              type="button"
+              class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+              aria-label="Bersihkan pencarian"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
         </div>
 
       </div>
@@ -299,12 +334,30 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
             </button>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 catalog-items-container">
-            {featuredPakaian.map((product) => (
-              <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="pakaian">
-                <ProductCard product={product} type="pakaian" lang={lang} />
-              </div>
-            ))}
+          <div class="carousel-section relative group/carousel">
+            <button 
+              type="button" 
+              class="carousel-nav-btn carousel-prev-btn hidden md:flex absolute -left-3 lg:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 dark:bg-zinc-800/95 border border-zinc-200 dark:border-zinc-700 shadow-xl text-zinc-700 dark:text-zinc-200 items-center justify-center hover:scale-105 active:scale-95 transition-all opacity-0 group-hover/carousel:opacity-100" 
+              aria-label="Geser ke kiri"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 catalog-items-container">
+              {featuredPakaian.map((product) => (
+                <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="pakaian">
+                  <ProductCard product={product} type="pakaian" lang={lang} />
+                </div>
+              ))}
+            </div>
+
+            <button 
+              type="button" 
+              class="carousel-nav-btn carousel-next-btn hidden md:flex absolute -right-3 lg:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 dark:bg-zinc-800/95 border border-zinc-200 dark:border-zinc-700 shadow-xl text-zinc-700 dark:text-zinc-200 items-center justify-center hover:scale-105 active:scale-95 transition-all opacity-0 group-hover/carousel:opacity-100" 
+              aria-label="Geser ke kanan"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
           </div>
         </div>
 
@@ -331,12 +384,30 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
             </button>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 catalog-items-container">
-            {featuredBuket.map((product) => (
-              <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="buket">
-                <ProductCard product={product} type="buket" lang={lang} />
-              </div>
-            ))}
+          <div class="carousel-section relative group/carousel">
+            <button 
+              type="button" 
+              class="carousel-nav-btn carousel-prev-btn hidden md:flex absolute -left-3 lg:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 dark:bg-zinc-800/95 border border-zinc-200 dark:border-zinc-700 shadow-xl text-zinc-700 dark:text-zinc-200 items-center justify-center hover:scale-105 active:scale-95 transition-all opacity-0 group-hover/carousel:opacity-100" 
+              aria-label="Geser ke kiri"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 catalog-items-container">
+              {featuredBuket.map((product) => (
+                <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="buket">
+                  <ProductCard product={product} type="buket" lang={lang} />
+                </div>
+              ))}
+            </div>
+
+            <button 
+              type="button" 
+              class="carousel-nav-btn carousel-next-btn hidden md:flex absolute -right-3 lg:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 dark:bg-zinc-800/95 border border-zinc-200 dark:border-zinc-700 shadow-xl text-zinc-700 dark:text-zinc-200 items-center justify-center hover:scale-105 active:scale-95 transition-all opacity-0 group-hover/carousel:opacity-100" 
+              aria-label="Geser ke kanan"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
           </div>
         </div>
 
@@ -369,7 +440,7 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
               type="button"
               data-subcat="all"
               data-i18n="categories.all"
-              class="subcat-filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 transition-all shadow-2xs"
+              class="subcat-filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border border-zinc-900 dark:border-white transition-all shadow-xs"
             >
               {t(lang, 'categories.all')}
             </button>
@@ -377,7 +448,7 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
               <button
                 type="button"
                 data-subcat={subcat}
-                class="subcat-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-zinc-850 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 transition-all"
+                class="subcat-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-white transition-all shadow-xs"
               >
                 {subcat}
               </button>
@@ -385,13 +456,31 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
           </div>
         </div>
 
-        <!-- Grid Semua Pakaian -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 catalog-items-container" id="pakaian-full-grid">
-          {allPakaian.map((product) => (
-            <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="pakaian">
-              <ProductCard product={product} type="pakaian" lang={lang} />
-            </div>
-          ))}
+        <!-- Carousel / Grid Semua Pakaian -->
+        <div class="carousel-section relative group/carousel">
+          <button 
+            type="button" 
+            class="carousel-nav-btn carousel-prev-btn hidden md:flex absolute -left-3 lg:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 dark:bg-zinc-800/95 border border-zinc-200 dark:border-zinc-700 shadow-xl text-zinc-700 dark:text-zinc-200 items-center justify-center hover:scale-105 active:scale-95 transition-all opacity-0 group-hover/carousel:opacity-100" 
+            aria-label="Geser ke kiri"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 catalog-items-container" id="pakaian-full-grid">
+            {allPakaian.map((product) => (
+              <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="pakaian">
+                <ProductCard product={product} type="pakaian" lang={lang} />
+              </div>
+            ))}
+          </div>
+
+          <button 
+            type="button" 
+            class="carousel-nav-btn carousel-next-btn hidden md:flex absolute -right-3 lg:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 dark:bg-zinc-800/95 border border-zinc-200 dark:border-zinc-700 shadow-xl text-zinc-700 dark:text-zinc-200 items-center justify-center hover:scale-105 active:scale-95 transition-all opacity-0 group-hover/carousel:opacity-100" 
+            aria-label="Geser ke kanan"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
         </div>
 
       </div>
@@ -411,13 +500,31 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
           </p>
         </div>
 
-        <!-- Grid Semua Buket -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 catalog-items-container" id="buket-full-grid">
-          {allBuket.map((product) => (
-            <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="buket">
-              <ProductCard product={product} type="buket" lang={lang} />
-            </div>
-          ))}
+        <!-- Carousel / Grid Semua Buket -->
+        <div class="carousel-section relative group/carousel">
+          <button 
+            type="button" 
+            class="carousel-nav-btn carousel-prev-btn hidden md:flex absolute -left-3 lg:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 dark:bg-zinc-800/95 border border-zinc-200 dark:border-zinc-700 shadow-xl text-zinc-700 dark:text-zinc-200 items-center justify-center hover:scale-105 active:scale-95 transition-all opacity-0 group-hover/carousel:opacity-100" 
+            aria-label="Geser ke kiri"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 catalog-items-container" id="buket-full-grid">
+            {allBuket.map((product) => (
+              <div class="catalog-item" data-title={product.title} data-subcategory={product.sub_category} data-description={product.description || ''} data-category="buket">
+                <ProductCard product={product} type="buket" lang={lang} />
+              </div>
+            ))}
+          </div>
+
+          <button 
+            type="button" 
+            class="carousel-nav-btn carousel-next-btn hidden md:flex absolute -right-3 lg:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/95 dark:bg-zinc-800/95 border border-zinc-200 dark:border-zinc-700 shadow-xl text-zinc-700 dark:text-zinc-200 items-center justify-center hover:scale-105 active:scale-95 transition-all opacity-0 group-hover/carousel:opacity-100" 
+            aria-label="Geser ke kanan"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
         </div>
 
         <!-- Kotak Informasi Fleksibilitas Harga Buket Tepat SETELAH Seksi Galeri Buket -->
@@ -466,9 +573,10 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
   <WhatsAppFAB />
 </BaseLayout>
 
-<!-- Client Script: Tab Switcher, Pencarian Global & Efek Klik Berubah Warna pada Kartu Fitur -->
+<!-- Client Script: Tab Switcher, Pencarian Global, View Mode Toggle & Limitless Infinite Carousel -->
 <script is:inline>
 (function() {
+  const katalogUtama = document.getElementById('katalog-utama');
   const switcher = document.getElementById('catalog-tab-switcher');
   const searchInput = document.getElementById('global-catalog-search');
   const clearBtn = document.getElementById('clear-search-btn');
@@ -478,8 +586,266 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
   const searchCountDisplay = document.getElementById('search-count-display');
   const resetSearchLink = document.getElementById('reset-search-link');
 
+  const viewModeSwipeBtn = document.getElementById('view-mode-swipe-btn');
+  const viewModeGridBtn = document.getElementById('view-mode-grid-btn');
+
   let activeTab = 'cuplikan'; // 'cuplikan' | 'pakaian' | 'buket'
   let activeSubcat = 'all';
+
+  // 1. Mode Geser sebagai DEFAULT UTAMA saat membuka web app Galeri Tik
+  let currentViewMode = 'swipe';
+  try {
+    const sessionSaved = sessionStorage.getItem('catalog_view_mode');
+    if (sessionSaved === 'grid') {
+      currentViewMode = 'grid';
+    } else {
+      currentViewMode = 'swipe';
+      localStorage.setItem('catalog_view_mode', 'swipe');
+    }
+  } catch (e) {
+    currentViewMode = 'swipe';
+  }
+
+  function setViewMode(mode) {
+    currentViewMode = mode;
+    try {
+      sessionStorage.setItem('catalog_view_mode', mode);
+      localStorage.setItem('catalog_view_mode', mode);
+    } catch (e) {}
+
+    if (katalogUtama) {
+      katalogUtama.dataset.viewMode = mode;
+    }
+
+    if (mode === 'swipe') {
+      if (viewModeSwipeBtn) {
+        viewModeSwipeBtn.className = 'view-mode-btn active inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border border-zinc-900 dark:border-white shadow-2xs';
+      }
+      if (viewModeGridBtn) {
+        viewModeGridBtn.className = 'view-mode-btn inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white border border-transparent';
+      }
+      setTimeout(() => {
+        initAllInfiniteCarousels();
+        updateAllSwipeDepths();
+      }, 50);
+    } else {
+      if (viewModeGridBtn) {
+        viewModeGridBtn.className = 'view-mode-btn active inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border border-zinc-900 dark:border-white shadow-2xs';
+      }
+      if (viewModeSwipeBtn) {
+        viewModeSwipeBtn.className = 'view-mode-btn inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white border border-transparent';
+      }
+    }
+  }
+
+  // Terapkan view mode awal (default swipe)
+  setViewMode(currentViewMode);
+
+  viewModeSwipeBtn?.addEventListener('click', () => setViewMode('swipe'));
+  viewModeGridBtn?.addEventListener('click', () => setViewMode('grid'));
+
+  // 2. Limitless / Infinite Loop Carousel Implementation
+  function setupInfiniteLoop(container) {
+    if (!container || container.dataset.infiniteInit === 'true') return;
+    const originalItems = Array.from(container.querySelectorAll('.catalog-item:not([data-clone])'));
+    if (originalItems.length < 2) return;
+
+    container.dataset.infiniteInit = 'true';
+
+    // Clone items untuk buffer sebelum (prepend) dan setelah (append)
+    const clonesBefore = [];
+    const clonesAfter = [];
+
+    originalItems.forEach((item, idx) => {
+      // Clone untuk setelah item terakhir (loop kembali ke awal)
+      const cloneAfter = item.cloneNode(true);
+      cloneAfter.setAttribute('data-clone', 'true');
+      cloneAfter.setAttribute('data-original-index', idx);
+      cloneAfter.classList.add('catalog-item-clone', 'catalog-item-clone-after');
+      clonesAfter.push(cloneAfter);
+
+      // Clone untuk sebelum item pertama (loop mundur ke akhir)
+      const cloneBefore = item.cloneNode(true);
+      cloneBefore.setAttribute('data-clone', 'true');
+      cloneBefore.setAttribute('data-original-index', idx);
+      cloneBefore.classList.add('catalog-item-clone', 'catalog-item-clone-before');
+      clonesBefore.push(cloneBefore);
+    });
+
+    // Sisipkan clonesBefore sebelum item pertama
+    clonesBefore.forEach(clone => {
+      container.insertBefore(clone, originalItems[0]);
+    });
+
+    // Sisipkan clonesAfter setelah item terakhir
+    clonesAfter.forEach(clone => {
+      container.appendChild(clone);
+    });
+
+    // Menghitung setSpan = jarak horizontal 1 putaran penuh produk asli
+    function getSetSpan() {
+      const firstOrig = originalItems[0];
+      const firstCloneAfter = clonesAfter[0];
+      if (firstOrig && firstCloneAfter) {
+        return firstCloneAfter.offsetLeft - firstOrig.offsetLeft;
+      }
+      return 0;
+    }
+
+    // Mengatur posisi scroll awal ke produk asli pertama
+    function resetToStart(smooth = false) {
+      if (katalogUtama && katalogUtama.dataset.viewMode !== 'swipe') return;
+      const isMobile = window.innerWidth < 768;
+      const firstOrig = originalItems[0];
+      if (!firstOrig) return;
+
+      let target = firstOrig.offsetLeft;
+      if (isMobile) {
+        target = firstOrig.offsetLeft - (container.clientWidth - firstOrig.clientWidth) / 2;
+      }
+      container.scrollTo({ left: Math.max(0, target), behavior: smooth ? 'smooth' : 'instant' });
+    }
+
+    // Teleport mulus tanpa kedip saat melintasi batas produk
+    function checkInfiniteJump() {
+      if (!katalogUtama || katalogUtama.dataset.viewMode !== 'swipe') return;
+      // Jangan melompat jika filter pencarian aktif
+      const firstClone = container.querySelector('.catalog-item-clone');
+      if (firstClone && firstClone.style.display === 'none') return;
+
+      const setSpan = getSetSpan();
+      if (setSpan <= 0) return;
+
+      const firstOrig = originalItems[0];
+      if (!firstOrig) return;
+
+      const isMobile = window.innerWidth < 768;
+      const centerOffset = isMobile ? (container.clientWidth - firstOrig.clientWidth) / 2 : 0;
+      const origBase = firstOrig.offsetLeft - centerOffset;
+
+      // Jika digeser terus ke kanan melewati produk terakhir ke clonesAfter: teleport kembali ke awal produk asli
+      if (container.scrollLeft >= origBase + setSpan - 15) {
+        container.scrollLeft -= setSpan;
+        if (isMobile) updateContainerDepth(container);
+      } 
+      // Jika digeser terus ke kiri melewati produk pertama ke clonesBefore: teleport ke produk asli akhir
+      else if (container.scrollLeft <= origBase - 15) {
+        container.scrollLeft += setSpan;
+        if (isMobile) updateContainerDepth(container);
+      }
+    }
+
+    container._resetToStart = resetToStart;
+    container._checkInfiniteJump = checkInfiniteJump;
+
+    // Listener scroll dengan debounce & scrollend
+    let jumpTimer = null;
+    container.addEventListener('scroll', () => {
+      clearTimeout(jumpTimer);
+      jumpTimer = setTimeout(checkInfiniteJump, 60);
+    }, { passive: true });
+
+    if ('onscrollend' in window) {
+      container.addEventListener('scrollend', checkInfiniteJump, { passive: true });
+    }
+
+    // Posisikan ke awal produk asli
+    setTimeout(() => {
+      resetToStart(false);
+      updateContainerDepth(container);
+    }, 80);
+  }
+
+  function initAllInfiniteCarousels() {
+    const containers = document.querySelectorAll('.catalog-items-container');
+    containers.forEach(setupInfiniteLoop);
+  }
+
+  // Efek Kedalaman Dinamis di HP untuk Mode Geser (Interactive Carousel Depth)
+  function updateContainerDepth(container) {
+    if (!container || window.innerWidth >= 768) return;
+    const rect = container.getBoundingClientRect();
+    const containerCenter = rect.left + rect.width / 2;
+    const items = container.querySelectorAll('.catalog-item');
+
+    let closestItem = null;
+    let minDistance = Infinity;
+
+    items.forEach(item => {
+      if (item.style.display === 'none') return;
+      const itemRect = item.getBoundingClientRect();
+      const itemCenter = itemRect.left + itemRect.width / 2;
+      const distance = Math.abs(containerCenter - itemCenter);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestItem = item;
+      }
+    });
+
+    items.forEach(item => {
+      if (item === closestItem) {
+        item.classList.add('is-active-card');
+      } else {
+        item.classList.remove('is-active-card');
+      }
+    });
+  }
+
+  function updateAllSwipeDepths() {
+    if (!katalogUtama || katalogUtama.dataset.viewMode !== 'swipe') return;
+    const containers = katalogUtama.querySelectorAll('.catalog-items-container');
+    containers.forEach(c => updateContainerDepth(c));
+  }
+
+  // Scroll listener dengan requestAnimationFrame untuk performa native 60fps
+  const catalogContainers = document.querySelectorAll('.catalog-items-container');
+  catalogContainers.forEach(container => {
+    let ticking = false;
+    container.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (katalogUtama && katalogUtama.dataset.viewMode === 'swipe') {
+            updateContainerDepth(container);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  });
+
+  // Tombol Panah Navigasi Carousel di Desktop (Mendukung Limitless Looping)
+  const carouselSections = document.querySelectorAll('.carousel-section');
+  carouselSections.forEach(section => {
+    const container = section.querySelector('.catalog-items-container');
+    const prevBtn = section.querySelector('.carousel-prev-btn');
+    const nextBtn = section.querySelector('.carousel-next-btn');
+
+    if (container && prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        const scrollDistance = container.clientWidth * 0.75;
+        container.scrollBy({ left: -scrollDistance, behavior: 'smooth' });
+        setTimeout(() => {
+          if (container._checkInfiniteJump) container._checkInfiniteJump();
+        }, 340);
+      });
+    }
+    if (container && nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        const scrollDistance = container.clientWidth * 0.75;
+        container.scrollBy({ left: scrollDistance, behavior: 'smooth' });
+        setTimeout(() => {
+          if (container._checkInfiniteJump) container._checkInfiniteJump();
+        }, 340);
+      });
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (katalogUtama && katalogUtama.dataset.viewMode === 'swipe') {
+      updateAllSwipeDepths();
+    }
+  });
 
   // Interaktivitas Kartu Fitur Toko: Berubah Warna Berbeda-beda Saat Diklik
   const featureCards = document.querySelectorAll('.feature-interactive-card');
@@ -568,6 +934,17 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
 
     // Re-apply filter & search
     filterCurrentView();
+
+    // Re-align carousels in newly visible tab
+    setTimeout(() => {
+      if (currentPane) {
+        currentPane.querySelectorAll('.catalog-items-container').forEach(c => {
+          setupInfiniteLoop(c);
+          if (c._resetToStart) c._resetToStart(false);
+          updateContainerDepth(c);
+        });
+      }
+    }, 60);
   };
 
   // Click on Tab switcher buttons
@@ -577,7 +954,7 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
     window.switchCatalogTab(btn.dataset.tab);
   });
 
-  // Filter Sub-kategori Pakaian
+  // 3. Filter Sub-kategori Pakaian (High-Contrast Styling in Dark Mode)
   const subcatFilters = document.getElementById('pakaian-subcat-filters');
   subcatFilters?.addEventListener('click', (e) => {
     const btn = e.target.closest('.subcat-filter-btn');
@@ -586,9 +963,9 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
 
     subcatFilters.querySelectorAll('.subcat-filter-btn').forEach(b => {
       if (b === btn) {
-        b.className = 'subcat-filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 transition-all shadow-2xs';
+        b.className = 'subcat-filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border border-zinc-900 dark:border-white transition-all shadow-xs';
       } else {
-        b.className = 'subcat-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-zinc-850 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 transition-all';
+        b.className = 'subcat-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-white transition-all shadow-xs';
       }
     });
 
@@ -625,13 +1002,21 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
 
   function filterCurrentView() {
     const query = (searchInput?.value || '').toLowerCase().trim();
+    const isFiltered = query.length > 0 || (activeTab === 'pakaian' && activeSubcat !== 'all');
     const currentPane = document.getElementById(`tab-content-${activeTab}`);
     if (!currentPane) return;
 
-    const items = currentPane.querySelectorAll('.catalog-item');
+    // Toggle visibility of clones during search/filter
+    const clones = currentPane.querySelectorAll('.catalog-item-clone');
+    clones.forEach(c => {
+      c.style.display = isFiltered ? 'none' : '';
+    });
+
+    // Filter only genuine original items
+    const originalItems = currentPane.querySelectorAll('.catalog-item:not([data-clone])');
     let visibleCount = 0;
 
-    items.forEach(item => {
+    originalItems.forEach(item => {
       const title = (item.dataset.title || '').toLowerCase();
       const subcat = (item.dataset.subcategory || '').toLowerCase();
       const desc = (item.dataset.description || '').toLowerCase();
@@ -673,6 +1058,11 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
     } else {
       searchNotice?.classList.add('hidden');
     }
+
+    // Update dynamic depth for visible items in swipe mode
+    if (katalogUtama && katalogUtama.dataset.viewMode === 'swipe') {
+      setTimeout(updateAllSwipeDepths, 40);
+    }
   }
 
   // Update count jika bahasa berubah saat search aktif
@@ -680,7 +1070,98 @@ const featuredBuket = allBuket.filter(p => p.is_featured);
     filterCurrentView();
   });
 
-  // Initial check on load
+  // Initial setup on load
   filterCurrentView();
+  initAllInfiniteCarousels();
+  setTimeout(updateAllSwipeDepths, 120);
 })();
 </script>
+
+<style is:global>
+  /* -------------------------------------------------------------
+     MODE GESER INTERAKTIF (Interactive Carousel - Scroll-Snap)
+     ------------------------------------------------------------- */
+  #katalog-utama[data-view-mode="swipe"] .catalog-items-container {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 1rem !important;
+    padding-bottom: 2.25rem !important;
+    padding-left: 23vw !important;
+    padding-right: 23vw !important;
+    gap: 1rem !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  #katalog-utama[data-view-mode="swipe"] .catalog-items-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Padding & gap responsif pada desktop */
+  @media (min-width: 768px) {
+    #katalog-utama[data-view-mode="swipe"] .catalog-items-container {
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+      gap: 1.25rem !important;
+      scroll-snap-type: x proximity !important;
+    }
+  }
+
+  /* Kartu Produk di Mode Geser (Mobile: 3 Kartu Terlihat Sekaligus + Dynamic Depth) */
+  #katalog-utama[data-view-mode="swipe"] .catalog-item {
+    flex-shrink: 0 !important;
+    scroll-snap-align: center !important;
+    width: 54vw !important;
+    max-width: 250px !important;
+    transition: transform 0.28s cubic-bezier(0.2, 0, 0.2, 1), opacity 0.28s ease-out, filter 0.28s ease-out !important;
+    transform: translateY(0.75rem) scale(0.9);
+    opacity: 0.65;
+    filter: blur(1.5px);
+  }
+
+  /* Kartu Aktif di Tengah Layar (Mobile: Tajam, Full Opacity, Naik ke Atas) */
+  @media (max-width: 767px) {
+    #katalog-utama[data-view-mode="swipe"] .catalog-item.is-active-card {
+      transform: translateY(0) scale(1) !important;
+      opacity: 1 !important;
+      filter: blur(0) !important;
+      z-index: 10;
+    }
+  }
+
+  /* Kartu di Layar Desktop (Desktop: Semua Tajam & Rata) */
+  @media (min-width: 768px) {
+    #katalog-utama[data-view-mode="swipe"] .catalog-item {
+      width: 250px !important;
+      max-width: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+      filter: none !important;
+      scroll-snap-align: start !important;
+    }
+  }
+
+  /* -------------------------------------------------------------
+     MODE GRID (Classic Grid Layout)
+     ------------------------------------------------------------- */
+  #katalog-utama[data-view-mode="grid"] .carousel-nav-btn {
+    display: none !important;
+  }
+  #katalog-utama[data-view-mode="grid"] .catalog-item {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    width: auto !important;
+    max-width: none !important;
+    flex-shrink: 1 !important;
+    scroll-snap-align: none !important;
+  }
+
+  /* Sembunyikan item clone saat dalam Mode Grid */
+  #katalog-utama[data-view-mode="grid"] .catalog-item-clone {
+    display: none !important;
+  }
+</style>

@@ -23,53 +23,31 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
       </svg>
     </button>
 
-    <!-- KOLOM KIRI: Foto Utama (Full Fit / Zoomable & Pannable) & Deretan Thumbnail -->
-    <div class="w-full md:w-1/2 bg-zinc-100 dark:bg-zinc-950 p-6 flex flex-col justify-between border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
+    <!-- KOLOM KIRI: Foto Utama (Multi-Photo Swipe Slider) & Indikator Titik & Deretan Thumbnail -->
+    <div class="w-full md:w-1/2 bg-zinc-100 dark:bg-zinc-950 p-5 sm:p-6 flex flex-col justify-between border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
       
-      <!-- Wadah Foto Utama dengan Fitur Zoom & Pan -->
+      <!-- Wadah Slider Foto Utama yang Bisa Diswipe -->
       <div 
         id="lightbox-viewport"
-        class="relative w-full aspect-[4/5] sm:aspect-[3/4] max-h-[420px] rounded-2xl overflow-hidden bg-zinc-200/80 dark:bg-zinc-900/80 flex items-center justify-center group shadow-inner select-none transition-all"
+        class="relative w-full aspect-[4/5] sm:aspect-[3/4] max-h-[420px] rounded-2xl overflow-hidden bg-zinc-200/80 dark:bg-zinc-900/80 flex items-center justify-center group shadow-inner select-none"
       >
-        <!-- Kontainer foto yang bisa di-zoom & di-pan -->
+        <!-- Horizontal Scroll-Snap Slider Track (Touch Swipe di HP & Drag di Desktop) -->
         <div 
-          id="lightbox-pan-area"
-          class="w-full h-full flex items-center justify-center transition-transform duration-200 origin-center cursor-zoom-in"
-          title="Zoom"
+          id="lightbox-slider"
+          class="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-none scroll-smooth select-none cursor-grab active:cursor-grabbing"
         >
-          <img 
-            id="lightbox-image" 
-            src="" 
-            alt="" 
-            class="w-full h-full object-contain pointer-events-none select-none transition-transform duration-200"
-          />
-        </div>
-        
-        <!-- Tombol Kontrol Zoom Manual (+ / -) -->
-        <div class="absolute top-3 left-3 z-10 flex items-center gap-1.5 bg-zinc-900/80 backdrop-blur-md rounded-lg p-1 text-white shadow-xs">
-          <button 
-            id="lightbox-zoom-toggle" 
-            type="button"
-            class="px-2.5 py-1 text-xs font-semibold rounded hover:bg-white/20 transition-colors flex items-center gap-1"
-          >
-            <svg id="zoom-icon-in" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/>
-            </svg>
-            <svg id="zoom-icon-out" class="w-3.5 h-3.5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"/>
-            </svg>
-            <span id="zoom-text" data-i18n="lightbox.zoom">{t(lang, 'lightbox.zoom')}</span>
-          </button>
+          <!-- Slides diisi secara dinamis via JS -->
         </div>
 
         <!-- Indikator Counter Foto -->
-        <div class="absolute bottom-3 left-3 bg-zinc-900/80 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+        <div class="absolute top-3 left-3 bg-zinc-900/80 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm z-10 pointer-events-none">
           <span id="lightbox-counter">1 / 1</span>
         </div>
 
         <!-- Tombol Navigasi Prev/Next Foto -->
         <button 
           id="lightbox-prev" 
+          type="button"
           class="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 dark:bg-zinc-900/90 text-zinc-800 dark:text-zinc-200 shadow-md hover:bg-white dark:hover:bg-zinc-800 transition-colors focus:outline-none z-10"
           aria-label={t(lang, 'lightbox.prev')}
           data-i18n-aria="lightbox.prev"
@@ -81,6 +59,7 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
 
         <button 
           id="lightbox-next" 
+          type="button"
           class="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 dark:bg-zinc-900/90 text-zinc-800 dark:text-zinc-200 shadow-md hover:bg-white dark:hover:bg-zinc-800 transition-colors focus:outline-none z-10"
           aria-label={t(lang, 'lightbox.next')}
           data-i18n-aria="lightbox.next"
@@ -91,8 +70,15 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
         </button>
       </div>
 
+      <!-- Indikator Titik (Pagination Dots) -->
+      <div id="lightbox-dots-wrapper" class="flex items-center justify-center gap-1.5 mt-3 min-h-[14px]">
+        <div id="lightbox-dots" class="flex items-center gap-1.5">
+          <!-- Dots injected via JS -->
+        </div>
+      </div>
+
       <!-- Deretan Thumbnail Kecil (Multi-Foto) -->
-      <div id="lightbox-thumbnails-wrapper" class="mt-4">
+      <div id="lightbox-thumbnails-wrapper" class="mt-2.5">
         <div id="lightbox-thumbnails" class="flex items-center gap-2.5 overflow-x-auto py-1 scrollbar-none">
           <!-- Thumbnail buttons injected via JS -->
         </div>
@@ -199,8 +185,9 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
 <script is:inline>
 (function() {
   const dialog = document.getElementById('lightbox-dialog');
-  const mainImage = document.getElementById('lightbox-image');
-  const panArea = document.getElementById('lightbox-pan-area');
+  const slider = document.getElementById('lightbox-slider');
+  const dotsContainer = document.getElementById('lightbox-dots');
+  const dotsWrapper = document.getElementById('lightbox-dots-wrapper');
   const title = document.getElementById('lightbox-title');
   const desc = document.getElementById('lightbox-desc');
   const subcategory = document.getElementById('lightbox-subcategory');
@@ -219,20 +206,14 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
   const nextBtn = document.getElementById('lightbox-next');
   const thumbnailsContainer = document.getElementById('lightbox-thumbnails');
   const thumbnailsWrapper = document.getElementById('lightbox-thumbnails-wrapper');
-  const zoomToggle = document.getElementById('lightbox-zoom-toggle');
-  const zoomIconIn = document.getElementById('zoom-icon-in');
-  const zoomIconOut = document.getElementById('zoom-icon-out');
-  const zoomText = document.getElementById('zoom-text');
 
   let images = [];
   let currentIndex = 0;
-  let isZoomed = false;
+  let activeProductType = 'pakaian';
   let isDragging = false;
   let startX = 0;
-  let startY = 0;
-  let currentTranslateX = 0;
-  let currentTranslateY = 0;
-  let activeProductType = 'pakaian';
+  let startScrollLeft = 0;
+  let hasDragged = false;
 
   function updateDynamicTexts() {
     const currentLang = localStorage.getItem('lang') || document.documentElement.lang || 'id';
@@ -255,9 +236,6 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
       if (priceInfoDesc) priceInfoDesc.textContent = window.getI18nText('lightbox.bouquetPriceInfoDesc', currentLang);
       if (storeBox) storeBox.classList.add('hidden');
     }
-    if (zoomText) {
-      zoomText.textContent = isZoomed ? window.getI18nText('lightbox.reset', currentLang) : window.getI18nText('lightbox.zoom', currentLang);
-    }
   }
 
   // Dengarkan event perubahan bahasa
@@ -265,138 +243,149 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
     updateDynamicTexts();
   });
 
-  function resetZoom() {
-    isZoomed = false;
-    currentTranslateX = 0;
-    currentTranslateY = 0;
-    if (panArea) {
-      panArea.style.transform = 'translate(0px, 0px) scale(1)';
-      panArea.className = 'w-full h-full flex items-center justify-center transition-transform duration-200 origin-center cursor-zoom-in';
-    }
-    if (zoomIconIn) zoomIconIn.classList.remove('hidden');
-    if (zoomIconOut) zoomIconOut.classList.add('hidden');
-    const currentLang = localStorage.getItem('lang') || document.documentElement.lang || 'id';
-    if (zoomText) zoomText.textContent = window.getI18nText('lightbox.zoom', currentLang);
-  }
+  function renderGallery() {
+    if (!slider) return;
+    slider.innerHTML = '';
+    if (dotsContainer) dotsContainer.innerHTML = '';
+    if (thumbnailsContainer) thumbnailsContainer.innerHTML = '';
 
-  function toggleZoom(e) {
-    if (e) e.stopPropagation();
-    isZoomed = !isZoomed;
-    const currentLang = localStorage.getItem('lang') || document.documentElement.lang || 'id';
-    if (isZoomed) {
-      currentTranslateX = 0;
-      currentTranslateY = 0;
-      panArea.style.transform = 'translate(0px, 0px) scale(1.85)';
-      panArea.className = 'w-full h-full flex items-center justify-center transition-transform duration-200 origin-center cursor-grab active:cursor-grabbing';
-      zoomIconIn.classList.add('hidden');
-      zoomIconOut.classList.remove('hidden');
-      if (zoomText) zoomText.textContent = window.getI18nText('lightbox.reset', currentLang);
+    const total = images.length;
+    if (total <= 1) {
+      if (dotsWrapper) dotsWrapper.style.display = 'none';
+      if (thumbnailsWrapper) thumbnailsWrapper.style.display = 'none';
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
     } else {
-      resetZoom();
+      if (dotsWrapper) dotsWrapper.style.display = 'flex';
+      if (thumbnailsWrapper) thumbnailsWrapper.style.display = 'block';
+      if (prevBtn) prevBtn.style.display = 'flex';
+      if (nextBtn) nextBtn.style.display = 'flex';
+    }
+
+    images.forEach((imgUrl, idx) => {
+      // 1. Slide Image
+      const slide = document.createElement('div');
+      slide.className = 'w-full h-full flex-shrink-0 snap-center flex items-center justify-center p-2 sm:p-3 relative select-none';
+      slide.innerHTML = `<img src="${imgUrl}" alt="Foto ${idx + 1}" class="max-w-full max-h-full object-contain pointer-events-none select-none rounded-xl transition-transform duration-300" />`;
+      slider.appendChild(slide);
+
+      // 2. Pagination Dot
+      if (dotsContainer && total > 1) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = `lightbox-dot rounded-full transition-all duration-300 focus:outline-none ${
+          idx === 0 ? 'w-5 h-2 bg-brand-500 dark:bg-brand-400' : 'w-2 h-2 bg-zinc-300 dark:bg-zinc-600 hover:bg-zinc-400'
+        }`;
+        dot.setAttribute('aria-label', `Foto ${idx + 1}`);
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          goToSlide(idx);
+        });
+        dotsContainer.appendChild(dot);
+      }
+
+      // 3. Thumbnail
+      if (thumbnailsContainer && total > 1) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `w-14 h-14 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
+          idx === 0 ? 'border-brand-500 scale-105 shadow-sm' : 'border-transparent opacity-60 hover:opacity-100'
+        }`;
+        btn.innerHTML = `<img src="${imgUrl}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover select-none pointer-events-none" />`;
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          goToSlide(idx);
+        });
+        thumbnailsContainer.appendChild(btn);
+      }
+    });
+
+    updateActiveSlideUI();
+  }
+
+  function updateActiveSlideUI() {
+    if (counter) {
+      counter.textContent = `${currentIndex + 1} / ${Math.max(1, images.length)}`;
+    }
+
+    // Update Dots
+    if (dotsContainer) {
+      Array.from(dotsContainer.children).forEach((dot, idx) => {
+        if (idx === currentIndex) {
+          dot.className = 'lightbox-dot rounded-full transition-all duration-300 focus:outline-none w-5 h-2 bg-brand-500 dark:bg-brand-400';
+        } else {
+          dot.className = 'lightbox-dot rounded-full transition-all duration-300 focus:outline-none w-2 h-2 bg-zinc-300 dark:bg-zinc-600 hover:bg-zinc-400';
+        }
+      });
+    }
+
+    // Update Thumbnails
+    if (thumbnailsContainer) {
+      Array.from(thumbnailsContainer.children).forEach((thumb, idx) => {
+        if (idx === currentIndex) {
+          thumb.className = 'w-14 h-14 rounded-lg overflow-hidden border-2 border-brand-500 scale-105 shadow-sm flex-shrink-0 transition-all';
+          thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } else {
+          thumb.className = 'w-14 h-14 rounded-lg overflow-hidden border-2 border-transparent opacity-60 hover:opacity-100 flex-shrink-0 transition-all';
+        }
+      });
     }
   }
 
-  zoomToggle?.addEventListener('click', toggleZoom);
-  panArea?.addEventListener('click', (e) => {
-    if (!isDragging) {
-      toggleZoom(e);
-    }
-  });
+  function goToSlide(index) {
+    if (!slider || !images.length) return;
+    currentIndex = ((index % images.length) + images.length) % images.length;
+    slider.scrollTo({
+      left: currentIndex * slider.clientWidth,
+      behavior: 'smooth'
+    });
+    updateActiveSlideUI();
+  }
 
-  // Drag to Pan when zoomed
-  panArea?.addEventListener('mousedown', (e) => {
-    if (!isZoomed) return;
+  // Touch Swipe & Scroll-Snap Sync
+  let scrollDebounce = null;
+  slider?.addEventListener('scroll', () => {
+    if (!slider || !images.length) return;
+    const width = slider.clientWidth;
+    if (!width) return;
+    const newIdx = Math.round(slider.scrollLeft / width);
+    if (newIdx !== currentIndex && newIdx >= 0 && newIdx < images.length) {
+      currentIndex = newIdx;
+      clearTimeout(scrollDebounce);
+      scrollDebounce = setTimeout(() => {
+        updateActiveSlideUI();
+      }, 50);
+    }
+  }, { passive: true });
+
+  // Desktop Mouse Drag to Swipe
+  slider?.addEventListener('mousedown', (e) => {
+    if (images.length <= 1) return;
     isDragging = true;
-    startX = e.clientX - currentTranslateX;
-    startY = e.clientY - currentTranslateY;
-    panArea.style.transition = 'none';
+    hasDragged = false;
+    startX = e.pageX - slider.offsetLeft;
+    startScrollLeft = slider.scrollLeft;
+    slider.classList.remove('scroll-smooth');
   });
 
   window.addEventListener('mousemove', (e) => {
-    if (!isDragging || !isZoomed) return;
-    currentTranslateX = e.clientX - startX;
-    currentTranslateY = e.clientY - startY;
-
-    const maxBound = 160;
-    currentTranslateX = Math.max(-maxBound, Math.min(maxBound, currentTranslateX));
-    currentTranslateY = Math.max(-maxBound, Math.min(maxBound, currentTranslateY));
-
-    panArea.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px) scale(1.85)`;
+    if (!isDragging || !slider) return;
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX);
+    if (Math.abs(walk) > 5) hasDragged = true;
+    slider.scrollLeft = startScrollLeft - walk;
   });
 
   window.addEventListener('mouseup', () => {
-    if (isDragging) {
-      isDragging = false;
-      if (panArea) panArea.style.transition = 'transform 0.2s ease-out';
+    if (!isDragging || !slider) return;
+    isDragging = false;
+    slider.classList.add('scroll-smooth');
+    if (hasDragged) {
+      const width = slider.clientWidth;
+      const targetIndex = Math.round(slider.scrollLeft / width);
+      goToSlide(targetIndex);
     }
   });
-
-  // Touch Support
-  panArea?.addEventListener('touchstart', (e) => {
-    if (!isZoomed || e.touches.length !== 1) return;
-    isDragging = true;
-    startX = e.touches[0].clientX - currentTranslateX;
-    startY = e.touches[0].clientY - currentTranslateY;
-    panArea.style.transition = 'none';
-  }, { passive: true });
-
-  window.addEventListener('touchmove', (e) => {
-    if (!isDragging || !isZoomed || e.touches.length !== 1) return;
-    currentTranslateX = e.touches[0].clientX - startX;
-    currentTranslateY = e.touches[0].clientY - startY;
-    panArea.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px) scale(1.85)`;
-  }, { passive: true });
-
-  window.addEventListener('touchend', () => {
-    if (isDragging) {
-      isDragging = false;
-      if (panArea) panArea.style.transition = 'transform 0.2s ease-out';
-    }
-  });
-
-  function renderThumbnails() {
-    thumbnailsContainer.innerHTML = '';
-    if (!images || images.length <= 1) {
-      thumbnailsWrapper.style.display = 'none';
-      prevBtn.style.display = 'none';
-      nextBtn.style.display = 'none';
-      return;
-    }
-    
-    thumbnailsWrapper.style.display = 'block';
-    prevBtn.style.display = 'flex';
-    nextBtn.style.display = 'flex';
-
-    images.forEach((imgUrl, idx) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = `w-14 h-14 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
-        idx === currentIndex ? 'border-brand-500 scale-105 shadow-sm' : 'border-transparent opacity-60 hover:opacity-100'
-      }`;
-      btn.innerHTML = `<img src="${imgUrl}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover select-none pointer-events-none" />`;
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        setActiveImage(idx);
-      });
-      thumbnailsContainer.appendChild(btn);
-    });
-  }
-
-  function setActiveImage(index) {
-    if (!images.length) return;
-    resetZoom();
-    currentIndex = ((index % images.length) + images.length) % images.length;
-    mainImage.src = images[currentIndex];
-    counter.textContent = `${currentIndex + 1} / ${images.length}`;
-
-    Array.from(thumbnailsContainer.children).forEach((thumb, idx) => {
-      if (idx === currentIndex) {
-        thumb.className = 'w-14 h-14 rounded-lg overflow-hidden border-2 border-brand-500 scale-105 shadow-sm flex-shrink-0 transition-all';
-      } else {
-        thumb.className = 'w-14 h-14 rounded-lg overflow-hidden border-2 border-transparent opacity-60 hover:opacity-100 flex-shrink-0 transition-all';
-      }
-    });
-  }
 
   document.addEventListener('click', (e) => {
     const trigger = e.target.closest('[data-lightbox-trigger]');
@@ -407,6 +396,12 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
     } catch {
       images = [];
     }
+    if (!images || images.length === 0) {
+      const fallbackImg = trigger.querySelector('img');
+      if (fallbackImg && fallbackImg.src) {
+        images = [fallbackImg.src];
+      }
+    }
 
     const itemTitle = trigger.dataset.title || 'Galeri Tik';
     const itemSubCat = trigger.dataset.subcategory || 'Koleksi';
@@ -415,11 +410,10 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
     const itemWaUrl = trigger.dataset.waUrl || '#';
     const itemPriceRange = trigger.dataset.priceRange || '';
 
-    title.textContent = itemTitle;
-    mainImage.alt = itemTitle;
-    desc.textContent = itemDesc;
-    subcategory.textContent = itemSubCat;
-    waBtn.href = itemWaUrl;
+    if (title) title.textContent = itemTitle;
+    if (desc) desc.textContent = itemDesc;
+    if (subcategory) subcategory.textContent = itemSubCat;
+    if (waBtn) waBtn.href = itemWaUrl;
 
     // Khusus Pakaian: Tampilkan Kisaran Harga jika tersedia
     if (activeProductType === 'pakaian' && itemPriceRange) {
@@ -432,15 +426,19 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
     updateDynamicTexts();
 
     currentIndex = 0;
-    renderThumbnails();
-    setActiveImage(0);
+    renderGallery();
 
     dialog.showModal();
     document.body.style.overflow = 'hidden';
+
+    // Pastikan slider mulai dari slide pertama
+    setTimeout(() => {
+      if (slider) slider.scrollLeft = 0;
+      updateActiveSlideUI();
+    }, 50);
   });
 
   function closeDialog() {
-    resetZoom();
     dialog.close();
     document.body.style.overflow = '';
   }
@@ -448,11 +446,11 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
   closeBtn?.addEventListener('click', closeDialog);
   prevBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
-    setActiveImage(currentIndex - 1);
+    goToSlide(currentIndex - 1);
   });
   nextBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
-    setActiveImage(currentIndex + 1);
+    goToSlide(currentIndex + 1);
   });
 
   dialog?.addEventListener('click', (e) => {
@@ -465,15 +463,14 @@ const lang = getLangFromCookie(Astro.request.headers.get('cookie'));
   });
 
   dialog?.addEventListener('cancel', () => {
-    resetZoom();
     document.body.style.overflow = '';
   });
 
   document.addEventListener('keydown', (e) => {
     if (!dialog.open) return;
     if (e.key === 'Escape') closeDialog();
-    if (e.key === 'ArrowLeft') setActiveImage(currentIndex - 1);
-    if (e.key === 'ArrowRight') setActiveImage(currentIndex + 1);
+    if (e.key === 'ArrowLeft') goToSlide(currentIndex - 1);
+    if (e.key === 'ArrowRight') goToSlide(currentIndex + 1);
   });
 })();
 </script>
